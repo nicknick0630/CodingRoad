@@ -1,295 +1,1266 @@
 <!DOCTYPE html>
-<html>
-  <head><meta name="generator" content="Hexo 3.8.0">
-  <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
-  <meta name="description" content="紀錄我的程式學習">
-  <meta name="keyword" content="cpp, algorightm, c">
-  
-    <link rel="shortcut icon" href="/css/images/logo.png">
-  
-  <title>
-    
-      Coding Road
-    
-  </title>
-  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-  <link href="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
-  <link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="/css/style.css">
-  
-  <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-  <script src="//cdn.bootcss.com/geopattern/1.2.3/js/geopattern.min.js"></script>
-  <script src="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.js"></script>
-  <
-  
-  
-  
-    <!-- MathJax support START -->
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-        tex2jax: {
-          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-          processEscapes: true,
-          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-        }
-      });
-    </script>
 
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for (i=0; i < all.length; i += 1) {
-          all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-      });
-    </script>
-    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <!-- MathJax support END -->
+
+
   
+
+
+<html class="theme-next muse use-motion" lang>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="紀錄我的程式學習">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Coding Road">
+<meta property="og:url" content="https://nicknick0630.github.io/index.html">
+<meta property="og:site_name" content="Coding Road">
+<meta property="og:description" content="紀錄我的程式學習">
+<meta property="og:locale" content="default">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Coding Road">
+<meta name="twitter:description" content="紀錄我的程式學習">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://nicknick0630.github.io/">
+
+
+
+
+
+  <title>Coding Road</title>
+  
+
+
+
+
+
+
 
 
 </head>
-<div class="wechat-share">
-  <img src="/css/images/logo.png">
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left 
+  page-home">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Coding Road</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
 </div>
 
-  <body>
-    <header class="header fixed-header">
-  <div class="header-container">
-    <a class="home-link" href="/">
-      <div class="logo"></div>
-      <span>Coding Road</span>
-    </a>
-    <ul class="right-list">
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
       
-        <li class="list-item">
-          
-            <a href="/" class="item-link active">Home</a>
-          
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
         </li>
       
-        <li class="list-item">
-          
-            <a href="/tags/" class="item-link">Tags</a>
-          
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
         </li>
       
-        <li class="list-item">
-          
-            <a href="/archives/" class="item-link">Archives</a>
-          
-        </li>
-      
-        <li class="list-item">
-          
-            <a href="/project/" class="item-link">Projects</a>
-          
-        </li>
-      
-        <li class="list-item">
-          
-            <a href="/about/" class="item-link">About</a>
-          
-        </li>
+
       
     </ul>
-    <div class="menu">
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-    </div>
-    <div class="menu-mask">
-      <ul class="menu-list">
-        
-          <li class="menu-item">
-            
-              <a href="/" class="menu-link mobile-active">Home</a>
-            
-          </li>
-        
-          <li class="menu-item">
-            
-              <a href="/tags/" class="menu-link">Tags</a>
-            
-          </li>
-        
-          <li class="menu-item">
-            
-              <a href="/archives/" class="menu-link">Archives</a>
-            
-          </li>
-        
-          <li class="menu-item">
-            
-              <a href="/project/" class="menu-link">Projects</a>
-            
-          </li>
-        
-          <li class="menu-item">
-            
-              <a href="/about/" class="menu-link">About</a>
-            
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-</header>
-
-    <main class="app-body">
   
-    <article class="article-card">
-      <h2 class="article-head">
-        <a href="/2019/02/18/Heap-and-Priority-Queue/">Heap and Priority Queue</a>
-      </h2>
-      <p class="article-date">February 18, 2019</p>
-      
-        
-  <a href="/tags#演算法 ( Algorithm )">
-    <span class="tag-code">演算法 ( Algorithm )</span>
-  </a>
 
-      
-      <div class="article-summary">
-        
-          參考 : 朝陽 ，Second Round , PriorityQueue各種實作 , wiki heap , wiki PQ
-
-1. HeapHeap 是一種 Data Structure ，要符合 Heap Condition (or Heap Property)Heap propert ...
-        
-      </div>
-      <a class="more" href="/2019/02/18/Heap-and-Priority-Queue/">Read more</a>
-    </article>
   
-    <article class="article-card">
-      <h2 class="article-head">
-        <a href="/2019/02/18/二元樹走訪-by-iteration/">二元樹走訪 by iteration</a>
-      </h2>
-      <p class="article-date">February 18, 2019</p>
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+  <section id="posts" class="posts-expand">
+    
       
-        
-  <a href="/tags#演算法 ( Algorithm )">
-    <span class="tag-code">演算法 ( Algorithm )</span>
-  </a>
 
-      
-      <div class="article-summary">
-        
-          binary tree iterative traversal
-1.postorder參考 這篇
-解法1需要用到2個 pointer : nowNode 和 preNode且可以依照他們的關係去分為下面2種情況
-
-
-traverse down : preNode 是 nowNode 的 pa ...
-        
-      </div>
-      <a class="more" href="/2019/02/18/二元樹走訪-by-iteration/">Read more</a>
-    </article>
   
-    <article class="article-card">
-      <h2 class="article-head">
-        <a href="/2019/02/18/test2/">test2</a>
-      </h2>
-      <p class="article-date">February 18, 2019</p>
-      
-        
-  <a href="/tags#cpp">
-    <span class="tag-code">cpp</span>
-  </a>
 
-      
-      <div class="article-summary">
-        
-          this is a testso
-
-hahaha
-
-        
-      </div>
-      <a class="more" href="/2019/02/18/test2/">Read more</a>
-    </article>
   
-    <article class="article-card">
-      <h2 class="article-head">
-        <a href="/2019/02/17/test-my-site/">test_my_site</a>
-      </h2>
-      <p class="article-date">February 17, 2019</p>
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://nicknick0630.github.io/2019/02/18/Heap-and-Priority-Queue/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chen Yu Sheng">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coding Road">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/02/18/Heap-and-Priority-Queue/" itemprop="url">Heap and Priority Queue</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-02-18T22:39:29+08:00">
+                2019-02-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
-      <div class="article-summary">
+      
+
+      
         
           
+            <p>參考 : <a href="https://www.cyut.edu.tw/~ckhung/b/al/heap.php" target="_blank" rel="noopener">朝陽</a> ，<a href="http://alrightchiu.github.io/SecondRound/priority-queuebinary-heap.html" target="_blank" rel="noopener">Second Round</a> , <a href="https://rockmanray.tian.yam.com/posts/44952434" target="_blank" rel="noopener">PriorityQueue各種實作</a> , <a href="https://en.wikipedia.org/wiki/Heap_(data_structure" target="_blank" rel="noopener">wiki heap</a> , <a href="https://en.wikipedia.org/wiki/Priority_queue" target="_blank" rel="noopener">wiki PQ</a></p>
+<hr>
+<h1 id="1-Heap"><a href="#1-Heap" class="headerlink" title="1. Heap"></a>1. Heap</h1><p>Heap 是一種 Data Structure ，要符合 <strong>Heap Condition (or Heap Property)</strong><br>Heap property 是指 parent 和 children 的關係 (但 children 之間順序無關)</p>
+<blockquote>
+<ol>
+<li>Min Heap : parent &lt;= children</li>
+<li>Max Heap : parent &gt;= children</li>
+</ol>
+</blockquote>
+<p>Heap 有一些不同的實作方法，如果只有寫<font color="blue"> <em>Heap</em></font>，通常都是指 <strong>Binary Heap</strong><br>其他種類如: Binomial Heap ， Fibonacci Heap ， Pairing Heap 等，參考 <a href="https://en.wikipedia.org/wiki/Heap_(data_structure" target="_blank" rel="noopener"><font size="5">wiki Heap</font></a>)<br><br></p>
+<h2 id="lt-Binary-Heap-gt"><a href="#lt-Binary-Heap-gt" class="headerlink" title="&lt; (Binary) Heap &gt;"></a>&lt; (Binary) Heap &gt;</h2><p>Heap 是一種 Binary Tree，不過要符合2個條件 :</p>
+<blockquote>
+<ol>
+<li>外觀是 Complete Binary Tree</li>
+<li>裡面元素都要符合 Heap Condition</li>
+</ol>
+</blockquote>
+<p>雖然 Heap 在觀念上是一個 Complete Binary Tree ，但實際上是用 array 去 implement<br>這樣就能快速地去存取父(子)節點</p>
+<blockquote>
+<p>node 的 index 是 i</p>
+<ol>
+<li>parent  : i/2</li>
+<li>left child : i*2</li>
+<li>right child : i*2 + 1</li>
+</ol>
+</blockquote>
+<p>Heap 的 push 為 O(log<sub>2</sub> N)，pop 為 O(log<sub>2</sub> N)</p>
+<hr>
+<h1 id="2-Priority-Queue"><a href="#2-Priority-Queue" class="headerlink" title="2. Priority Queue"></a>2. Priority Queue</h1><p>Priority Queue 是一種 Abstract Data Structure，也是一種 container<br>當要從 Priority Queue 取出一個元素時，他會回傳<strong>最高優先度</strong>的元素並移除它<br>並可以 change 某元素之優先度，當然其位置也會改變</p>
+<p><br></p>
+<p>可以使用不同的 Data Structure 去 implement<br>舉一些例子 : [srch 表示搜尋時間 ，已知位置為 O(1)，否則為該 search 欄位時間]</p>
+<p><br></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left"></th>
+<th style="text-align:left">insert</th>
+<th style="text-align:left">remove</th>
+<th style="text-align:left">change</th>
+<th style="text-align:left">isEmpty</th>
+<th style="text-align:left">search</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">unsorted array</td>
+<td style="text-align:left">O(1)</td>
+<td style="text-align:left">O(n)</td>
+<td style="text-align:left">srch+O(1)</td>
+<td style="text-align:left">O(1)</td>
+<td style="text-align:left">O(n)</td>
+</tr>
+<tr>
+<td style="text-align:left">sorted array</td>
+<td style="text-align:left">O(n)</td>
+<td style="text-align:left">O(n)</td>
+<td style="text-align:left">O(n)</td>
+<td style="text-align:left">O(1)</td>
+<td style="text-align:left">O(log<sub>2</sub> n)</td>
+</tr>
+<tr>
+<td style="text-align:left">circular sorted array</td>
+<td style="text-align:left">O(n)</td>
+<td style="text-align:left">O(1)</td>
+<td style="text-align:left">O(n)</td>
+<td style="text-align:left">O(1)</td>
+<td style="text-align:left">O(log<sub>2</sub> n)</td>
+</tr>
+<tr>
+<td style="text-align:left">unsorted linked list</td>
+<td style="text-align:left">O(1)</td>
+<td style="text-align:left">O(n)</td>
+<td style="text-align:left">srch+O(1)</td>
+<td style="text-align:left">O(1)</td>
+<td style="text-align:left">O(n)</td>
+</tr>
+<tr>
+<td style="text-align:left">sorted linked list</td>
+<td style="text-align:left">O(n)</td>
+<td style="text-align:left">O(1)</td>
+<td style="text-align:left">O(n)</td>
+<td style="text-align:left">O(1)</td>
+<td style="text-align:left">O(n)</td>
+</tr>
+<tr>
+<td style="text-align:left">Binary Heap</td>
+<td style="text-align:left">O(log<sub>2</sub> n)</td>
+<td style="text-align:left">O(log<sub>2</sub> n)</td>
+<td style="text-align:left">O(log<sub>2</sub> n)</td>
+<td style="text-align:left">O(1)</td>
+<td style="text-align:left">O(log<sub>2</sub> n)</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<p>其中 Binary Heap 所花費的時間較為平均，O(1) &lt; O(log<sub>2</sub> n) &lt; O(n)<br>當然還有更快的作法，指示使用 Binary Tree 較為常見<br>有時也會稱 Priority Queue 為 Heap</p>
+<hr>
+<h1 id="3-快速建立-Binary-Heap-或-PQ"><a href="#3-快速建立-Binary-Heap-或-PQ" class="headerlink" title="3.快速建立 Binary Heap 或 PQ"></a>3.快速建立 Binary Heap 或 PQ</h1><p>假設要建立 Min Heap<br>給定一個隨機數值的 array ，將所有有 child 的 node (也就是subtree) 做 bulidMinHeap<br>直到所有subtree皆完成，就建立完成了<br><br></p>
+<p><img src="./Heap.png" width="350" height="350"></p>
+<p>例如給定一個有 10 個 node 的 tree ，最後一個有 child 的 node 為 10/2 = 5<br>因此從 index=5 開始做 MinHeap<br>5 -&gt; 4 -&gt; 3 -&gt; 2 -&gt; 1<br>就完成了<br>費時 :</p>
+<ul>
+<li>level 3 -&gt; 耗時 1 (向下比較1次) * 2 個 = 2</li>
+<li>level 2 -&gt; 耗時 2 (向下比較2次) * 2 個 = 4</li>
+<li>level 1 -&gt; 耗時 3 (向下比較3次) * 1 個 = 3</li>
+<li>total = 9</li>
+</ul>
+<h2 id="Genneral-廣義來說-共有-N-個元素"><a href="#Genneral-廣義來說-共有-N-個元素" class="headerlink" title="Genneral ( 廣義來說 ) : 共有 N 個元素"></a>Genneral ( 廣義來說 ) : 共有 N 個元素</h2><p>共有 log<sub>2</sub>N+1 = k 層 (假設為 Full Binary Tree)<br>( M<sub>i</sub> : 第 i 層有 <font size="4">$ \frac{N}{2^{k-i}} $</font> 個元素 )</p>
+<ul>
+<li>level k-1 -&gt; 耗時 :  1 <em> M<sub>k-1</sub> = 1 </em> $ \frac{N}{2^1} $</li>
+<li>level k-2 -&gt; 耗時 :  2 <em> M<sub>k-2</sub> = 2 </em> $ \frac{N}{2^2} $</li>
+<li>level k-3 -&gt; 耗時 :  3 <em> M<sub>k-3</sub> = 3 </em> $ \frac{N}{2^3} $<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;。<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;。<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;。</li>
+<li>level 1   -&gt; 耗時 :  (k-1) <em> M<sub>1</sub> = (k-1) </em> $ \frac{N}{2^{k-1}} $</li>
+</ul>
+<p>Total time = $ \sum\limits_{i=1}^{k-1}i* \frac{N}{2^{k-i}} = \frac{N}{2} + \frac{2N}{4} + \frac{3N}{8} + \frac{4N}{16} …$</p>
+<p><strong>耗時 = O(N)</strong></p>
+<hr>
+<h1 id="4-Binary-Heap-實作"><a href="#4-Binary-Heap-實作" class="headerlink" title="4.Binary Heap 實作"></a>4.Binary Heap 實作</h1><p>首先設一個依據 Heap property 比較大小的 function</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Min Heap</span></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">compare_with_heap_property</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> <span class="keyword">const</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> arr[a] &lt; arr[b];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Max Heap</span></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">compare_with_heap_property</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> <span class="keyword">const</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> arr[a] &gt; arr[b];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><br><br>然後在寫 heap_down(向下比較) 與 heap_up(向上比較)</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">heap_down</span><span class="params">(<span class="keyword">int</span> up)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> down = up * <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (down &lt;= nowSize)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (down != nowSize &amp;&amp; compare_with_heap_property(down + <span class="number">1</span>, down))</span><br><span class="line">            ++down;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (compare_with_heap_property(down, up))</span><br><span class="line">        &#123;</span><br><span class="line">            swap(down, up);</span><br><span class="line">            up = down;</span><br><span class="line">            down *= <span class="number">2</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">heap_up</span><span class="params">(<span class="keyword">int</span> down)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> up = down / <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (up &gt;= <span class="number">1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (compare_with_heap_property(down, up))</span><br><span class="line">        &#123;</span><br><span class="line">            swap(down, up);</span><br><span class="line">            down = up;</span><br><span class="line">            up /= <span class="number">2</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><br><br>接下來就可以去實作 <strong>快速建立Heap</strong> 、<strong>push(insert)</strong> 、<strong>pop(delete)</strong></p>
+<h2 id="快速建立Heap"><a href="#快速建立Heap" class="headerlink" title="快速建立Heap"></a>快速建立Heap</h2><p>利用上方 <strong>#3</strong> 介紹的概念</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">build</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> up = nowSize / <span class="number">2</span>; up &gt;= <span class="number">1</span>; --up)</span><br><span class="line">        heap_down(up);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="push-insert"><a href="#push-insert" class="headerlink" title="push(insert)"></a>push(insert)</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">push</span><span class="params">(<span class="keyword">const</span> T &amp;input, <span class="keyword">const</span> <span class="keyword">int</span> key = <span class="number">0</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (nowSize == capacity)    <span class="comment">// capacity is full</span></span><br><span class="line">        extend_capacity();</span><br><span class="line"></span><br><span class="line">    arr[++nowSize].setData(input);</span><br><span class="line">    arr[nowSize].setKey(key);</span><br><span class="line"></span><br><span class="line">    heap_up(nowSize);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="pop-delete"><a href="#pop-delete" class="headerlink" title="pop(delete)"></a>pop(delete)</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">pop</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (empty())</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">cerr</span> &lt;&lt; <span class="string">"no element"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    arr[<span class="number">1</span>] = arr[nowSize--];</span><br><span class="line"></span><br><span class="line">    heap_down(<span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+          
         
-      </div>
-      <a class="more" href="/2019/02/17/test-my-site/">Read more</a>
-    </article>
-  
-    <article class="article-card">
-      <h2 class="article-head">
-        <a href="/2019/02/17/hello-world/">Hello World</a>
-      </h2>
-      <p class="article-date">February 17, 2019</p>
       
-      <div class="article-summary">
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://nicknick0630.github.io/2019/02/18/二元樹走訪-by-iteration/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chen Yu Sheng">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coding Road">
+    </span>
+
+    
+      <header class="post-header">
+
         
-          Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer ...
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/02/18/二元樹走訪-by-iteration/" itemprop="url">二元樹走訪 by iteration</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-02-18T20:39:50+08:00">
+                2019-02-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="binary-tree-iterative-traversal"><a href="#binary-tree-iterative-traversal" class="headerlink" title="binary tree iterative traversal"></a>binary tree iterative traversal</h2><hr>
+<h3 id="1-postorder"><a href="#1-postorder" class="headerlink" title="1.postorder"></a>1.postorder</h3><p>參考 <a href="https://articles.leetcode.com/binary-tree-post-order-traversal/" target="_blank" rel="noopener">這篇</a></p>
+<h4 id="解法1"><a href="#解法1" class="headerlink" title="解法1"></a>解法1</h4><p>需要用到2個 pointer : nowNode 和 preNode<br>且可以依照他們的關係去分為下面2種情況</p>
+<blockquote>
+<ol>
+<li><p><font color="red"><strong>traverse down</strong></font> : preNode 是 nowNode 的 parent</p>
+<ul>
+<li>繼續往下走  : nowNode 的 left child 、 right child 、 visit nowNode</li>
+</ul>
+</li>
+<li><p><font color="red"><strong>traverse up</strong></font> : nowNode 是 preNode 的 parent</p>
+<ul>
+<li>如果 preNode 是 nowNode 的 left child  : traverse right child</li>
+<li>如果 preNode 是 nowNode 的 right child : visit nowNode</li>
+</ul>
+</li>
+</ol>
+</blockquote>
+<p>code :</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">postorderIterative</span><span class="params">(<span class="keyword">void</span>)</span> <span class="keyword">const</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	pNode nowNode, preNode = <span class="literal">nullptr</span>;</span><br><span class="line">	<span class="built_in">stack</span>&lt;pNode&gt; nstack;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span> (root == <span class="literal">nullptr</span>)</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	</span><br><span class="line">	nstack.push(root);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">while</span> (!nstack.empty())</span><br><span class="line">	&#123;</span><br><span class="line">		nowNode = nstack.top();</span><br><span class="line">		<span class="comment">//traverse down</span></span><br><span class="line">		<span class="keyword">if</span> (preNode == <span class="literal">nullptr</span> || preNode-&gt;left == nowNode || preNode-&gt;right == nowNode) <span class="comment">//註1</span></span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span> (nowNode-&gt;left)</span><br><span class="line">				nstack.push(nowNode-&gt;left);</span><br><span class="line">			<span class="keyword">else</span> <span class="keyword">if</span> (nowNode-&gt;right)</span><br><span class="line">				nstack.push(nowNode-&gt;right);</span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">			&#123;</span><br><span class="line">				<span class="built_in">cout</span> &lt;&lt; nowNode-&gt;data &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">				nstack.pop();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">//traverse up</span></span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (nowNode-&gt;left == preNode)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span> (nowNode-&gt;right)</span><br><span class="line">				nstack.push(nowNode-&gt;right);</span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">			&#123;</span><br><span class="line">				<span class="built_in">cout</span> &lt;&lt; nowNode-&gt;data &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">				nstack.pop();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">//traverse up</span></span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (nowNode-&gt;right == preNode)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">cout</span> &lt;&lt; nowNode-&gt;data &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">			nstack.pop();</span><br><span class="line">		&#125;</span><br><span class="line">	</span><br><span class="line">		preNode = nowNode;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意這邊的if (preNode == nullptr || preNode-&gt;left == nowNode || preNode-&gt;right == nowNode)<br>因為最一開始 nowNode=root 、 preNode=nullptr<br>所以為了避免存取到 nullptr，使用 <strong>preNode == nullptr</strong> 判斷<br>這裡利用到了 <strong>Logic OR “||”</strong> 的特性<br>只要前面是 true ，後面就不用判斷了</p>
+<p>refactored code :</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">postorderIterative</span><span class="params">(<span class="keyword">void</span>)</span> <span class="keyword">const</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	pNode nowNode, preNode = <span class="literal">nullptr</span>;</span><br><span class="line">	<span class="built_in">stack</span>&lt;pNode&gt; nstack;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span> (root == <span class="literal">nullptr</span>)</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	</span><br><span class="line">	nstack.push(root);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">while</span> (!nstack.empty())</span><br><span class="line">	&#123;</span><br><span class="line">		nowNode = nstack.top();</span><br><span class="line">	</span><br><span class="line">		<span class="keyword">if</span> (preNode == <span class="literal">nullptr</span> || preNode-&gt;left == nowNode || preNode-&gt;right == nowNode)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span> (nowNode-&gt;left)</span><br><span class="line">				nstack.push(nowNode-&gt;left);</span><br><span class="line">			<span class="keyword">else</span> <span class="keyword">if</span> (nowNode-&gt;right)</span><br><span class="line">				nstack.push(nowNode-&gt;right);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (nowNode-&gt;left == preNode)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span> (nowNode-&gt;right)</span><br><span class="line">				nstack.push(nowNode-&gt;right);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">cout</span> &lt;&lt; nowNode-&gt;data &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">			nstack.pop();</span><br><span class="line">		&#125;</span><br><span class="line">	</span><br><span class="line">		preNode = nowNode;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>另外這邊是先 push left 再 push right<br>和下面 two stack 版本 與 preorder 不一樣<br>因為這邊是合在一起的 if-else 條件判斷<br>因此一次只能選擇往左（push left) 或往右（push right)<br>下面 preorder traversal 是2個獨立的 if 判斷式<br>所以2個都有可能會push進去<br>因此要先判斷後面順序的那一個<br>==&gt;preoeder 是 VLR 所以要先判斷R再L<br><br></p>
+<h4 id="解法2"><a href="#解法2" class="headerlink" title="解法2"></a>解法2</h4><p>利用2個 stack<br>使用 <font color="red"><strong>VRL</strong> (換順序的preorder(VLR))</font>  輸出到 output stack<br>再從 output stack 輸出，就變 <strong>LRV</strong> 了<br>code :</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">postorderTwoStack</span><span class="params">(<span class="keyword">void</span>)</span> <span class="keyword">const</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	pNode nowNode;</span><br><span class="line">	<span class="built_in">stack</span>&lt;pNode&gt; nstack;</span><br><span class="line">	<span class="built_in">stack</span>&lt;pNode&gt; output;</span><br><span class="line">	</span><br><span class="line">	nstack.push(root);</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// VRL</span></span><br><span class="line">	<span class="keyword">while</span> (!nstack.empty())</span><br><span class="line">	&#123;</span><br><span class="line">		nowNode = nstack.top();</span><br><span class="line">	</span><br><span class="line">		output.push(nowNode);</span><br><span class="line">	</span><br><span class="line">		nstack.pop();</span><br><span class="line">	</span><br><span class="line">		<span class="comment">//first in last out</span></span><br><span class="line">		<span class="keyword">if</span> (nowNode-&gt;left)</span><br><span class="line">			nstack.push(nowNode-&gt;left);</span><br><span class="line">	</span><br><span class="line">		<span class="comment">//所以right會先出</span></span><br><span class="line">		<span class="keyword">if</span> (nowNode-&gt;right)</span><br><span class="line">			nstack.push(nowNode-&gt;right);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// LRV</span></span><br><span class="line">	<span class="keyword">while</span> (!output.empty())</span><br><span class="line">	&#123;</span><br><span class="line">		nowNode = output.top();</span><br><span class="line">		output.pop();</span><br><span class="line">	</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; nowNode-&gt;data &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="2-preorder"><a href="#2-preorder" class="headerlink" title="2.preorder"></a>2.preorder</h3><p>這是iterative版本，手繪筆記區的筆記是 iterator class的版本。<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">preorderIterative</span><span class="params">(<span class="keyword">void</span>)</span> <span class="keyword">const</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	pNode nowNode;</span><br><span class="line">	<span class="built_in">stack</span>&lt;pNode&gt; nstack;</span><br><span class="line">	</span><br><span class="line">	nstack.push(root);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">while</span> (!nstack.empty())</span><br><span class="line">	&#123;</span><br><span class="line">		nowNode = nstack.top();</span><br><span class="line">	</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; nowNode-&gt;data &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">	</span><br><span class="line">		nstack.pop();</span><br><span class="line">	</span><br><span class="line">		<span class="keyword">if</span> (nowNode-&gt;right)</span><br><span class="line">			nstack.push(nowNode-&gt;right);</span><br><span class="line">	</span><br><span class="line">		<span class="keyword">if</span> (nowNode-&gt;left)</span><br><span class="line">			nstack.push(nowNode-&gt;left);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>注意 preorder 的順序是VLR<br>但 stac k是 first in last out<br>所以要先 push right 再 push left<br>這樣 pop 時才會是 left 先出來</p>
+<hr>
+<h3 id="3-inorder"><a href="#3-inorder" class="headerlink" title="3.inorder"></a>3.inorder</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">inorderIterative</span><span class="params">(<span class="keyword">void</span>)</span> <span class="keyword">const</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(!root)</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">	pNode nowNode;</span><br><span class="line">	<span class="built_in">stack</span>&lt;pNode&gt; nstack;</span><br><span class="line">	</span><br><span class="line">	nowNode = root;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">while</span> (<span class="literal">true</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">while</span> (nowNode)</span><br><span class="line">		&#123;</span><br><span class="line">			nstack.push(nowNode);</span><br><span class="line">			nowNode = nowNode-&gt;left;</span><br><span class="line">		&#125;</span><br><span class="line">	</span><br><span class="line">		<span class="keyword">if</span> (nstack.empty())</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">	</span><br><span class="line">		nowNode = nstack.top();</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; nowNode-&gt;data &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">		nstack.pop();</span><br><span class="line">		</span><br><span class="line">		nowNode = nowNode-&gt;right;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="4-level-order"><a href="#4-level-order" class="headerlink" title="4.level order"></a>4.level order</h3><p>利用 Queue 來實作</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">levelorder</span><span class="params">(<span class="keyword">void</span>)</span> <span class="keyword">const</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (!root)</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">queue</span>&lt;pNode&gt; que;</span><br><span class="line">	pNode now_node;</span><br><span class="line"></span><br><span class="line">	que.push(root);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">while</span> (!que.empty())</span><br><span class="line">	&#123;</span><br><span class="line">		now_node = que.front();</span><br><span class="line">		que.pop();</span><br><span class="line"></span><br><span class="line">		<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="built_in">std</span>::setw(<span class="number">4</span>) &lt;&lt; <span class="built_in">std</span>::left &lt;&lt; now_node-&gt;data;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (now_node-&gt;left)</span><br><span class="line">			que.push(now_node-&gt;left);</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (now_node-&gt;right)</span><br><span class="line">			que.push(now_node-&gt;right);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://nicknick0630.github.io/2019/02/18/test2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chen Yu Sheng">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coding Road">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/02/18/test2/" itemprop="url">test2</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-02-18T20:10:39+08:00">
+                2019-02-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="this-is-a-test"><a href="#this-is-a-test" class="headerlink" title="this is a test"></a>this is a test</h3><p>so</p>
+<hr>
+<p>hahaha</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://nicknick0630.github.io/2019/02/17/test-my-site/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chen Yu Sheng">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coding Road">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/02/17/test-my-site/" itemprop="url">test_my_site</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-02-17T23:49:02+08:00">
+                2019-02-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://nicknick0630.github.io/2019/02/17/hello-world/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chen Yu Sheng">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coding Road">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/02/17/hello-world/" itemprop="url">Hello World</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-02-17T23:47:39+08:00">
+                2019-02-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+  </section>
+
+  
+
+
+          </div>
+          
+
+
+          
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Chen Yu Sheng</p>
+              <p class="site-description motion-element" itemprop="description">紀錄我的程式學習</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
         
       </div>
-      <a class="more" href="/2019/02/17/hello-world/">Read more</a>
-    </article>
-  
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chen Yu Sheng</span>
 
   
-</main>
-
-
-    <div class="scroll-top">
-  <span class="arrow-icon"></span>
 </div>
-    <footer class="app-footer">
-  <p class="copyright">
-    &copy; 2019 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
-    <br>
-    Theme by <a href="https://github.com/yanm1ng">yanm1ng</a>
-  </p>
-</footer>
 
-<script>
-  function async(u, c) {
-    var d = document, t = 'script',
-      o = d.createElement(t),
-      s = d.getElementsByTagName(t)[0];
-    o.src = u;
-    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
-    s.parentNode.insertBefore(o, s);
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
   }
 </script>
-<script>
-  async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
-    FastClick.attach(document.body);
-  })
-</script>
 
-<script>
-  var hasLine = 'true';
-  async("//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js", function(){
-    $('figure pre').each(function(i, block) {
-      var figure = $(this).parents('figure');
-      if (hasLine === 'false') {
-        figure.find('.gutter').hide();
-      }
-      var lang = figure.attr('class').split(' ')[1] || 'code';
-      var codeHtml = $(this).html();
-      var codeTag = document.createElement('code');
-      codeTag.className = lang;
-      codeTag.innerHTML = codeHtml;
-      $(this).attr('class', '').empty().html(codeTag);
-      figure.attr('data-lang', lang.toUpperCase());
-      hljs.highlightBlock(block);
-    });
-  })
-</script>
-<!-- Baidu Tongji -->
 
-<script src="/js/script.js"></script>
-  </body>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
 </html>
