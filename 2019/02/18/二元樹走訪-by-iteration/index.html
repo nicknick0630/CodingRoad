@@ -152,10 +152,17 @@
 <h4 id="解法1"><a href="#解法1" class="headerlink" title="解法1"></a>解法1</h4><p>需要用到2個 pointer : nowNode 和 preNode<br>且可以依照他們的關係去分為下面2種情況</p>
 <blockquote>
 <ol>
-<li><font color="red"><strong>traverse down</strong></font> : preNode 是 nowNode 的 parent<pre><code>-&gt; 繼續往下走 : nowNode 的 left child 、 right child 、 visit nowNode
-</code></pre><br></li>
-<li><font color="red"><strong>traverse up</strong></font> : nowNode 是 preNode 的 parent<pre><code>-&gt; (a) 如果 preNode 是 nowNode 的 left child &amp;nbsp;: traverse right child
-</code></pre>&nbsp;&nbsp;&nbsp;(b) 如果 preNode 是 nowNode 的 right child : visit nowNode</li>
+<li><p><font color="red"><strong>traverse down</strong></font> : preNode 是 nowNode 的 parent</p>
+<ul>
+<li>繼續往下走  : nowNode 的 left child 、 right child 、 visit nowNode</li>
+</ul>
+</li>
+<li><p><font color="red"><strong>traverse up</strong></font> : nowNode 是 preNode 的 parent</p>
+<ul>
+<li>如果 preNode 是 nowNode 的 left child  : traverse right child</li>
+<li>如果 preNode 是 nowNode 的 right child : visit nowNode</li>
+</ul>
+</li>
 </ol>
 </blockquote>
 <p>code :</p>
