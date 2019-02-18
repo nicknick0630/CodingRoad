@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+  <head><meta name="generator" content="Hexo 3.8.0">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="Chen Yu Sheng&#39;s blog">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      二元樹走訪 by iteration | Coding Road
+    
+  </title>
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  
+  <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdn.bootcss.com/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.js"></script>
+  <
+  
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+</head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png">
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Coding Road</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/project/" class="item-link">Projects</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/project/" class="menu-link">Projects</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>二元樹走訪 by iteration</h2>
+  <p class="post-date">2019-02-18</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><p>##binary tree iterative traversal</p>
+<hr>
+<p>###1.postorder<br>參考 <a href="https://articles.leetcode.com/binary-tree-post-order-traversal/" target="_blank" rel="noopener">這篇</a></p>
+<p>####解法1<br>需要用到2個 pointer : nowNode 和 preNode<br>且可以依照他們的關係去分為下面2種情況</p>
+<blockquote>
+<ol>
+<li><font color="red"><strong>traverse down</strong></font> : preNode 是 nowNode 的 parent<pre><code>-&gt; 繼續往下走 : nowNode 的 left child 、 right child 、 visit nowNode
+</code></pre><br></li>
+<li><font color="red"><strong>traverse up</strong></font> : nowNode 是 preNode 的 parent<pre><code>-&gt; (a) 如果 preNode 是 nowNode 的 left child &amp;nbsp;: traverse right child
+</code></pre>&nbsp;&nbsp;&nbsp;(b) 如果 preNode 是 nowNode 的 right child : visit nowNode<br>code : <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">postorderIterative</span><span class="params">(<span class="keyword">void</span>)</span> <span class="keyword">const</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	pNode nowNode, preNode = <span class="literal">nullptr</span>;</span><br><span class="line">	<span class="built_in">stack</span>&lt;pNode&gt; nstack;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span> (root == <span class="literal">nullptr</span>)</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	</span><br><span class="line">	nstack.push(root);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">while</span> (!nstack.empty())</span><br><span class="line">	&#123;</span><br><span class="line">		nowNode = nstack.top();</span><br><span class="line">		<span class="comment">//traverse down</span></span><br><span class="line">		<span class="keyword">if</span> (preNode == <span class="literal">nullptr</span> || preNode-&gt;left == nowNode || preNode-&gt;right == nowNode) <span class="comment">//註1</span></span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span> (nowNode-&gt;left)</span><br><span class="line">				nstack.push(nowNode-&gt;left);</span><br><span class="line">			<span class="keyword">else</span> <span class="keyword">if</span> (nowNode-&gt;right)</span><br><span class="line">				nstack.push(nowNode-&gt;right);</span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">			&#123;</span><br><span class="line">				<span class="built_in">cout</span> &lt;&lt; nowNode-&gt;data &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">				nstack.pop();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">//traverse up</span></span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (nowNode-&gt;left == preNode)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span> (nowNode-&gt;right)</span><br><span class="line">				nstack.push(nowNode-&gt;right);</span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">			&#123;</span><br><span class="line">				<span class="built_in">cout</span> &lt;&lt; nowNode-&gt;data &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">				nstack.pop();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">//traverse up</span></span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (nowNode-&gt;right == preNode)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">cout</span> &lt;&lt; nowNode-&gt;data &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">			nstack.pop();</span><br><span class="line">		&#125;</span><br><span class="line">	</span><br><span class="line">		preNode = nowNode;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</blockquote>
+<p>注意這邊的if (preNode == nullptr || preNode-&gt;left == nowNode || preNode-&gt;right == nowNode)<br>因為最一開始 nowNode=root 、 preNode=nullptr<br>所以為了避免存取到 nullptr，使用 <strong>preNode == nullptr</strong> 判斷<br>這裡利用到了 <strong>Logic OR “||”</strong> 的特性<br>只要前面是 true ，後面就不用判斷了</p>
+<p>refactored code :<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">postorderIterative</span><span class="params">(<span class="keyword">void</span>)</span> <span class="keyword">const</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	pNode nowNode, preNode = <span class="literal">nullptr</span>;</span><br><span class="line">	<span class="built_in">stack</span>&lt;pNode&gt; nstack;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span> (root == <span class="literal">nullptr</span>)</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	</span><br><span class="line">	nstack.push(root);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">while</span> (!nstack.empty())</span><br><span class="line">	&#123;</span><br><span class="line">		nowNode = nstack.top();</span><br><span class="line">	</span><br><span class="line">		<span class="keyword">if</span> (preNode == <span class="literal">nullptr</span> || preNode-&gt;left == nowNode || preNode-&gt;right == nowNode)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span> (nowNode-&gt;left)</span><br><span class="line">				nstack.push(nowNode-&gt;left);</span><br><span class="line">			<span class="keyword">else</span> <span class="keyword">if</span> (nowNode-&gt;right)</span><br><span class="line">				nstack.push(nowNode-&gt;right);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (nowNode-&gt;left == preNode)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span> (nowNode-&gt;right)</span><br><span class="line">				nstack.push(nowNode-&gt;right);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">cout</span> &lt;&lt; nowNode-&gt;data &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">			nstack.pop();</span><br><span class="line">		&#125;</span><br><span class="line">	</span><br><span class="line">		preNode = nowNode;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">``` </span><br><span class="line">另外這邊是先 push left 再 push right</span><br><span class="line">和下面 two <span class="built_in">stack</span> 版本 與 preorder 不一樣</span><br><span class="line">因為這邊是合在一起的 <span class="keyword">if</span>-<span class="keyword">else</span> 條件判斷</span><br><span class="line">因此一次只能選擇往左（push left) 或往右（push right)</span><br><span class="line">下面 preorder traversal 是<span class="number">2</span>個獨立的 <span class="keyword">if</span> 判斷式</span><br><span class="line">所以<span class="number">2</span>個都有可能會push進去</span><br><span class="line">因此要先判斷後面順序的那一個</span><br><span class="line">==&gt;preoeder 是 VLR 所以要先判斷R再L</span><br><span class="line">&lt;br&gt;</span><br><span class="line">####解法<span class="number">2</span></span><br><span class="line">利用<span class="number">2</span>個 <span class="built_in">stack</span> </span><br><span class="line">使用 &lt;font color=<span class="string">"red"</span>&gt;**VRL** (換順序的preorder(VLR))&lt;/font&gt;  輸出到 output <span class="built_in">stack</span></span><br><span class="line">再從 output <span class="built_in">stack</span> 輸出，就變 **LRV** 了</span><br><span class="line">code : </span><br><span class="line">```cpp</span><br><span class="line"><span class="keyword">void</span> postorderTwoStack(<span class="keyword">void</span>) <span class="keyword">const</span></span><br><span class="line">&#123;</span><br><span class="line">	pNode nowNode;</span><br><span class="line">	<span class="built_in">stack</span>&lt;pNode&gt; nstack;</span><br><span class="line">	<span class="built_in">stack</span>&lt;pNode&gt; output;</span><br><span class="line">	</span><br><span class="line">	nstack.push(root);</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// VRL</span></span><br><span class="line">	<span class="keyword">while</span> (!nstack.empty())</span><br><span class="line">	&#123;</span><br><span class="line">		nowNode = nstack.top();</span><br><span class="line">	</span><br><span class="line">		output.push(nowNode);</span><br><span class="line">	</span><br><span class="line">		nstack.pop();</span><br><span class="line">	</span><br><span class="line">		<span class="comment">//first in last out</span></span><br><span class="line">		<span class="keyword">if</span> (nowNode-&gt;left)</span><br><span class="line">			nstack.push(nowNode-&gt;left);</span><br><span class="line">	</span><br><span class="line">		<span class="comment">//所以right會先出</span></span><br><span class="line">		<span class="keyword">if</span> (nowNode-&gt;right)</span><br><span class="line">			nstack.push(nowNode-&gt;right);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// LRV</span></span><br><span class="line">	<span class="keyword">while</span> (!output.empty())</span><br><span class="line">	&#123;</span><br><span class="line">		nowNode = output.top();</span><br><span class="line">		output.pop();</span><br><span class="line">	</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; nowNode-&gt;data &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<hr>
+<p>###2.preorder<br>這是iterative版本，手繪筆記區的筆記是 iterator class的版本。<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">preorderIterative</span><span class="params">(<span class="keyword">void</span>)</span> <span class="keyword">const</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	pNode nowNode;</span><br><span class="line">	<span class="built_in">stack</span>&lt;pNode&gt; nstack;</span><br><span class="line">	</span><br><span class="line">	nstack.push(root);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">while</span> (!nstack.empty())</span><br><span class="line">	&#123;</span><br><span class="line">		nowNode = nstack.top();</span><br><span class="line">	</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; nowNode-&gt;data &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">	</span><br><span class="line">		nstack.pop();</span><br><span class="line">	</span><br><span class="line">		<span class="keyword">if</span> (nowNode-&gt;right)</span><br><span class="line">			nstack.push(nowNode-&gt;right);</span><br><span class="line">	</span><br><span class="line">		<span class="keyword">if</span> (nowNode-&gt;left)</span><br><span class="line">			nstack.push(nowNode-&gt;left);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>注意 preorder 的順序是VLR<br>但 stac k是 first in last out<br>所以要先 push right 再 push left<br>這樣 pop 時才會是 left 先出來</p>
+<hr>
+<p>###3.inorder<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">inorderIterative</span><span class="params">(<span class="keyword">void</span>)</span> <span class="keyword">const</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(!root)</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">	pNode nowNode;</span><br><span class="line">	<span class="built_in">stack</span>&lt;pNode&gt; nstack;</span><br><span class="line">	</span><br><span class="line">	nowNode = root;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">while</span> (<span class="literal">true</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">while</span> (nowNode)</span><br><span class="line">		&#123;</span><br><span class="line">			nstack.push(nowNode);</span><br><span class="line">			nowNode = nowNode-&gt;left;</span><br><span class="line">		&#125;</span><br><span class="line">	</span><br><span class="line">		<span class="keyword">if</span> (nstack.empty())</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">	</span><br><span class="line">		nowNode = nstack.top();</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; nowNode-&gt;data &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">		nstack.pop();</span><br><span class="line">		</span><br><span class="line">		nowNode = nowNode-&gt;right;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<hr>
+<h3 id="4-level-order"><a href="#4-level-order" class="headerlink" title="4.level order"></a>4.level order</h3><p>利用 Queue 來實作</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">levelorder</span><span class="params">(<span class="keyword">void</span>)</span> <span class="keyword">const</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (!root)</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">queue</span>&lt;pNode&gt; que;</span><br><span class="line">	pNode now_node;</span><br><span class="line"></span><br><span class="line">	que.push(root);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">while</span> (!que.empty())</span><br><span class="line">	&#123;</span><br><span class="line">		now_node = que.front();</span><br><span class="line">		que.pop();</span><br><span class="line"></span><br><span class="line">		<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="built_in">std</span>::setw(<span class="number">4</span>) &lt;&lt; <span class="built_in">std</span>::left &lt;&lt; now_node-&gt;data;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (now_node-&gt;left)</span><br><span class="line">			que.push(now_node-&gt;left);</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (now_node-&gt;right)</span><br><span class="line">			que.push(now_node-&gt;right);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#演算法 ( Algorithm )">
+    <span class="tag-code">演算法 ( Algorithm )</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2019/02/18/test2/">
+        <span class="nav-arrow">← </span>
+        
+          test2
+        
+      </a>
+    
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+    <!-- 二维码 END -->
+    
+      <!-- No Comment -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#4-level-order"><span class="toc-nav-text">4.level order</span></a></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'https://nicknick0630.github.io/2019/02/18/二元樹走訪-by-iteration/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2019 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    Theme by <a href="https://github.com/yanm1ng">yanm1ng</a>
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+<script src="/js/script.js"></script>
+  </body>
+</html>
