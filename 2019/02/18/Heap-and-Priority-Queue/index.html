@@ -117,19 +117,19 @@
 
 
 
-<meta name="description" content="參考 : 朝陽 ，Second Round , PriorityQueue各種實作 , wiki heap , wiki PQ  1. HeapHeap 是一種 Data Structure ，要符合 Heap Condition (or Heap Property)Heap property 是指 parent 和 children 的關係 (但 children 之間順序無關)   Min H">
+<meta name="description" content="HeapHeap 是一種 Data Structure ，要符合 Heap Condition (or Heap Property)Heap property 是指 parent 和 children 的關係 (但 children 之間順序無關)   Min Heap : parent &amp;lt;= children Max Heap : parent &amp;gt;= children   Heap">
 <meta name="keywords" content="Heap,Priority Queue">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Heap and Priority Queue">
 <meta property="og:url" content="https://nicknick0630.github.io/2019/02/18/Heap-and-Priority-Queue/index.html">
 <meta property="og:site_name" content="Coding Road">
-<meta property="og:description" content="參考 : 朝陽 ，Second Round , PriorityQueue各種實作 , wiki heap , wiki PQ  1. HeapHeap 是一種 Data Structure ，要符合 Heap Condition (or Heap Property)Heap property 是指 parent 和 children 的關係 (但 children 之間順序無關)   Min H">
+<meta property="og:description" content="HeapHeap 是一種 Data Structure ，要符合 Heap Condition (or Heap Property)Heap property 是指 parent 和 children 的關係 (但 children 之間順序無關)   Min Heap : parent &amp;lt;= children Max Heap : parent &amp;gt;= children   Heap">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://nicknick0630.github.io/2019/02/18/Heap-and-Priority-Queue/Heap.png">
-<meta property="og:updated_time" content="2019-02-19T14:56:16.741Z">
+<meta property="og:updated_time" content="2019-02-20T13:58:37.514Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Heap and Priority Queue">
-<meta name="twitter:description" content="參考 : 朝陽 ，Second Round , PriorityQueue各種實作 , wiki heap , wiki PQ  1. HeapHeap 是一種 Data Structure ，要符合 Heap Condition (or Heap Property)Heap property 是指 parent 和 children 的關係 (但 children 之間順序無關)   Min H">
+<meta name="twitter:description" content="HeapHeap 是一種 Data Structure ，要符合 Heap Condition (or Heap Property)Heap property 是指 parent 和 children 的關係 (但 children 之間順序無關)   Min Heap : parent &amp;lt;= children Max Heap : parent &amp;gt;= children   Heap">
 <meta name="twitter:image" content="https://nicknick0630.github.io/2019/02/18/Heap-and-Priority-Queue/Heap.png">
 
 
@@ -411,17 +411,16 @@
       
 
       
-        <p>參考 : <a href="https://www.cyut.edu.tw/~ckhung/b/al/heap.php" target="_blank" rel="noopener">朝陽</a> ，<a href="http://alrightchiu.github.io/SecondRound/priority-queuebinary-heap.html" target="_blank" rel="noopener">Second Round</a> , <a href="https://rockmanray.tian.yam.com/posts/44952434" target="_blank" rel="noopener">PriorityQueue各種實作</a> , <a href="https://en.wikipedia.org/wiki/Heap_(data_structure" target="_blank" rel="noopener">wiki heap</a> , <a href="https://en.wikipedia.org/wiki/Priority_queue" target="_blank" rel="noopener">wiki PQ</a></p>
-<hr>
-<h1 id="1-Heap"><a href="#1-Heap" class="headerlink" title="1. Heap"></a>1. Heap</h1><p>Heap 是一種 Data Structure ，要符合 <strong>Heap Condition (or Heap Property)</strong><br>Heap property 是指 parent 和 children 的關係 (但 children 之間順序無關)</p>
+        <h1 id="Heap"><a href="#Heap" class="headerlink" title="Heap"></a>Heap</h1><p>Heap 是一種 Data Structure ，要符合 <strong>Heap Condition (or Heap Property)</strong><br>Heap property 是指 parent 和 children 的關係 (但 children 之間順序無關)</p>
 <blockquote>
 <ol>
 <li>Min Heap : parent &lt;= children</li>
 <li>Max Heap : parent &gt;= children</li>
 </ol>
 </blockquote>
-<p>Heap 有一些不同的實作方法，如果只有寫<font color="blue"> <em>Heap</em></font>，通常都是指 <strong>Binary Heap</strong><br>其他種類如: Binomial Heap ， Fibonacci Heap ， Pairing Heap 等，參考 <a href="https://en.wikipedia.org/wiki/Heap_(data_structure" target="_blank" rel="noopener"><font size="5">wiki Heap</font></a>)<br><br></p>
-<h2 id="lt-Binary-Heap-gt"><a href="#lt-Binary-Heap-gt" class="headerlink" title="&lt; (Binary) Heap &gt;"></a>&lt; (Binary) Heap &gt;</h2><p>Heap 是一種 Binary Tree，不過要符合2個條件 :</p>
+<p>Heap 有一些不同的實作方法，如果只有寫<font color="blue"> <em>Heap</em></font>，通常都是指 <strong>Binary Heap</strong><br>其他種類如: Binomial Heap ， Fibonacci Heap ， Pairing Heap 等，參考 <a href="https://en.wikipedia.org/wiki/Heap_(data_structure" target="_blank" rel="noopener"><font size="5">wiki Heap</font></a> )</p>
+<p><br></p>
+<h2 id="nbsp-Binary-Heap"><a href="#nbsp-Binary-Heap" class="headerlink" title="&nbsp;(Binary) Heap"></a>&nbsp;(Binary) Heap</h2><p>Heap 是一種 Binary Tree，不過要符合2個條件 :</p>
 <blockquote>
 <ol>
 <li>外觀是 Complete Binary Tree</li>
@@ -438,8 +437,8 @@
 </ol>
 </blockquote>
 <p>Heap 的 push 為 O(log<sub>2</sub> N)，pop 為 O(log<sub>2</sub> N)</p>
-<hr>
-<h1 id="2-Priority-Queue"><a href="#2-Priority-Queue" class="headerlink" title="2. Priority Queue"></a>2. Priority Queue</h1><p>Priority Queue 是一種 Abstract Data Structure，也是一種 container<br>當要從 Priority Queue 取出一個元素時，他會回傳<strong>最高優先度</strong>的元素並移除它<br>並可以 change 某元素之優先度，當然其位置也會改變</p>
+<p><br></p>
+<h1 id="Priority-Queue"><a href="#Priority-Queue" class="headerlink" title="Priority Queue"></a>Priority Queue</h1><p>Priority Queue 是一種 Abstract Data Structure，也是一種 container<br>當要從 Priority Queue 取出一個元素時，他會回傳<strong>最高優先度</strong>的元素並移除它<br>並可以 change 某元素之優先度，當然其位置也會改變</p>
 <p><br></p>
 <p>可以使用不同的 Data Structure 去 implement<br>舉一些例子 : [srch 表示搜尋時間 ，已知位置為 O(1)，否則為該 search 欄位時間]</p>
 <p><br></p>
@@ -507,8 +506,8 @@
 </table>
 <p><br></p>
 <p>其中 Binary Heap 所花費的時間較為平均，O(1) &lt; O(log<sub>2</sub> n) &lt; O(n)<br>當然還有更快的作法，指示使用 Binary Tree 較為常見<br>有時也會稱 Priority Queue 為 Heap</p>
-<hr>
-<h1 id="3-快速建立-Binary-Heap-或-PQ"><a href="#3-快速建立-Binary-Heap-或-PQ" class="headerlink" title="3.快速建立 Binary Heap 或 PQ"></a>3.快速建立 Binary Heap 或 PQ</h1><p>假設要建立 Min Heap<br>給定一個隨機數值的 array ，將所有有 child 的 node (也就是subtree) 做 bulidMinHeap<br>直到所有subtree皆完成，就建立完成了<br><br></p>
+<p><br></p>
+<h1 id="快速建立-Binary-Heap-或-PQ"><a href="#快速建立-Binary-Heap-或-PQ" class="headerlink" title="快速建立 Binary Heap 或 PQ"></a>快速建立 Binary Heap 或 PQ</h1><p>假設要建立 Min Heap<br>給定一個隨機數值的 array ，將所有有 child 的 node (也就是subtree) 做 bulidMinHeap<br>直到所有subtree皆完成，就建立完成了<br><br></p>
 <p><img src="./Heap.png" width="350" height="350"></p>
 <p>例如給定一個有 10 個 node 的 tree ，最後一個有 child 的 node 為 10/2 = 5<br>因此從 index=5 開始做 MinHeap<br>5 -&gt; 4 -&gt; 3 -&gt; 2 -&gt; 1<br>就完成了<br>費時 :</p>
 <ul>
@@ -517,7 +516,9 @@
 <li>level 1 -&gt; 耗時 3 (向下比較3次) * 1 個 = 3</li>
 <li>total = 9</li>
 </ul>
-<h2 id="Genneral-廣義來說-共有-N-個元素"><a href="#Genneral-廣義來說-共有-N-個元素" class="headerlink" title="Genneral ( 廣義來說 ) : 共有 N 個元素"></a>Genneral ( 廣義來說 ) : 共有 N 個元素</h2><p>共有 log<sub>2</sub>N+1 = k 層 (假設為 Full Binary Tree)<br>( M<sub>i</sub> : 第 i 層有 <font size="4">$ \frac{N}{2^{k-i}} $</font> 個元素 )</p>
+<font style="font-size:1.3em; font-weight:600;">Genneral ( 廣義來說 ) : 共有 N 個元素</font>
+
+<p>共有 log<sub>2</sub>N+1 = k 層 (假設為 Full Binary Tree)<br>( M<sub>i</sub> : 第 i 層有 <font size="4">$ \frac{N}{2^{k-i}} $</font> 個元素 )</p>
 <ul>
 <li>level k-1 -&gt; 耗時 :  1 <em> M<sub>k-1</sub> = 1 </em> $ \frac{N}{2^1} $</li>
 <li>level k-2 -&gt; 耗時 :  2 <em> M<sub>k-2</sub> = 2 </em> $ \frac{N}{2^2} $</li>
@@ -526,16 +527,26 @@
 </ul>
 <p>Total time = $ \sum\limits_{i=1}^{k-1}i* \frac{N}{2^{k-i}} = \frac{N}{2} + \frac{2N}{4} + \frac{3N}{8} + \frac{4N}{16} …$</p>
 <p><strong>耗時 = O(N)</strong></p>
-<hr>
-<h1 id="4-Binary-Heap-實作"><a href="#4-Binary-Heap-實作" class="headerlink" title="4.Binary Heap 實作"></a>4.Binary Heap 實作</h1><p>首先設一個依據 Heap property 比較大小的 function</p>
+<p><br></p>
+<h1 id="Binary-Heap-實作"><a href="#Binary-Heap-實作" class="headerlink" title="Binary Heap 實作"></a>Binary Heap 實作</h1><p>首先設一個依據 Heap property 比較大小的 function</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Min Heap</span></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">compare_with_heap_property</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> <span class="keyword">const</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> arr[a] &lt; arr[b];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Max Heap</span></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">compare_with_heap_property</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> <span class="keyword">const</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> arr[a] &gt; arr[b];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><br><br>然後在寫 heap_down(向下比較) 與 heap_up(向上比較)</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">heap_down</span><span class="params">(<span class="keyword">int</span> up)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> down = up * <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (down &lt;= nowSize)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (down != nowSize &amp;&amp; compare_with_heap_property(down + <span class="number">1</span>, down))</span><br><span class="line">            ++down;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (compare_with_heap_property(down, up))</span><br><span class="line">        &#123;</span><br><span class="line">            swap(down, up);</span><br><span class="line">            up = down;</span><br><span class="line">            down *= <span class="number">2</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">heap_up</span><span class="params">(<span class="keyword">int</span> down)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> up = down / <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (up &gt;= <span class="number">1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (compare_with_heap_property(down, up))</span><br><span class="line">        &#123;</span><br><span class="line">            swap(down, up);</span><br><span class="line">            down = up;</span><br><span class="line">            up /= <span class="number">2</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><br><br>接下來就可以去實作 <strong>快速建立Heap</strong> 、<strong>push(insert)</strong> 、<strong>pop(delete)</strong></p>
-<h2 id="快速建立Heap"><a href="#快速建立Heap" class="headerlink" title="快速建立Heap"></a>快速建立Heap</h2><p>利用上方 <strong>#3</strong> 介紹的概念</p>
+<h2 id="nbsp-快速建立Heap"><a href="#nbsp-快速建立Heap" class="headerlink" title="&nbsp;快速建立Heap"></a>&nbsp;快速建立Heap</h2><p>利用上方 <strong>#3</strong> 介紹的概念</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">build</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> up = nowSize / <span class="number">2</span>; up &gt;= <span class="number">1</span>; --up)</span><br><span class="line">        heap_down(up);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="push-insert"><a href="#push-insert" class="headerlink" title="push(insert)"></a>push(insert)</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">push</span><span class="params">(<span class="keyword">const</span> T &amp;input, <span class="keyword">const</span> <span class="keyword">int</span> key = <span class="number">0</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (nowSize == capacity)    <span class="comment">// capacity is full</span></span><br><span class="line">        extend_capacity();</span><br><span class="line"></span><br><span class="line">    arr[++nowSize].setData(input);</span><br><span class="line">    arr[nowSize].setKey(key);</span><br><span class="line"></span><br><span class="line">    heap_up(nowSize);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="pop-delete"><a href="#pop-delete" class="headerlink" title="pop(delete)"></a>pop(delete)</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">pop</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (empty())</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">cerr</span> &lt;&lt; <span class="string">"no element"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    arr[<span class="number">1</span>] = arr[nowSize--];</span><br><span class="line"></span><br><span class="line">    heap_down(<span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="nbsp-nbsp-push-insert"><a href="#nbsp-nbsp-push-insert" class="headerlink" title="&nbsp;&nbsp;push(insert)"></a>&nbsp;&nbsp;push(insert)</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">push</span><span class="params">(<span class="keyword">const</span> T &amp;input, <span class="keyword">const</span> <span class="keyword">int</span> key = <span class="number">0</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (nowSize == capacity)    <span class="comment">// capacity is full</span></span><br><span class="line">        extend_capacity();</span><br><span class="line"></span><br><span class="line">    arr[++nowSize].setData(input);</span><br><span class="line">    arr[nowSize].setKey(key);</span><br><span class="line"></span><br><span class="line">    heap_up(nowSize);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="nbsp-nbsp-pop-delete"><a href="#nbsp-nbsp-pop-delete" class="headerlink" title="&nbsp;&nbsp;pop(delete)"></a>&nbsp;&nbsp;pop(delete)</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">pop</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (empty())</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">cerr</span> &lt;&lt; <span class="string">"no element"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    arr[<span class="number">1</span>] = arr[nowSize--];</span><br><span class="line"></span><br><span class="line">    heap_down(<span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><br></p>
+<hr>
+<p>參考網站</p>
+<ul>
+<li><a href="https://www.cyut.edu.tw/~ckhung/b/al/heap.php" target="_blank" rel="noopener">朝陽</a></li>
+<li><a href="http://alrightchiu.github.io/SecondRound/priority-queuebinary-heap.html" target="_blank" rel="noopener">Second Round</a></li>
+<li><a href="https://rockmanray.tian.yam.com/posts/44952434" target="_blank" rel="noopener">PriorityQueue各種實作</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Heap_(data_structure" target="_blank" rel="noopener">wiki heap</a>)</li>
+<li><a href="https://en.wikipedia.org/wiki/Priority_queue" target="_blank" rel="noopener">wiki PQ</a></li>
+</ul>
 
       
     </div>
@@ -578,8 +589,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/02/19/UVa-test/" rel="prev" title="UVa test">
-                UVa test <i class="fa fa-chevron-right"></i>
+              <a href="/2019/02/20/UVa-10131/" rel="prev" title="UVa 10131">
+                UVa 10131 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -659,7 +670,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -724,7 +735,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-Heap"><span class="nav-number">1.</span> <span class="nav-text">1. Heap</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#lt-Binary-Heap-gt"><span class="nav-number">1.1.</span> <span class="nav-text">&lt; (Binary) Heap &gt;</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-Priority-Queue"><span class="nav-number">2.</span> <span class="nav-text">2. Priority Queue</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-快速建立-Binary-Heap-或-PQ"><span class="nav-number">3.</span> <span class="nav-text">3.快速建立 Binary Heap 或 PQ</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Genneral-廣義來說-共有-N-個元素"><span class="nav-number">3.1.</span> <span class="nav-text">Genneral ( 廣義來說 ) : 共有 N 個元素</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-Binary-Heap-實作"><span class="nav-number">4.</span> <span class="nav-text">4.Binary Heap 實作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#快速建立Heap"><span class="nav-number">4.1.</span> <span class="nav-text">快速建立Heap</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#push-insert"><span class="nav-number">4.1.1.</span> <span class="nav-text">push(insert)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pop-delete"><span class="nav-number">4.1.2.</span> <span class="nav-text">pop(delete)</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Heap"><span class="nav-number">1.</span> <span class="nav-text">Heap</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#nbsp-Binary-Heap"><span class="nav-number">1.1.</span> <span class="nav-text"> (Binary) Heap</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Priority-Queue"><span class="nav-number">2.</span> <span class="nav-text">Priority Queue</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#快速建立-Binary-Heap-或-PQ"><span class="nav-number">3.</span> <span class="nav-text">快速建立 Binary Heap 或 PQ</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Binary-Heap-實作"><span class="nav-number">4.</span> <span class="nav-text">Binary Heap 實作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#nbsp-快速建立Heap"><span class="nav-number">4.1.</span> <span class="nav-text"> 快速建立Heap</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#nbsp-nbsp-push-insert"><span class="nav-number">4.1.1.</span> <span class="nav-text">  push(insert)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nbsp-nbsp-pop-delete"><span class="nav-number">4.1.2.</span> <span class="nav-text">  pop(delete)</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
