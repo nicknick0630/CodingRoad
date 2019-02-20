@@ -1869,7 +1869,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #ffd4a2;
+  background: #62ff6c;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -3190,7 +3190,7 @@ pre .javascript .function {
   border-radius: 8px;
 }
 .posts-expand .post-title {
-  font-weight: 480;
+  font-weight: 520;
 }
 hr {
   height: 0.2em;
@@ -3242,8 +3242,7 @@ h6 {
 .post-body h6 {
   font-size: 1.1em;
 }
-strong,
-b {
+strong {
   color: #bf360c;
 }
 p {
@@ -3257,4 +3256,8 @@ pre .keyword {
 }
 pre .number {
   color: #ff5666;
+}
+code {
+  background: #fff2fb;
+  border-radius: 5px;
 }
