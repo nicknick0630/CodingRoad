@@ -117,19 +117,19 @@
 
 
 
-<meta name="description" content="HeapHeap 是一種 Data Structure ，要符合 Heap Condition (or Heap Property)Heap property 是指 parent 和 children 的關係 (但 children 之間順序無關)   Min Heap : parent &amp;lt;= children Max Heap : parent &amp;gt;= children   Heap">
+<meta name="description" content="HeapHeap 是一種 Data Structure ，要符合 Heap Condition (or Heap Property)Heap property 是指 parent 和 children 的關係 (但 children 之間順序無關)  Min Heap : parent &amp;lt;= children Max Heap : parent &amp;gt;= children  Heap 有一">
 <meta name="keywords" content="Heap,Priority Queue">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Heap and Priority Queue">
 <meta property="og:url" content="https://nicknick0630.github.io/2019/02/18/Heap-and-Priority-Queue/index.html">
 <meta property="og:site_name" content="Coding Road">
-<meta property="og:description" content="HeapHeap 是一種 Data Structure ，要符合 Heap Condition (or Heap Property)Heap property 是指 parent 和 children 的關係 (但 children 之間順序無關)   Min Heap : parent &amp;lt;= children Max Heap : parent &amp;gt;= children   Heap">
+<meta property="og:description" content="HeapHeap 是一種 Data Structure ，要符合 Heap Condition (or Heap Property)Heap property 是指 parent 和 children 的關係 (但 children 之間順序無關)  Min Heap : parent &amp;lt;= children Max Heap : parent &amp;gt;= children  Heap 有一">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://nicknick0630.github.io/2019/02/18/Heap-and-Priority-Queue/Heap.png">
-<meta property="og:updated_time" content="2019-02-20T13:58:37.514Z">
+<meta property="og:updated_time" content="2019-02-20T15:20:27.178Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Heap and Priority Queue">
-<meta name="twitter:description" content="HeapHeap 是一種 Data Structure ，要符合 Heap Condition (or Heap Property)Heap property 是指 parent 和 children 的關係 (但 children 之間順序無關)   Min Heap : parent &amp;lt;= children Max Heap : parent &amp;gt;= children   Heap">
+<meta name="twitter:description" content="HeapHeap 是一種 Data Structure ，要符合 Heap Condition (or Heap Property)Heap property 是指 parent 和 children 的關係 (但 children 之間順序無關)  Min Heap : parent &amp;lt;= children Max Heap : parent &amp;gt;= children  Heap 有一">
 <meta name="twitter:image" content="https://nicknick0630.github.io/2019/02/18/Heap-and-Priority-Queue/Heap.png">
 
 
@@ -412,35 +412,31 @@
 
       
         <h1 id="Heap"><a href="#Heap" class="headerlink" title="Heap"></a>Heap</h1><p>Heap 是一種 Data Structure ，要符合 <strong>Heap Condition (or Heap Property)</strong><br>Heap property 是指 parent 和 children 的關係 (但 children 之間順序無關)</p>
-<blockquote>
 <ol>
 <li>Min Heap : parent &lt;= children</li>
 <li>Max Heap : parent &gt;= children</li>
 </ol>
-</blockquote>
-<p>Heap 有一些不同的實作方法，如果只有寫<font color="blue"> <em>Heap</em></font>，通常都是指 <strong>Binary Heap</strong><br>其他種類如: Binomial Heap ， Fibonacci Heap ， Pairing Heap 等，參考 <a href="https://en.wikipedia.org/wiki/Heap_(data_structure" target="_blank" rel="noopener"><font size="5">wiki Heap</font></a> )</p>
+<p>Heap 有一些不同的實作方法，如果只有寫<font color="blue"> <em>Heap</em></font>，通常都是指 <strong>Binary Heap</strong><br>其他種類如: Binomial Heap ， Fibonacci Heap ， Pairing Heap 等，參考 <a href="https://s.yam.com/x4pre" target="_blank" rel="noopener"><font size="5">wiki Heap</font></a></p>
 <p><br></p>
 <h2 id="nbsp-Binary-Heap"><a href="#nbsp-Binary-Heap" class="headerlink" title="&nbsp;(Binary) Heap"></a>&nbsp;(Binary) Heap</h2><p>Heap 是一種 Binary Tree，不過要符合2個條件 :</p>
-<blockquote>
 <ol>
 <li>外觀是 Complete Binary Tree</li>
 <li>裡面元素都要符合 Heap Condition</li>
 </ol>
-</blockquote>
 <p>雖然 Heap 在觀念上是一個 Complete Binary Tree ，但實際上是用 array 去 implement<br>這樣就能快速地去存取父(子)節點</p>
 <blockquote>
 <p>node 的 index 是 i</p>
 <ol>
-<li>parent  : i/2</li>
-<li>left child : i*2</li>
-<li>right child : i*2 + 1</li>
+<li>parent  : i / 2</li>
+<li>left child : i * 2</li>
+<li>right child : i * 2 + 1</li>
 </ol>
 </blockquote>
 <p>Heap 的 push 為 O(log<sub>2</sub> N)，pop 為 O(log<sub>2</sub> N)</p>
 <p><br></p>
 <h1 id="Priority-Queue"><a href="#Priority-Queue" class="headerlink" title="Priority Queue"></a>Priority Queue</h1><p>Priority Queue 是一種 Abstract Data Structure，也是一種 container<br>當要從 Priority Queue 取出一個元素時，他會回傳<strong>最高優先度</strong>的元素並移除它<br>並可以 change 某元素之優先度，當然其位置也會改變</p>
 <p><br></p>
-<p>可以使用不同的 Data Structure 去 implement<br>舉一些例子 : [srch 表示搜尋時間 ，已知位置為 O(1)，否則為該 search 欄位時間]</p>
+<p>可以使用不同的 Data Structure 去 implement<br>舉一些例子 : [ search 表示搜尋時間 ，已知位置為 O(1)，否則為該 search 欄位時間 ]</p>
 <p><br></p>
 <table>
 <thead>
@@ -516,16 +512,16 @@
 <li>level 1 -&gt; 耗時 3 (向下比較3次) * 1 個 = 3</li>
 <li>total = 9</li>
 </ul>
-<font style="font-size:1.3em; font-weight:600;">Genneral ( 廣義來說 ) : 共有 N 個元素</font>
+<font style="font-size:1.3em; font-weight:900;">Genneral ( 廣義來說 ) : 共有 N 個元素 <br> </font>
 
 <p>共有 log<sub>2</sub>N+1 = k 層 (假設為 Full Binary Tree)<br>( M<sub>i</sub> : 第 i 層有 <font size="4">$ \frac{N}{2^{k-i}} $</font> 個元素 )</p>
 <ul>
-<li>level k-1 -&gt; 耗時 :  1 <em> M<sub>k-1</sub> = 1 </em> $ \frac{N}{2^1} $</li>
-<li>level k-2 -&gt; 耗時 :  2 <em> M<sub>k-2</sub> = 2 </em> $ \frac{N}{2^2} $</li>
-<li>level k-3 -&gt; 耗時 :  3 <em> M<sub>k-3</sub> = 3 </em> $ \frac{N}{2^3} $<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;。<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;。<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;。</li>
-<li>level 1   -&gt; 耗時 :  (k-1) <em> M<sub>1</sub> = (k-1) </em> $ \frac{N}{2^{k-1}} $</li>
+<li>level k-1 -&gt; 耗時 :  $ 1 \times M $<sub>k-1</sub> = $ 1 \times \frac{N}{2^1} $</li>
+<li>level k-2 -&gt; 耗時 :  $ 2 \times M $<sub>k-2</sub> = $ 2 \times \frac{N}{2^2} $</li>
+<li>level k-3 -&gt; 耗時 :  $ 3 \times M $<sub>k-3</sub> = $ 3 \times \frac{N}{2^3} $<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;。<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;。<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;。</li>
+<li>level 1   -&gt; 耗時 :  $ (k-1) \times M $<sub>1</sub> = $ (k-1) \times \frac{N}{2^{k-1}} $</li>
 </ul>
-<p>Total time = $ \sum\limits_{i=1}^{k-1}i* \frac{N}{2^{k-i}} = \frac{N}{2} + \frac{2N}{4} + \frac{3N}{8} + \frac{4N}{16} …$</p>
+<p>Total time = $ \sum\limits_{i=1}^{k-1}i \times \frac{N}{2^{k-i}} = \frac{N}{2} + \frac{2N}{4} + \frac{3N}{8} + \frac{4N}{16} …$</p>
 <p><strong>耗時 = O(N)</strong></p>
 <p><br></p>
 <h1 id="Binary-Heap-實作"><a href="#Binary-Heap-實作" class="headerlink" title="Binary Heap 實作"></a>Binary Heap 實作</h1><p>首先設一個依據 Heap property 比較大小的 function</p>
@@ -951,6 +947,28 @@
   
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
 
   
 
