@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|consolas:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="C++,Graph,Shortest Path,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="題目 :  UVa Link 給定一個 M x N 的矩陣 A ，求 A1,1 到 AM,N 的最短路徑長 測資Input :   2450 3 1 2 97 3 4 9 91 7 5 5 32 3 4 2 5160 1 2 3 4 5  Output :   2415   解法這題要解的就是 Single Source To Other Destinations 的 Shortest Path我">
+<meta name="keywords" content="C++,Graph,Shortest Path">
+<meta property="og:type" content="article">
+<meta property="og:title" content="UVa 292 : Number Maze">
+<meta property="og:url" content="https://nicknick0630.github.io/2019/02/28/UVa-292-Number-Maze/index.html">
+<meta property="og:site_name" content="Coding Road">
+<meta property="og:description" content="題目 :  UVa Link 給定一個 M x N 的矩陣 A ，求 A1,1 到 AM,N 的最短路徑長 測資Input :   2450 3 1 2 97 3 4 9 91 7 5 5 32 3 4 2 5160 1 2 3 4 5  Output :   2415   解法這題要解的就是 Single Source To Other Destinations 的 Shortest Path我">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-02-28T16:59:15.201Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="UVa 292 : Number Maze">
+<meta name="twitter:description" content="題目 :  UVa Link 給定一個 M x N 的矩陣 A ，求 A1,1 到 AM,N 的最短路徑長 測資Input :   2450 3 1 2 97 3 4 9 91 7 5 5 32 3 4 2 5160 1 2 3 4 5  Output :   2415   解法這題要解的就是 Single Source To Other Destinations 的 Shortest Path我">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":15,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://nicknick0630.github.io/2019/02/28/UVa-292-Number-Maze/">
+
+
+
+
+
+  <title>UVa 292 : Number Maze | Coding Road</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Coding Road</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://nicknick0630.github.io/2019/02/28/UVa-292-Number-Maze/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chen Yu Sheng">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/upload/image/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coding Road">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">UVa 292 : Number Maze</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-02-28T20:05:27+08:00">
+                2019-02-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/UVa/" itemprop="url" rel="index">
+                    <span itemprop="name">UVa</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-eye"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  1.2k 字
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="題目-UVa-Link"><a href="#題目-UVa-Link" class="headerlink" title="題目 :  UVa Link "></a>題目 : <a href="https://uva.onlinejudge.org/index.php?option=com_onlinejudge&amp;Itemid=8&amp;page=show_problem&amp;problem=870" target="_blank" rel="noopener"> <small><b>UVa Link</b></small> </a></h2><p>給定一個 M x N 的矩陣 A ，求 A<sub>1,1</sub> 到 A<sub>M,N</sub> 的最短路徑長</p>
+<p><strong>測資</strong><br><strong>Input : </strong></p>
+<blockquote>
+<p>2<br>4<br>5<br>0 3 1 2 9<br>7 3 4 9 9<br>1 7 5 5 3<br>2 3 4 2 5<br>1<br>6<br>0 1 2 3 4 5</p>
+</blockquote>
+<p><strong>Output : </strong></p>
+<blockquote>
+<p>24<br>15</p>
+</blockquote>
+<p><br></p>
+<h2 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h2><p>這題要解的就是 Single Source To Other Destinations 的 Shortest Path<br>我們考慮一下 2 種比較常見的演算法 : </p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Dijkstra Algorithm</th>
+<th>Bellman-Ford Algorithm</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>策略</td>
+<td>Greedy</td>
+<td>Dynamic Program</td>
+</tr>
+<tr>
+<td>可有負邊</td>
+<td>不可</td>
+<td>可</td>
+</tr>
+<tr>
+<td>時間複雜度</td>
+<td>O( N<sup>2</sup> )</td>
+<td>O( N<sup>3</sup> )</td>
+</tr>
+</tbody>
+</table>
+<p>由於此題目中邊的權重為 0 ~ 9，沒有負邊<br>因此選擇使用 <strong>Dijkstra Algorithm</strong> 更經濟實惠一點</p>
+<p>不過在實作演算時我們需要稍微改變一點細節<br>紀錄與 Source 的最短距離的一為陣列要改為使用二維陣列<br>此外，我們選擇使用 priority queue 來找出最小邊<br>除了可以加速演算法，對這題來說也比較好實作</p>
+<p><br></p>
+<h2 id="程式碼解說"><a href="#程式碼解說" class="headerlink" title="程式碼解說"></a>程式碼解說</h2><ol>
+<li>dist[m + 2][n + 2] :<br> 紀錄各點到 source (本題是 &lt;1,1&gt; ) 的距離，此外為了讓 index 從 1 開始，在 row 和 column 前面各加了一列(行)空白<br> 此外，為了方便計算，在最後面也各加了一列(行)空白</li>
+<li>checked[m + 2][n + 2] :<br> 紀錄該點使否已經是最短路徑，前後同樣加了空白<br> 並將空白行視為已經是最短路徑，比較方便計算</li>
+</ol>
+<p><br></p>
+<h2 id="完整程式碼"><a href="#完整程式碼" class="headerlink" title="完整程式碼"></a>完整程式碼</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;queue&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="keyword">using</span> Matrix = <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;T&gt;&gt;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">constexpr</span> <span class="keyword">int</span> MAX = <span class="number">999</span>;</span><br><span class="line"><span class="keyword">constexpr</span> <span class="keyword">int</span> INF = <span class="number">100000</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 放在 priority queue 中的儲存資料</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Record</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="keyword">int</span> row;</span><br><span class="line">	<span class="keyword">int</span> col;</span><br><span class="line">	<span class="keyword">int</span> dist;	<span class="comment">// 當前 ( row, col ) 到 source 的最短路徑</span></span><br><span class="line"></span><br><span class="line">	Record(<span class="keyword">int</span> p = <span class="number">0</span>, <span class="keyword">int</span> t = <span class="number">0</span>, <span class="keyword">int</span> d = <span class="number">0</span>) :row&#123; p &#125;, col&#123; t &#125;, dist&#123; d &#125; &#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 由於 c++ 的 priority queue 是 max priority queue，所以要相反定義</span></span><br><span class="line"><span class="keyword">inline</span> <span class="keyword">bool</span> <span class="keyword">operator</span>&lt;(<span class="keyword">const</span> Record &amp;lhs, <span class="keyword">const</span> Record &amp;rhs)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">return</span> lhs.dist &gt; rhs.dist;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	Solution()</span><br><span class="line">	&#123;</span><br><span class="line">		ios::sync_with_stdio(<span class="literal">false</span>);</span><br><span class="line">		<span class="built_in">cin</span>.tie(<span class="literal">nullptr</span>);</span><br><span class="line">		<span class="built_in">cout</span>.tie(<span class="literal">nullptr</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">calculate</span><span class="params">(<span class="keyword">const</span> Matrix&lt;<span class="keyword">int</span>&gt; &amp;m, <span class="keyword">const</span> <span class="keyword">int</span> ROW, <span class="keyword">const</span> <span class="keyword">int</span> COL)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		Record min_rec;</span><br><span class="line">		priority_queue&lt;Record&gt; que;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">int</span> mr, mc;</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 初始化資料</span></span><br><span class="line">		initialize(ROW, COL);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 加入起始點</span></span><br><span class="line">		que.push(Record&#123; <span class="number">1</span>,<span class="number">1</span>,m[<span class="number">1</span>][<span class="number">1</span>] &#125;);</span><br><span class="line"></span><br><span class="line">		<span class="keyword">while</span> (!checked[ROW][COL])</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="comment">// get the min edge from the available edges with priority queue</span></span><br><span class="line">			min_rec = extract_min(que);</span><br><span class="line"></span><br><span class="line">			mr = min_rec.row;</span><br><span class="line">			mc = min_rec.col;</span><br><span class="line"></span><br><span class="line">			<span class="comment">// set the edge to be checked</span></span><br><span class="line">			dist[mr][mc] = min_rec.dist;</span><br><span class="line">			checked[mr][mc] = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">			<span class="comment">// update the neighbor nodes</span></span><br><span class="line">			update_and_relax(m, que, mr, mc);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span> dist[ROW][COL];</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	Matrix&lt;<span class="keyword">int</span>&gt; dist;</span><br><span class="line">	Matrix&lt;<span class="keyword">bool</span>&gt; checked;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">initialize</span><span class="params">(<span class="keyword">const</span> <span class="keyword">int</span> ROW, <span class="keyword">const</span> <span class="keyword">int</span> COL)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		dist.clear();</span><br><span class="line">		checked.clear();</span><br><span class="line"></span><br><span class="line">		dist.resize(ROW + <span class="number">2</span>, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(COL + <span class="number">2</span>, INF));</span><br><span class="line">		checked.resize(ROW + <span class="number">2</span>, <span class="built_in">vector</span>&lt;<span class="keyword">bool</span>&gt;(COL + <span class="number">2</span>, <span class="literal">false</span>));</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 將空白行視為已經是最短路徑 ( 方便計算 )</span></span><br><span class="line">		initial_checked();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">initial_checked</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">int</span> i;</span><br><span class="line">		<span class="keyword">int</span> re = checked.size() - <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">int</span> ce = checked[<span class="number">0</span>].size() - <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt;= ce; ++i)</span><br><span class="line">			checked[<span class="number">0</span>][i] = checked[re][i] = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt;= re; ++i)</span><br><span class="line">			checked[i][<span class="number">0</span>] = checked[i][ce] = <span class="literal">true</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function">Record <span class="title">extract_min</span><span class="params">(priority_queue&lt;Record&gt; &amp;que)</span> <span class="keyword">const</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		Record rec;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (!que.empty())</span><br><span class="line">		&#123;</span><br><span class="line">			rec = que.top();</span><br><span class="line">			que.pop();</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span> rec;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">update_and_relax</span><span class="params">(<span class="keyword">const</span> Matrix&lt;<span class="keyword">int</span>&gt; &amp;m, priority_queue&lt;Record&gt; &amp;que, <span class="keyword">const</span> <span class="keyword">int</span> now_r, <span class="keyword">const</span> <span class="keyword">int</span> now_c)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="comment">// 二個方向 : 右、下</span></span><br><span class="line">		<span class="keyword">static</span> <span class="keyword">const</span> <span class="built_in">vector</span>&lt;pair&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt;&gt; DIR = &#123; &#123;<span class="number">0</span>,<span class="number">1</span>&#125;,&#123;<span class="number">1</span>,<span class="number">0</span>&#125; &#125;;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">int</span> d, new_r, new_c;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">auto</span> &amp;dir : DIR)</span><br><span class="line">		&#123;</span><br><span class="line">			new_r = now_r + dir.first;</span><br><span class="line">			new_c = now_c + dir.second;</span><br><span class="line"></span><br><span class="line">			<span class="keyword">if</span> (!checked[new_r][new_c])</span><br><span class="line">			&#123;</span><br><span class="line">				d = dist[now_r][now_c] + m[new_r][new_c];</span><br><span class="line"></span><br><span class="line">				<span class="keyword">if</span> (d &lt; dist[new_r][new_c])</span><br><span class="line">				&#123;</span><br><span class="line">					dist[new_r][new_c] = d;</span><br><span class="line">					que.push(Record&#123; new_r, new_c, d &#125;);</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> total_case;</span><br><span class="line">	<span class="keyword">int</span> row, col;</span><br><span class="line">	<span class="keyword">int</span> r, c, n, ans;</span><br><span class="line">	Solution s;</span><br><span class="line"></span><br><span class="line">	Matrix&lt;<span class="keyword">int</span>&gt; m(MAX + <span class="number">1</span>, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(MAX + <span class="number">1</span>));</span><br><span class="line"></span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; total_case;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">while</span> (total_case--)</span><br><span class="line">	&#123;</span><br><span class="line">		m.clear();</span><br><span class="line"></span><br><span class="line">		<span class="built_in">cin</span> &gt;&gt; row &gt;&gt; col;</span><br><span class="line">		<span class="built_in">cin</span>.get();</span><br><span class="line"></span><br><span class="line">		m.resize(row + <span class="number">2</span>, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(col + <span class="number">2</span>, INF));</span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span> (r = <span class="number">1</span>; r &lt;= row; ++r)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">for</span> (c = <span class="number">1</span>; c &lt;= col; ++c)</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="built_in">cin</span> &gt;&gt; n;</span><br><span class="line">				m[r][c] = n;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		ans = s.calculate(m, row, col);</span><br><span class="line"></span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; ans &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><br></p>
+<h2 id="複雜度分析"><a href="#複雜度分析" class="headerlink" title="複雜度分析"></a>複雜度分析</h2><p>看一下主要的程式碼架構部分</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">calculate</span><span class="params">(<span class="keyword">const</span> Matrix&lt;<span class="keyword">int</span>&gt; &amp;m, <span class="keyword">const</span> <span class="keyword">int</span> ROW, <span class="keyword">const</span> <span class="keyword">int</span> COL)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		Record min_rec;</span><br><span class="line">		priority_queue&lt;Record&gt; que;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">int</span> mr, mc;</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 初始化資料</span></span><br><span class="line">		initialize(ROW, COL);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 加入起始點</span></span><br><span class="line">		que.push(Record&#123; <span class="number">1</span>,<span class="number">1</span>,m[<span class="number">1</span>][<span class="number">1</span>] &#125;);</span><br><span class="line"></span><br><span class="line">		<span class="keyword">while</span> (!checked[ROW][COL])</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="comment">// get the min edge from the available edges with priority queue</span></span><br><span class="line">			min_rec = extract_min(que);</span><br><span class="line"></span><br><span class="line">			mr = min_rec.row;</span><br><span class="line">			mc = min_rec.col;</span><br><span class="line"></span><br><span class="line">			<span class="comment">// set the edge to be checked</span></span><br><span class="line">			dist[mr][mc] = min_rec.dist;</span><br><span class="line">			checked[mr][mc] = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">			<span class="comment">// update the neighbor nodes</span></span><br><span class="line">			update_and_relax(m, que, mr, mc);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span> dist[ROW][COL];</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="維護-priority-queue"><a href="#維護-priority-queue" class="headerlink" title="維護 priority queue"></a>維護 priority queue</h3><ol>
+<li><strong>min_rec = extract_min(que);</strong><br> extract a element from priority queue : O(logE)</li>
+<li><strong>update_and_relax(m, que, mr, mc);</strong><br> 迴圈次數 2 次 : O(1)<br> 如果有 push element in priority queue : O(logE)</li>
+</ol>
+<p>由於路徑走向是由左上往右下走，因此每個頂點都會有 2 條邊 ( 右、左 )<br>所以總邊數 = 2 x M x N - M - N –&gt; O(MN) –&gt; O( V )</p>
+<p>因此，本題的 Edge 可是大約視作為 Vertex 的數目，所以對 priority queue 的操作也可看為 O( logV )<br>此外每個邊皆用於 relaxation 一次，priority queue 的操作最多共執行 E 次<br>所以維護 priority queue 的時間複雜度為 O(VlogV)</p>
+<h3 id="迴圈"><a href="#迴圈" class="headerlink" title="迴圈"></a>迴圈</h3><p>迴圈最多走訪 V 次</p>
+<h3 id="總時間"><a href="#總時間" class="headerlink" title="總時間"></a>總時間</h3><p>時間複雜度 : 迴圈 + 維護 priority queue = <strong>O(V + VlogV)</strong></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/C/" rel="tag"> <i class="fa fa-tag"></i> C++</a>
+          
+            <a href="/tags/Graph/" rel="tag"> <i class="fa fa-tag"></i> Graph</a>
+          
+            <a href="/tags/Shortest-Path/" rel="tag"> <i class="fa fa-tag"></i> Shortest Path</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/02/26/UVa-100-3n-1/" rel="next" title="UVa 100 : 3n+1">
+                <i class="fa fa-chevron-left"></i> UVa 100 : 3n+1
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/upload/image/avatar.gif" alt="Chen Yu Sheng">
+            
+              <p class="site-author-name" itemprop="name">Chen Yu Sheng</p>
+              <p class="site-description motion-element" itemprop="description">紀錄我的程式學習</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/nicknick0630" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:nicknick0630@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#題目-UVa-Link"><span class="nav-number">1.</span> <span class="nav-text">題目 :  UVa Link </span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解法"><span class="nav-number">2.</span> <span class="nav-text">解法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#程式碼解說"><span class="nav-number">3.</span> <span class="nav-text">程式碼解說</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#完整程式碼"><span class="nav-number">4.</span> <span class="nav-text">完整程式碼</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#複雜度分析"><span class="nav-number">5.</span> <span class="nav-text">複雜度分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#維護-priority-queue"><span class="nav-number">5.1.</span> <span class="nav-text">維護 priority queue</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#迴圈"><span class="nav-number">5.2.</span> <span class="nav-text">迴圈</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#總時間"><span class="nav-number">5.3.</span> <span class="nav-text">總時間</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chen Yu Sheng</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a></div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+
+</body>
+</html>
