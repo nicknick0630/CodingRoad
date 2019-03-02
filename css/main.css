@@ -1869,7 +1869,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #a1e8ff;
+  background: #63bb8b;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -3247,6 +3247,9 @@ strong {
 }
 p {
   margin: 0 0 17px 0;
+}
+.posts-expand .post-body ul li {
+  list-style-type: disc;
 }
 .highlight .gutter pre {
   color: #ec60fa;
