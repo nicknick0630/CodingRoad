@@ -117,18 +117,18 @@
 
 
 
-<meta name="description" content="題目 :  UVa Link 給定面額為 1, 5, 10, 25, 50 的 5 種硬幣，輸入一個金額大小，要計算出使用這 5 種硬幣組合出此金額的方法數，並輸出。 測資Input :   1126  Output :   413   解法這是典型的完全背包問題，和 01 背包問題不同的地方是硬幣是可以無限使用的，而 01 背包問題只能使用一次。  01 背包問題思考角度  : 考慮第 k 種物">
+<meta name="description" content="題目 :  UVa Link 有 N 項商品，每個價值為 Vi 且重量為 Wi，並有 G 個人，每個人的最大負重為 Qj，若每個人每種商品只能取一件，求所有人在自己的負重內可以取得的最大價值的總和。 測資Input :   2372  1744  2331  24126664  2685  2252  499  1839  1354  9423202026  Output :   72514">
 <meta name="keywords" content="C++,DP">
 <meta property="og:type" content="article">
-<meta property="og:title" content="UVa 674 : Coin Change">
-<meta property="og:url" content="https://nicknick0630.github.io/2019/02/21/UVa-674-Coin-Change/index.html">
+<meta property="og:title" content="UVa 10130 : SuperSale">
+<meta property="og:url" content="https://nicknick0630.github.io/2019/03/03/UVa-10130-SuperSale/index.html">
 <meta property="og:site_name" content="Coding Road">
-<meta property="og:description" content="題目 :  UVa Link 給定面額為 1, 5, 10, 25, 50 的 5 種硬幣，輸入一個金額大小，要計算出使用這 5 種硬幣組合出此金額的方法數，並輸出。 測資Input :   1126  Output :   413   解法這是典型的完全背包問題，和 01 背包問題不同的地方是硬幣是可以無限使用的，而 01 背包問題只能使用一次。  01 背包問題思考角度  : 考慮第 k 種物">
+<meta property="og:description" content="題目 :  UVa Link 有 N 項商品，每個價值為 Vi 且重量為 Wi，並有 G 個人，每個人的最大負重為 Qj，若每個人每種商品只能取一件，求所有人在自己的負重內可以取得的最大價值的總和。 測資Input :   2372  1744  2331  24126664  2685  2252  499  1839  1354  9423202026  Output :   72514">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-03-02T16:17:21.409Z">
+<meta property="og:updated_time" content="2019-03-02T16:27:55.738Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="UVa 674 : Coin Change">
-<meta name="twitter:description" content="題目 :  UVa Link 給定面額為 1, 5, 10, 25, 50 的 5 種硬幣，輸入一個金額大小，要計算出使用這 5 種硬幣組合出此金額的方法數，並輸出。 測資Input :   1126  Output :   413   解法這是典型的完全背包問題，和 01 背包問題不同的地方是硬幣是可以無限使用的，而 01 背包問題只能使用一次。  01 背包問題思考角度  : 考慮第 k 種物">
+<meta name="twitter:title" content="UVa 10130 : SuperSale">
+<meta name="twitter:description" content="題目 :  UVa Link 有 N 項商品，每個價值為 Vi 且重量為 Wi，並有 G 個人，每個人的最大負重為 Qj，若每個人每種商品只能取一件，求所有人在自己的負重內可以取得的最大價值的總和。 測資Input :   2372  1744  2331  24126664  2685  2252  499  1839  1354  9423202026  Output :   72514">
 
 
 
@@ -158,13 +158,13 @@
 
 
 
-  <link rel="canonical" href="https://nicknick0630.github.io/2019/02/21/UVa-674-Coin-Change/">
+  <link rel="canonical" href="https://nicknick0630.github.io/2019/03/03/UVa-10130-SuperSale/">
 
 
 
 
 
-  <title>UVa 674 : Coin Change | Coding Road</title>
+  <title>UVa 10130 : SuperSale | Coding Road</title>
   
 
 
@@ -311,7 +311,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://nicknick0630.github.io/2019/02/21/UVa-674-Coin-Change/">
+    <link itemprop="mainEntityOfPage" href="https://nicknick0630.github.io/2019/03/03/UVa-10130-SuperSale/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Chen Yu Sheng">
@@ -328,7 +328,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">UVa 674 : Coin Change</h1>
+          <h1 class="post-title" itemprop="name headline">UVa 10130 : SuperSale</h1>
         
 
         <div class="post-meta">
@@ -340,8 +340,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-02-21T00:37:59+08:00">
-                2019-02-21
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-03T00:15:49+08:00">
+                2019-03-03
               </time>
             
 
@@ -381,8 +381,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2019/02/21/UVa-674-Coin-Change/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/02/21/UVa-674-Coin-Change/" itemprop="commentCount"></span>
+                <a href="/2019/03/03/UVa-10130-SuperSale/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/03/03/UVa-10130-SuperSale/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -409,7 +409,7 @@
                   <span class="post-meta-item-text">Words count in article&#58;</span>
                 
                 <span title="Words count in article">
-                  617 字
+                  334 字
                 </span>
               
 
@@ -434,33 +434,19 @@
       
 
       
-        <h2 id="題目-UVa-Link"><a href="#題目-UVa-Link" class="headerlink" title="題目 :  UVa Link "></a>題目 : <a href="https://uva.onlinejudge.org/index.php?option=com_onlinejudge&amp;Itemid=8&amp;page=show_problem&amp;problem=615" target="_blank" rel="noopener"> <small><b>UVa Link</b></small> </a></h2><p>給定面額為 1, 5, 10, 25, 50 的 5 種硬幣，輸入一個金額大小，要計算出使用這 5 種硬幣組合出此金額的方法數，並輸出。</p>
+        <h2 id="題目-UVa-Link"><a href="#題目-UVa-Link" class="headerlink" title="題目 :  UVa Link "></a>題目 : <a href="https://uva.onlinejudge.org/index.php?option=com_onlinejudge&amp;Itemid=8&amp;page=show_problem&amp;problem=615" target="_blank" rel="noopener"> <small><b>UVa Link</b></small> </a></h2><p>有 N 項商品，每個價值為 V<sub>i</sub> 且重量為 W<sub>i</sub>，並有 G 個人，每個人的最大負重為 Q<sub>j</sub>，若每個人每種商品只能取一件，求所有人在自己的負重內可以取得的最大價值的總和。</p>
 <p><strong>測資</strong><br><strong>Input : </strong></p>
 <blockquote>
-<p>11<br>26</p>
+<p>2<br>3<br>72  17<br>44  23<br>31  24<br>1<br>26<br>6<br>64  26<br>85  22<br>52  4<br>99  18<br>39  13<br>54  9<br>4<br>23<br>20<br>20<br>26</p>
 </blockquote>
 <p><strong>Output : </strong></p>
 <blockquote>
-<p>4<br>13</p>
+<p>72<br>514</p>
 </blockquote>
 <p><br></p>
-<h2 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h2><p>這是典型的完全背包問題，和 01 背包問題不同的地方是硬幣是可以無限使用的，而 01 背包問題只能使用一次。</p>
-<p><b> 01 背包問題思考角度 </b> : 考慮第 k 種物品，取或不取</p>
-<blockquote>
-<p>狀態轉移方程 :  <code>value[k][w] = max{ value[k-1][w] (不取k), value[k-1][w - weight[k]] + item_val[k] (取k) }</code><br><small> value[k][w] : value[k][w]為取前 k 種硬幣與重量限制為 w 的情況下的最大價值</small><br><small> weight[k]   : 物品 k 的重量 </small><br><small> item_val[k] : 物品 k 的價值 </small></p>
-</blockquote>
-<p><b> 而完全背包問題則否，所以需要換一個角度思考</b><br>當計算到 <code>t</code> cents 時，因為每一個硬幣都是可以無限拿取的，因此我們可以考慮 2 種計算方法</p>
-<ol>
-<li>令 <code>t + coin_type[k]</code> 的方法數增加一種，因為可以從 <code>t</code> 再加上 <code>coin_type[k]</code></li>
-<li>令 <code>t</code> 的方法數增加一種，因為可以從 <code>t - coin_type[k]</code> 再加上 <code>coin_type[k]</code></li>
-</ol>
-<p>如果忽略檢測陣列範圍值所消耗的時間的話，這 2 種方法的時間複雜度皆為 O(N<sup>2</sup>)<br>但這 2 種方法的本質我覺得還是不太一樣的</p>
-<ul>
-<li>方法一比較屬於暴力法，從當前進度點出發去建構更深的答案。( 有點抽象發散的 fu )<br>此外，當我們的問題範圍最大只到 t 時，這種方法會做出多餘的事情。<br>例如有 1, 5, 10 三種硬幣，我們要計算 11 的答案，但當我們在計算 10 時，多計算了 10+5 與 10+10。</li>
-<li>方法二就是屬於動態規劃，從子問題去建構出最佳解答。( 聚合的 fu )<br>並且不會有多餘的計算。</li>
-</ul>
-<p><br></p>
-<h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	Solution() : coin_types&#123; <span class="number">1</span>,<span class="number">5</span>,<span class="number">10</span>,<span class="number">25</span>,<span class="number">50</span> &#125;, methods(MAX_CENTS + <span class="number">1</span>, <span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		ios::sync_with_stdio(<span class="literal">false</span>);</span><br><span class="line">		<span class="built_in">cin</span>.tie(<span class="literal">nullptr</span>);</span><br><span class="line">		<span class="built_in">cout</span>.tie(<span class="literal">nullptr</span>);</span><br><span class="line"></span><br><span class="line">		initial_methods();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">calculate</span><span class="params">(<span class="keyword">int</span> num)</span> <span class="keyword">const</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> methods[num];</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="keyword">const</span> <span class="keyword">int</span> MAX_CENTS = <span class="number">7489</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">const</span> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; coin_types;</span><br><span class="line">	<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; methods;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">initial_methods</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="comment">// note this!!!!</span></span><br><span class="line">		methods[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">auto</span> coin : coin_types)</span><br><span class="line">			<span class="keyword">for</span> (<span class="keyword">int</span> now_value = coin; now_value &lt;= MAX_CENTS; ++now_value)</span><br><span class="line">				methods[now_value] += methods[now_value - coin];</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	Solution s;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">int</span> num;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">while</span> (<span class="built_in">cin</span> &gt;&gt; num)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; s.calculate(num) &lt;&lt; <span class="string">'\n'</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; flush;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h2><p>此題就是 01 背包問題</p>
+<h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	Solution() : val(<span class="number">1000</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		ios::sync_with_stdio(<span class="literal">false</span>);</span><br><span class="line">		<span class="built_in">cin</span>.tie(<span class="literal">nullptr</span>);</span><br><span class="line">		<span class="built_in">cout</span>.tie(<span class="literal">nullptr</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">calculate</span><span class="params">(<span class="keyword">const</span> <span class="built_in">vector</span>&lt;pair&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt;&gt; &amp;data, <span class="keyword">const</span> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;mw, <span class="keyword">const</span> <span class="keyword">int</span> Max_Volumn)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		initial(Max_Volumn);</span><br><span class="line"></span><br><span class="line">		<span class="keyword">int</span> i, k;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; data.size(); ++i)</span><br><span class="line">			<span class="keyword">for</span> (k = Max_Volumn; k &gt;= data[i].second; --k)</span><br><span class="line">				val[k] = max(val[k], val[k - data[i].second] + data[i].first);</span><br><span class="line"></span><br><span class="line">		<span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">auto</span> x : mw)</span><br><span class="line">			sum += val[x];</span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span> sum;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; val;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">initial</span><span class="params">(<span class="keyword">const</span> <span class="keyword">int</span> Max_Volumn)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		val.clear();</span><br><span class="line"></span><br><span class="line">		val.resize(Max_Volumn + <span class="number">1</span>, <span class="number">0</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> total_case;</span><br><span class="line">	<span class="keyword">int</span> n;</span><br><span class="line">	<span class="keyword">int</span> price, weight;</span><br><span class="line">	<span class="keyword">int</span> n_people;</span><br><span class="line">	<span class="keyword">int</span> max_w;</span><br><span class="line">	<span class="keyword">int</span> m;</span><br><span class="line">	<span class="keyword">int</span> ans;</span><br><span class="line"></span><br><span class="line">	Solution s;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">vector</span>&lt;pair&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt;&gt; data(<span class="number">1000</span>);</span><br><span class="line">	<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; mw(<span class="number">100</span>);</span><br><span class="line"></span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; total_case;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">while</span> (total_case--)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">cin</span> &gt;&gt; n;</span><br><span class="line"></span><br><span class="line">		data.clear();</span><br><span class="line">		mw.clear();</span><br><span class="line"></span><br><span class="line">		<span class="keyword">while</span> (n--)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">cin</span> &gt;&gt; price &gt;&gt; weight;</span><br><span class="line"></span><br><span class="line">			data.emplace_back(price, weight);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="built_in">cin</span> &gt;&gt; n_people;</span><br><span class="line"></span><br><span class="line">		m = <span class="number">-1</span>;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">while</span> (n_people--)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">cin</span> &gt;&gt; max_w;</span><br><span class="line"></span><br><span class="line">			<span class="keyword">if</span> (max_w &gt; m)</span><br><span class="line">				m = max_w;</span><br><span class="line"></span><br><span class="line">			mw.emplace_back(max_w);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		ans = s.calculate(data, mw, m);</span><br><span class="line"></span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; ans &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
       
     </div>
     
@@ -492,8 +478,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/02/18/Heap-and-Priority-Queue/" rel="next" title="Heap and Priority Queue">
-                <i class="fa fa-chevron-left"></i> Heap and Priority Queue
+              <a href="/2019/03/01/UVa-10986-Sending-Email/" rel="next" title="UVa 10986 : Sending Email">
+                <i class="fa fa-chevron-left"></i> UVa 10986 : Sending Email
               </a>
             
           </div>
@@ -501,10 +487,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/02/26/UVa-100-3n-1/" rel="prev" title="UVa 100 : 3n+1">
-                UVa 100 : 3n+1 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -864,9 +846,9 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'https://nicknick0630.github.io/2019/02/21/UVa-674-Coin-Change/';
-          this.page.identifier = '2019/02/21/UVa-674-Coin-Change/';
-          this.page.title = 'UVa 674 : Coin Change';
+          this.page.url = 'https://nicknick0630.github.io/2019/03/03/UVa-10130-SuperSale/';
+          this.page.identifier = '2019/03/03/UVa-10130-SuperSale/';
+          this.page.title = 'UVa 10130 : SuperSale';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://conding-road.disqus.com/embed.js';
