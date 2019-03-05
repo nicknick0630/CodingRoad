@@ -1869,7 +1869,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #40ff88;
+  background: #45ff30;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -3263,7 +3263,7 @@ pre .number {
 code {
   background: #ffe6f7;
   border-radius: 5px;
-  padding: 2px 7px;
+  padding: 3px 5px 3px 6px;
 }
 pre .comment {
   color: #fdff6f;
