@@ -125,7 +125,7 @@
 <meta property="og:site_name" content="Coding Road">
 <meta property="og:description" content="此演算法將一個 O( N2 ) 的 Scheduling 問題縮減到了 O( NlogN )   問題描述有 N 個 Jobs，每個 Job 耗時 p 且期限 (due) 為 d，求最少逾期工作數量 ( Minimum number of late jobs )的排程方式也就是說，要找出一個排程方式是能夠讓在期限之前完成的工作數量最大化  Moore-Hodgson 演算法 設 J = ∅ (">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-03-07T12:31:18.200Z">
+<meta property="og:updated_time" content="2019-03-07T17:11:56.576Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Moore-Hodgson&#39;s Algorithm">
 <meta name="twitter:description" content="此演算法將一個 O( N2 ) 的 Scheduling 問題縮減到了 O( NlogN )   問題描述有 N 個 Jobs，每個 Job 耗時 p 且期限 (due) 為 d，求最少逾期工作數量 ( Minimum number of late jobs )的排程方式也就是說，要找出一個排程方式是能夠讓在期限之前完成的工作數量最大化  Moore-Hodgson 演算法 設 J = ∅ (">
@@ -757,7 +757,7 @@
 <li>遍歷 Jobs，將 Job[i] 加入到 priority queue 中</li>
 <li>將目前 end time 加上 Job[i] 的耗時</li>
 <li>檢查此工作是否有超時 ( end time 是否大於 the due of Job[i] )</li>
-<li>若超時，則從 priority queue 中去除最大者，用將 end time 扣掉他。<br> 若有需要輸出最後結果的話，也在 overdue 上記錄該工作為超時</li>
+<li>若超時，則從 priority queue 中去除最大者，將 end time 扣掉他。<br> 若有需要輸出最後結果的話，也在 overdue 上記錄該工作為超時</li>
 <li>若沒有，則重複步驟 2，直到遍歷完 Jobs</li>
 <li>輸出時，先依照排序過後的 Jobs 次序將未逾期的工作印出<br> 再以任意順序輸出已逾期工作</li>
 </ol>
