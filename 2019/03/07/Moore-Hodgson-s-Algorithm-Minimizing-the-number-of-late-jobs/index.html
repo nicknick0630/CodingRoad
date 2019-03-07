@@ -117,18 +117,18 @@
 
 
 
-<meta name="description" content="此演算法將一個 O( N2 ) 的 Scheduling 問題縮減到了 O( NlogN )  問題描述有 N 個 Jobs，每個 Job 耗時 p 且期限 (due) 為 d，求最少逾期工作數量 ( Minimum number of late jobs )的排程方式也就是說，要找出一個排程方式是能夠讓在期限之前完成的工作數量最大化  Moore-Hodgson 演算法 設 J = ∅ ( J">
+<meta name="description" content="此演算法將一個 O( N2 ) 的 Scheduling 問題縮減到了 O( NlogN )   問題描述有 N 個 Jobs，每個 Job 耗時 p 且期限 (due) 為 d，求最少逾期工作數量 ( Minimum number of late jobs )的排程方式也就是說，要找出一個排程方式是能夠讓在期限之前完成的工作數量最大化  Moore-Hodgson 演算法 設 J = ∅ (">
 <meta name="keywords" content="Scheduling Algorithm ( 排程演算法 )">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Moore-Hodgson&#39;s Algorithm">
 <meta property="og:url" content="https://nicknick0630.github.io/2019/03/07/Moore-Hodgson-s-Algorithm-Minimizing-the-number-of-late-jobs/index.html">
 <meta property="og:site_name" content="Coding Road">
-<meta property="og:description" content="此演算法將一個 O( N2 ) 的 Scheduling 問題縮減到了 O( NlogN )  問題描述有 N 個 Jobs，每個 Job 耗時 p 且期限 (due) 為 d，求最少逾期工作數量 ( Minimum number of late jobs )的排程方式也就是說，要找出一個排程方式是能夠讓在期限之前完成的工作數量最大化  Moore-Hodgson 演算法 設 J = ∅ ( J">
+<meta property="og:description" content="此演算法將一個 O( N2 ) 的 Scheduling 問題縮減到了 O( NlogN )   問題描述有 N 個 Jobs，每個 Job 耗時 p 且期限 (due) 為 d，求最少逾期工作數量 ( Minimum number of late jobs )的排程方式也就是說，要找出一個排程方式是能夠讓在期限之前完成的工作數量最大化  Moore-Hodgson 演算法 設 J = ∅ (">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-03-07T12:08:17.429Z">
+<meta property="og:updated_time" content="2019-03-07T12:31:18.200Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Moore-Hodgson&#39;s Algorithm">
-<meta name="twitter:description" content="此演算法將一個 O( N2 ) 的 Scheduling 問題縮減到了 O( NlogN )  問題描述有 N 個 Jobs，每個 Job 耗時 p 且期限 (due) 為 d，求最少逾期工作數量 ( Minimum number of late jobs )的排程方式也就是說，要找出一個排程方式是能夠讓在期限之前完成的工作數量最大化  Moore-Hodgson 演算法 設 J = ∅ ( J">
+<meta name="twitter:description" content="此演算法將一個 O( N2 ) 的 Scheduling 問題縮減到了 O( NlogN )   問題描述有 N 個 Jobs，每個 Job 耗時 p 且期限 (due) 為 d，求最少逾期工作數量 ( Minimum number of late jobs )的排程方式也就是說，要找出一個排程方式是能夠讓在期限之前完成的工作數量最大化  Moore-Hodgson 演算法 設 J = ∅ (">
 
 
 
@@ -437,6 +437,7 @@
         <blockquote>
 <p>此演算法將一個 O( N<sup>2</sup> ) 的 Scheduling 問題縮減到了 O( NlogN )</p>
 </blockquote>
+<p><br></p>
 <h2 id="問題描述"><a href="#問題描述" class="headerlink" title="問題描述"></a>問題描述</h2><p>有 N 個 Jobs，每個 Job 耗時 p 且期限 (due) 為 d，求<strong>最少逾期工作數量 ( Minimum number of late jobs )</strong>的排程方式<br>也就是說，要找出一個排程方式是能夠讓在期限之前完成的工作數量最大化</p>
 <p><br></p>
 <h2 id="Moore-Hodgson-演算法"><a href="#Moore-Hodgson-演算法" class="headerlink" title="Moore-Hodgson 演算法"></a>Moore-Hodgson 演算法</h2><ol>
