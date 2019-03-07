@@ -106,7 +106,7 @@
 
 
 
-  <meta name="keywords" content="c++, c, algorithm, data structure, 演算法, 資料結構">
+  <meta name="keywords" content="Scheduling Algorithm ( 排程演算法 ),">
 
 
 
@@ -117,17 +117,18 @@
 
 
 
-<meta name="description" content="紀錄我的程式學習">
+<meta name="description" content="此演算法將一個 O( N2 ) 的 Scheduling 問題縮減到了 O( NlogN )  問題描述有 N 個 Jobs，每個 Job 耗時 p 且期限 (due) 為 d，求最少逾期工作數量 ( Minimum number of late jobs )的排程方式也就是說，要找出一個排程方式是能夠讓在期限之前完成的工作數量最大化  Moore-Hodgson 演算法 設 J = ∅ ( J">
+<meta name="keywords" content="Scheduling Algorithm ( 排程演算法 )">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Moore-Hodgson&#39;s Algorithm : Minimizing the number of late jobs">
+<meta property="og:title" content="Moore-Hodgson&#39;s Algorithm">
 <meta property="og:url" content="https://nicknick0630.github.io/2019/03/07/Moore-Hodgson-s-Algorithm-Minimizing-the-number-of-late-jobs/index.html">
 <meta property="og:site_name" content="Coding Road">
-<meta property="og:description" content="紀錄我的程式學習">
+<meta property="og:description" content="此演算法將一個 O( N2 ) 的 Scheduling 問題縮減到了 O( NlogN )  問題描述有 N 個 Jobs，每個 Job 耗時 p 且期限 (due) 為 d，求最少逾期工作數量 ( Minimum number of late jobs )的排程方式也就是說，要找出一個排程方式是能夠讓在期限之前完成的工作數量最大化  Moore-Hodgson 演算法 設 J = ∅ ( J">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-03-06T16:06:01.939Z">
+<meta property="og:updated_time" content="2019-03-07T12:06:32.573Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Moore-Hodgson&#39;s Algorithm : Minimizing the number of late jobs">
-<meta name="twitter:description" content="紀錄我的程式學習">
+<meta name="twitter:title" content="Moore-Hodgson&#39;s Algorithm">
+<meta name="twitter:description" content="此演算法將一個 O( N2 ) 的 Scheduling 問題縮減到了 O( NlogN )  問題描述有 N 個 Jobs，每個 Job 耗時 p 且期限 (due) 為 d，求最少逾期工作數量 ( Minimum number of late jobs )的排程方式也就是說，要找出一個排程方式是能夠讓在期限之前完成的工作數量最大化  Moore-Hodgson 演算法 設 J = ∅ ( J">
 
 
 
@@ -163,7 +164,7 @@
 
 
 
-  <title>Moore-Hodgson's Algorithm : Minimizing the number of late jobs | Coding Road</title>
+  <title>Moore-Hodgson's Algorithm | Coding Road</title>
   
 
 
@@ -327,7 +328,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Moore-Hodgson's Algorithm : Minimizing the number of late jobs</h1>
+          <h1 class="post-title" itemprop="name headline">Moore-Hodgson's Algorithm</h1>
         
 
         <div class="post-meta">
@@ -349,6 +350,28 @@
             
           </span>
 
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/演算法-Algorithm/" itemprop="url" rel="index">
+                    <span itemprop="name">演算法 ( Algorithm )</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -386,7 +409,7 @@
                   <span class="post-meta-item-text">Words count in article&#58;</span>
                 
                 <span title="Words count in article">
-                  0 字
+                  2.8k 字
                 </span>
               
 
@@ -411,7 +434,601 @@
       
 
       
-        
+        <blockquote>
+<p>此演算法將一個 O( N<sup>2</sup> ) 的 Scheduling 問題縮減到了 O( NlogN )</p>
+</blockquote>
+<h2 id="問題描述"><a href="#問題描述" class="headerlink" title="問題描述"></a>問題描述</h2><p>有 N 個 Jobs，每個 Job 耗時 p 且期限 (due) 為 d，求<strong>最少逾期工作數量 ( Minimum number of late jobs )</strong>的排程方式<br>也就是說，要找出一個排程方式是能夠讓在期限之前完成的工作數量最大化</p>
+<p><br></p>
+<h2 id="Moore-Hodgson-演算法"><a href="#Moore-Hodgson-演算法" class="headerlink" title="Moore-Hodgson 演算法"></a>Moore-Hodgson 演算法</h2><ol>
+<li>設 J = ∅ ( J 是一個 subschedule 且為空集合 )</li>
+<li>將 Jobs 按照期限遞增排序 ( d<sub>1</sub> &lt; d<sub>2</sub> &lt; …… &lt; d<sub>n</sub> )，也就是依照 Earliest Due Date ( EDD ) 的方式，並放入 J 中</li>
+<li>令 k = subschedule J 中的第一個逾期工作的 index，如果沒有找到，代表已完成排程，跳到步驟 7</li>
+<li>找出 p<sub>m</sub> = max{ p<sub>i</sub>, for i = 1 ~ k } ( <strong>找出 index &lt;= k 中最耗時的工作</strong>)</li>
+<li>將 Job m 移出 subschedule J，放入集合 S 中</li>
+<li>重複步驟 3</li>
+<li>最後，將集合 S 以<strong>任意</strong>順序加到 J 的後面，此 Schedule J 即為最少逾期工作數量的排程</li>
+</ol>
+<p><br></p>
+<h2 id="例子一"><a href="#例子一" class="headerlink" title="例子一"></a>例子一</h2><table>
+<thead>
+<tr>
+<th>Job</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>p<sub>i</sub> ( 所需時間 )</td>
+<td>10</td>
+<td>3</td>
+<td>4</td>
+<td>8</td>
+<td>10</td>
+<td>6</td>
+</tr>
+<tr>
+<td>d<sub>i</sub> ( 期限 )</td>
+<td>15</td>
+<td>6</td>
+<td>9</td>
+<td>23</td>
+<td>20</td>
+<td>30</td>
+</tr>
+</tbody>
+</table>
+<p>第一步，先根據 Due Time 去做排序<br>再新增加一個 s<sub>i</sub> 去紀錄剛好執行完 Job[i] 的時間</p>
+<table>
+<thead>
+<tr>
+<th>Job</th>
+<th>2</th>
+<th>3</th>
+<th>1</th>
+<th>5</th>
+<th>4</th>
+<th>6</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>p<sub>i</sub> ( 所需時間 )</td>
+<td>3</td>
+<td>4</td>
+<td>10</td>
+<td>10</td>
+<td>8</td>
+<td>6</td>
+</tr>
+<tr>
+<td>d<sub>i</sub> ( 期限 )</td>
+<td>6</td>
+<td>9</td>
+<td>15</td>
+<td>20</td>
+<td>23</td>
+<td>30</td>
+</tr>
+<tr>
+<td>s<sub>i</sub> ( 完成工作的時間 )</td>
+<td>3</td>
+<td>7</td>
+<td>17</td>
+<td>27</td>
+<td>35</td>
+<td>41</td>
+</tr>
+</tbody>
+</table>
+<p>我們可以輕易的從 s<sub>i</sub> 與 d<sub>i</sub> 去找到第一個逾期的工作是 Job[1]<br>然後再找一下在 Job[1] 之前的工作中，<strong>最耗時</strong>的工作為 Job[1]<br>所以我們把 Job[1] 刪除，並更新一下在 Job[1] 之後的 s<sub>i</sub></p>
+<table>
+<thead>
+<tr>
+<th>Job</th>
+<th>2</th>
+<th>3</th>
+<th>5</th>
+<th>4</th>
+<th>6</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>p<sub>i</sub></td>
+<td>3</td>
+<td>4</td>
+<td>10</td>
+<td>8</td>
+<td>6</td>
+</tr>
+<tr>
+<td>d<sub>i</sub></td>
+<td>6</td>
+<td>9</td>
+<td>20</td>
+<td>23</td>
+<td>30</td>
+</tr>
+<tr>
+<td>s<sub>i</sub></td>
+<td>3</td>
+<td>7</td>
+<td>17</td>
+<td>25</td>
+<td>31</td>
+</tr>
+</tbody>
+</table>
+<p>找到第一個逾期的工作是 Job[4]<br>在 Job[4] 之前<strong>最耗時</strong>的工作為 Job[5]<br>剔除他並更新</p>
+<table>
+<thead>
+<tr>
+<th>Job</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>6</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>p<sub>i</sub></td>
+<td>3</td>
+<td>4</td>
+<td>8</td>
+<td>6</td>
+</tr>
+<tr>
+<td>d<sub>i</sub></td>
+<td>6</td>
+<td>9</td>
+<td>23</td>
+<td>30</td>
+</tr>
+<tr>
+<td>s<sub>i</sub></td>
+<td>3</td>
+<td>7</td>
+<td>15</td>
+<td>21</td>
+</tr>
+</tbody>
+</table>
+<p>到這邊就沒有逾期的工作了<br>接下來就是把剛剛剔除的工作以<strong>任意順序</strong>加到後面去</p>
+<p>所以可以為 : 2 -&gt; 3 -&gt; 4 -&gt; 6 -&gt; <strong>1 -&gt; 5</strong><br>也可以是為 : 2 -&gt; 3 -&gt; 4 -&gt; 6 -&gt; <strong>5 -&gt; 1</strong></p>
+<h2 id="例子二"><a href="#例子二" class="headerlink" title="例子二"></a>例子二</h2><table>
+<thead>
+<tr>
+<th>Job</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>p<sub>i</sub></td>
+<td>4</td>
+<td>3</td>
+<td>2</td>
+<td>5</td>
+<td>6</td>
+</tr>
+<tr>
+<td>d<sub>i</sub></td>
+<td>6</td>
+<td>7</td>
+<td>8</td>
+<td>9</td>
+<td>11</td>
+</tr>
+</tbody>
+</table>
+<p>由於剛好順序已經是按照 Due Time 排序過後的了<br>所以直接加上 s<sub>i</sub> 來輔助過程</p>
+<table>
+<thead>
+<tr>
+<th>Job</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>p<sub>i</sub></td>
+<td>4</td>
+<td>3</td>
+<td>2</td>
+<td>5</td>
+<td>6</td>
+</tr>
+<tr>
+<td>d<sub>i</sub></td>
+<td>6</td>
+<td>7</td>
+<td>8</td>
+<td>9</td>
+<td>11</td>
+</tr>
+<tr>
+<td>s<sub>i</sub></td>
+<td>4</td>
+<td>7</td>
+<td>9</td>
+<td>14</td>
+<td>20</td>
+</tr>
+</tbody>
+</table>
+<p>找到第一個逾期的工作是 Job[3]<br>在 Job[3] 之前<strong>最耗時</strong>的工作為 Job[1]<br>剔除他並更新</p>
+<table>
+<thead>
+<tr>
+<th>Job</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>p<sub>i</sub></td>
+<td>3</td>
+<td>2</td>
+<td>5</td>
+<td>6</td>
+</tr>
+<tr>
+<td>d<sub>i</sub></td>
+<td>7</td>
+<td>8</td>
+<td>9</td>
+<td>11</td>
+</tr>
+<tr>
+<td>s<sub>i</sub></td>
+<td>3</td>
+<td>5</td>
+<td>10</td>
+<td>16</td>
+</tr>
+</tbody>
+</table>
+<p>找到第一個逾期的工作是 Job[4]<br>在 Job[4] 之前<strong>最耗時</strong>的工作為 Job[4]<br>剔除他並更新</p>
+<table>
+<thead>
+<tr>
+<th>Job</th>
+<th>2</th>
+<th>3</th>
+<th>5</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>p<sub>i</sub></td>
+<td>3</td>
+<td>2</td>
+<td>6</td>
+</tr>
+<tr>
+<td>d<sub>i</sub></td>
+<td>7</td>
+<td>8</td>
+<td>11</td>
+</tr>
+<tr>
+<td>s<sub>i</sub></td>
+<td>3</td>
+<td>5</td>
+<td>11</td>
+</tr>
+</tbody>
+</table>
+<p>到這邊就沒有逾期的工作了<br>接下來就是把剛剛剔除的工作以<strong>任意順序</strong>加到後面去</p>
+<p>所以可以為 : 2 -&gt; 3 -&gt; 5 -&gt; <strong>1 -&gt; 4</strong><br>也可以是為 : 2 -&gt; 3 -&gt; 5 -&gt; <strong>4 -&gt; 1</strong></p>
+<p><br></p>
+<h2 id="暴力程式碼-O-N2"><a href="#暴力程式碼-O-N2" class="headerlink" title="暴力程式碼 O( N2 )"></a>暴力程式碼 O( N<sup>2</sup> )</h2><blockquote>
+<p>此版本程式碼耗時 O( N<sup>2</sup> )<br>他只是演示上述演算法的過程<br><strong>並非真正的最佳 present algorithm 的方式</strong><br>真正優化的程式碼請往下看或按側邊攔跳到 <strong> 優化程式碼 </strong></p>
+</blockquote>
+<p>首先我們先定義一下工作的結構與比較大小的方法</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Job</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="keyword">int</span> index;</span><br><span class="line">	<span class="keyword">int</span> process;</span><br><span class="line">	<span class="keyword">int</span> due;</span><br><span class="line">	<span class="keyword">int</span> end_time;</span><br><span class="line"></span><br><span class="line">	Job(<span class="keyword">int</span> i = <span class="number">0</span>, <span class="keyword">int</span> p = <span class="number">0</span>, <span class="keyword">int</span> d = <span class="number">0</span>, <span class="keyword">int</span> e = <span class="number">0</span>) : index&#123; i &#125;, process &#123; p &#125;, due&#123; d &#125;, end_time&#123; e &#125; &#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">inline</span> <span class="keyword">bool</span> <span class="keyword">operator</span>&lt;(<span class="keyword">const</span> Job &amp;lhs, <span class="keyword">const</span> Job &amp;rhs)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">return</span> lhs.due &lt; rhs.due;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>再把 Moore-Hodgson’s Algorithm 封裝成 class</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Moore_Hodgson</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	Moore_Hodgson(<span class="built_in">initializer_list</span>&lt;Job&gt; int_list) : jobs&#123; int_list &#125;, last_valid_idx&#123; jobs.size() - <span class="number">1</span> &#125;</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">// 初始化 Jobs</span></span><br><span class="line">		initial();</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 運算</span></span><br><span class="line">		operate();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">friend</span> ostream&amp; <span class="keyword">operator</span>&lt;&lt;(ostream &amp;out, <span class="keyword">const</span> Moore_Hodgson &amp;schedule)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">auto</span> &amp;x : schedule.jobs)</span><br><span class="line">			out &lt;&lt; x.index &lt;&lt; <span class="string">" "</span>;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span> out;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="built_in">vector</span>&lt;Job&gt; jobs;</span><br><span class="line">	<span class="keyword">unsigned</span> last_valid_idx;	<span class="comment">// 最後一個可以在期限內完成的工作的 Index</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">operate</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">int</span> idx;</span><br><span class="line">		<span class="keyword">int</span> tem = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 若此次迴圈中沒有改變到 last_valid_idx 的值，代表已完成演算法</span></span><br><span class="line">		<span class="keyword">while</span> (tem != last_valid_idx)</span><br><span class="line">		&#123;</span><br><span class="line">			tem = last_valid_idx;</span><br><span class="line"></span><br><span class="line">			<span class="keyword">for</span> (idx = <span class="number">0</span>; idx &lt;= last_valid_idx; ++idx)</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="comment">// 找到逾期的工作</span></span><br><span class="line">				<span class="keyword">if</span> (jobs[idx].end_time &gt; jobs[idx].due)</span><br><span class="line">				&#123;</span><br><span class="line">					<span class="comment">// 找出最大工作量的工作 J_max</span></span><br><span class="line">					<span class="keyword">auto</span> itr = find_max_processing_time(jobs, <span class="number">0</span>, idx);</span><br><span class="line"></span><br><span class="line">					<span class="comment">// 先記錄起來</span></span><br><span class="line">					<span class="keyword">auto</span> rec = *itr;</span><br><span class="line"></span><br><span class="line">					<span class="comment">// 移除最大工作量的工作 J_max</span></span><br><span class="line">					<span class="keyword">auto</span> new_itr = jobs.erase(itr);</span><br><span class="line"></span><br><span class="line">					<span class="comment">// 將 last_valid_idx 往前移一位</span></span><br><span class="line">					--last_valid_idx;</span><br><span class="line"></span><br><span class="line">					<span class="comment">// 把在被刪掉的 J_max 工作之後的工作的結束時間更新 ( 不包括已經確定逾期的工作 )</span></span><br><span class="line">					<span class="comment">// 且只需要將之後的每個工作都減掉 J_max 的工作量就可以</span></span><br><span class="line">					update_end_time(jobs, rec.process);</span><br><span class="line"></span><br><span class="line">					<span class="comment">// 將逾期的工作加到最後面放著</span></span><br><span class="line">					jobs.push_back(rec);</span><br><span class="line"></span><br><span class="line">					<span class="comment">// 跳出 for 迴圈</span></span><br><span class="line">					<span class="keyword">break</span>;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">initial</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		sort(jobs.begin(), jobs.end());</span><br><span class="line"></span><br><span class="line">		jobs[<span class="number">0</span>].end_time = jobs[<span class="number">0</span>].process;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">auto</span> idx = <span class="number">1</span>; idx &lt; jobs.size(); ++idx)</span><br><span class="line">			jobs[idx].end_time = jobs[idx - <span class="number">1</span>].end_time + jobs[idx].process;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">vector</span>&lt;Job&gt;::<span class="function">const_iterator <span class="title">find_max_processing_time</span><span class="params">(<span class="keyword">const</span> <span class="built_in">vector</span>&lt;Job&gt; &amp;jobs, <span class="keyword">int</span> start, <span class="keyword">int</span> end)</span> <span class="keyword">const</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">int</span> max = <span class="number">-1</span>;</span><br><span class="line">		<span class="keyword">int</span> idx = <span class="number">-1</span>;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = start; i &lt;= end; ++i)</span><br><span class="line">			<span class="keyword">if</span> (jobs[i].process &gt; max)</span><br><span class="line">			&#123;</span><br><span class="line">				max = jobs[i].process;</span><br><span class="line">				idx = i;</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span> jobs.begin() + idx;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">update_end_time</span><span class="params">(<span class="built_in">vector</span>&lt;Job&gt; &amp;jobs, <span class="keyword">int</span> proc)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">int</span> idx = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">while</span> (idx &lt;= last_valid_idx)</span><br><span class="line">			jobs[idx++].end_time -= proc;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>然後在主程式這樣呼叫</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	Moore_Hodgson schedule1&#123; &#123;<span class="number">1</span>,<span class="number">10</span>,<span class="number">15</span>&#125;,&#123;<span class="number">2</span>,<span class="number">3</span>,<span class="number">6</span>&#125;,&#123;<span class="number">3</span>,<span class="number">4</span>,<span class="number">9</span> &#125;,&#123;<span class="number">4</span>,<span class="number">8</span>,<span class="number">23</span>&#125;,&#123;<span class="number">5</span>,<span class="number">10</span>,<span class="number">20</span>&#125;,&#123;<span class="number">6</span>,<span class="number">6</span>,<span class="number">30</span>&#125; &#125;;</span><br><span class="line">	Moore_Hodgson schedule2&#123; &#123;<span class="number">1</span>,<span class="number">4</span>,<span class="number">6</span>&#125;,&#123;<span class="number">2</span>,<span class="number">3</span>,<span class="number">7</span>&#125;,&#123;<span class="number">3</span>,<span class="number">2</span>,<span class="number">8</span> &#125;,&#123;<span class="number">4</span>,<span class="number">5</span>,<span class="number">9</span>&#125;,&#123;<span class="number">5</span>,<span class="number">6</span>,<span class="number">1</span>&#125; &#125;;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"Schedule 1 : "</span> &lt;&lt; schedule1 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"Schedule 2 : "</span> &lt;&lt; schedule2 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>得到輸出<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Schedule 1 : 2 3 4 6 1 5</span><br><span class="line">Schedule 2 : 2 3 5 1 4</span><br></pre></td></tr></table></figure></p>
+<p><br></p>
+<h2 id="優化程式碼-O-NlogN"><a href="#優化程式碼-O-NlogN" class="headerlink" title="優化程式碼 O( NlogN )"></a>優化程式碼 O( NlogN )</h2><p>上述的暴力法中有許多搜尋與計算 job end time 是重複的<br>我們可以使用 Priority Queue 與依序加入工作的方式來加快演算法</p>
+<h3 id="演算法"><a href="#演算法" class="headerlink" title="演算法"></a>演算法</h3><ol>
+<li>一樣先依照 EDD 次序將 Jobs 排序</li>
+<li>遍歷 Jobs，將 Job[i] 加入到 priority queue 中</li>
+<li>將目前 end time 加上 Job[i] 的耗時</li>
+<li>檢查此工作是否有超時 ( end time 是否大於 the due of Job[i] )</li>
+<li>若超時，則從 priority queue 中去除最大者，用將 end time 扣掉他。<br> 若有需要輸出最後結果的話，也在 overdue 上記錄該工作為超時</li>
+<li>若沒有，則重複步驟 2，直到遍歷完 Jobs</li>
+<li>輸出時，先依照排序過後的 Jobs 次序將未逾期的工作印出<br> 再以任意順序輸出已逾期工作</li>
+</ol>
+<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><p>用上面的例子一來做說明</p>
+<table>
+<thead>
+<tr>
+<th>Job</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>p<sub>i</sub> ( 所需時間 )</td>
+<td>10</td>
+<td>3</td>
+<td>4</td>
+<td>8</td>
+<td>10</td>
+<td>6</td>
+</tr>
+<tr>
+<td>d<sub>i</sub> ( 期限 )</td>
+<td>15</td>
+<td>6</td>
+<td>9</td>
+<td>23</td>
+<td>20</td>
+<td>30</td>
+</tr>
+</tbody>
+</table>
+<p>先將 Jobs 依照期限排序</p>
+<table>
+<thead>
+<tr>
+<th>Job</th>
+<th>2</th>
+<th>3</th>
+<th>1</th>
+<th>5</th>
+<th>4</th>
+<th>6</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>p<sub>i</sub> ( 所需時間 )</td>
+<td>3</td>
+<td>4</td>
+<td>10</td>
+<td>10</td>
+<td>8</td>
+<td>6</td>
+</tr>
+<tr>
+<td>d<sub>i</sub> ( 期限 )</td>
+<td>6</td>
+<td>9</td>
+<td>15</td>
+<td>20</td>
+<td>23</td>
+<td>30</td>
+</tr>
+</tbody>
+</table>
+<p>現在就開始來排程</p>
+<p>首先依序遍歷 Jobs</p>
+<p><strong>(一)</strong> 加入 Job[1]</p>
+<table>
+<thead>
+<tr>
+<th>Job</th>
+<th>2</th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>p<sub>i</sub></td>
+<td>3</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>d<sub>i</sub></td>
+<td>6</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>end time = 3，沒有超時</p>
+<p><strong>(二)</strong> 加入 Job[2]</p>
+<table>
+<thead>
+<tr>
+<th>Job</th>
+<th>2</th>
+<th>3</th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>p<sub>i</sub></td>
+<td>3</td>
+<td>4</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>d<sub>i</sub></td>
+<td>6</td>
+<td>9</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>end time = 7，沒有超時</p>
+<p><strong>(三)</strong> 加入 Job[3]</p>
+<table>
+<thead>
+<tr>
+<th>Job</th>
+<th>2</th>
+<th>3</th>
+<th>1</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>p<sub>i</sub></td>
+<td>3</td>
+<td>4</td>
+<td>10</td>
+<td></td>
+</tr>
+<tr>
+<td>d<sub>i</sub></td>
+<td>6</td>
+<td>9</td>
+<td>15</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>end time = 17，<strong>超時</strong><br>利用 priority queue 去除最大的，也就是將 J<sub>1</sub> 刪除<br>並減去他的工作時間，end time = 17 - 10 = 7</p>
+<p><strong>(四)</strong> 加入 Job[4]</p>
+<table>
+<thead>
+<tr>
+<th>Job</th>
+<th>2</th>
+<th>3</th>
+<th>5</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>p<sub>i</sub></td>
+<td>3</td>
+<td>4</td>
+<td>10</td>
+<td></td>
+</tr>
+<tr>
+<td>d<sub>i</sub></td>
+<td>6</td>
+<td>9</td>
+<td>20</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>end time = 17，沒有超時</p>
+<p><strong>(五)</strong> 加入 Job[5]</p>
+<table>
+<thead>
+<tr>
+<th>Job</th>
+<th>2</th>
+<th>3</th>
+<th>5</th>
+<th>4</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>p<sub>i</sub></td>
+<td>3</td>
+<td>4</td>
+<td>10</td>
+<td>8</td>
+</tr>
+<tr>
+<td>d<sub>i</sub></td>
+<td>6</td>
+<td>9</td>
+<td>20</td>
+<td>23</td>
+</tr>
+</tbody>
+</table>
+<p>end time = 25，<strong>超時</strong><br>利用 priority queue 去除最大的，也就是將 Job<sub>5</sub> 刪除<br>並減去他的工作時間，end time = 25 - 10 = 15</p>
+<p><strong>(六)</strong> 加入 Job[6]</p>
+<table>
+<thead>
+<tr>
+<th>Job</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>6</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>p<sub>i</sub></td>
+<td>3</td>
+<td>4</td>
+<td>8</td>
+<td>6</td>
+</tr>
+<tr>
+<td>d<sub>i</sub></td>
+<td>6</td>
+<td>9</td>
+<td>23</td>
+<td>30</td>
+</tr>
+</tbody>
+</table>
+<p>end time = 21，沒有超時</p>
+<p>最後輸出答案為 : 2 -&gt; 3 -&gt; 4 -&gt; 6 -&gt; <strong>1</strong> -&gt; <strong>4</strong></p>
+<h3 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h3><p>首先定義 Job 結構和比較大小的方法<br>由於我們不需要再記錄個別點的結束時間，因此就不需要 end_time 欄位了</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Job2</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="keyword">int</span> index;</span><br><span class="line">	<span class="keyword">int</span> process;</span><br><span class="line">	<span class="keyword">int</span> due;</span><br><span class="line"></span><br><span class="line">	Job2(<span class="keyword">int</span> i = <span class="number">0</span>, <span class="keyword">int</span> p = <span class="number">0</span>, <span class="keyword">int</span> d = <span class="number">0</span>) : index&#123; i &#125;, process &#123; p &#125;, due&#123; d &#125; &#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">inline</span> <span class="keyword">bool</span> <span class="keyword">operator</span>&lt;(<span class="keyword">const</span> Job2 &amp;lhs, <span class="keyword">const</span> Job2 &amp;rhs)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">return</span> lhs.due &lt; rhs.due;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>再來我們還需要定義 Priority Queue 中紀錄資訊的結構</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Record</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="keyword">int</span> index;</span><br><span class="line">	<span class="keyword">int</span> process;</span><br><span class="line"></span><br><span class="line">	Record(<span class="keyword">int</span> i = <span class="number">0</span>, <span class="keyword">int</span> p = <span class="number">0</span>) :index&#123; i &#125;, process&#123; p &#125; &#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">inline</span> <span class="keyword">bool</span> <span class="keyword">operator</span>&lt;(<span class="keyword">const</span> Record &amp;lhs, <span class="keyword">const</span> Record &amp;rhs)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">return</span> lhs.process &lt; rhs.process;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>主要演算法部分<br>要注意因為 Job 的 Index 是從 1 開始，所以要把 overdue 多開一個空間才可以用 Index 直接存取</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Moore_Hodgson_optimal</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	Moore_Hodgson_optimal(<span class="built_in">initializer_list</span>&lt;Job2&gt; int_list) : jobs&#123; int_list &#125;, overdue(jobs.size() + <span class="number">1</span>, <span class="literal">false</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">// 運算</span></span><br><span class="line">		operate();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">friend</span> ostream&amp; <span class="keyword">operator</span>&lt;&lt;(ostream &amp;out, <span class="keyword">const</span> Moore_Hodgson_optimal &amp;schedule)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">// 先輸出沒有超時的部分</span></span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">auto</span> i = <span class="number">0</span>; i &lt; schedule.jobs.size(); ++i)</span><br><span class="line">			<span class="keyword">if</span> (!schedule.overdue[schedule.jobs[i].index])</span><br><span class="line">				out &lt;&lt; schedule.jobs[i].index &lt;&lt; <span class="string">" "</span>;</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 任意順序輸出超時的部分</span></span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">auto</span> i = <span class="number">1</span>; i &lt; schedule.overdue.size(); ++i)</span><br><span class="line">			<span class="keyword">if</span> (schedule.overdue[i])</span><br><span class="line">				out &lt;&lt; i &lt;&lt; <span class="string">" "</span>;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span> out;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="built_in">vector</span>&lt;Job2&gt; jobs;</span><br><span class="line">	<span class="built_in">vector</span>&lt;<span class="keyword">bool</span>&gt; overdue;	<span class="comment">// 紀錄是否超時</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">initial</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		sort(jobs.begin(), jobs.end());</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">operate</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		priority_queue&lt;Record&gt; pque;</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 初始化 Jobs</span></span><br><span class="line">		initial();</span><br><span class="line"></span><br><span class="line">		<span class="keyword">int</span> sum_time = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">auto</span> &amp;job : jobs)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="comment">// 加入 priority queue</span></span><br><span class="line">			pque.push(&#123; job.index,job.process &#125;);</span><br><span class="line"></span><br><span class="line">			<span class="comment">// 加上此工作的耗時</span></span><br><span class="line">			sum_time += job.process;</span><br><span class="line"></span><br><span class="line">			<span class="comment">// 檢查是否會超時</span></span><br><span class="line">			<span class="keyword">if</span> (sum_time &gt; job.due)</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="comment">// 刪掉最大耗時並記錄</span></span><br><span class="line">				sum_time -= pque.top().process;</span><br><span class="line">				overdue[pque.top().index] = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">				pque.pop();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>主程式</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	Moore_Hodgson_optimal oschedule1&#123; &#123;<span class="number">1</span>,<span class="number">10</span>,<span class="number">15</span>&#125;,&#123;<span class="number">2</span>,<span class="number">3</span>,<span class="number">6</span>&#125;,&#123;<span class="number">3</span>,<span class="number">4</span>,<span class="number">9</span> &#125;,&#123;<span class="number">4</span>,<span class="number">8</span>,<span class="number">23</span>&#125;,&#123;<span class="number">5</span>,<span class="number">10</span>,<span class="number">20</span>&#125;,&#123;<span class="number">6</span>,<span class="number">6</span>,<span class="number">30</span>&#125; &#125;;</span><br><span class="line">	Moore_Hodgson_optimal oschedule2&#123; &#123;<span class="number">1</span>,<span class="number">4</span>,<span class="number">6</span>&#125;,&#123;<span class="number">2</span>,<span class="number">3</span>,<span class="number">7</span>&#125;,&#123;<span class="number">3</span>,<span class="number">2</span>,<span class="number">8</span> &#125;,&#123;<span class="number">4</span>,<span class="number">5</span>,<span class="number">9</span>&#125;,&#123;<span class="number">5</span>,<span class="number">6</span>,<span class="number">11</span>&#125; &#125;;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"Schedule 1 : "</span> &lt;&lt; oschedule1 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"Schedule 2 : "</span> &lt;&lt; oschedule2 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>輸出</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Schedule 1 : 2 3 4 6 1 5</span><br><span class="line">Schedule 2 : 2 3 5 1 4</span><br></pre></td></tr></table></figure>
+<p><br></p>
+<h2 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h2><p>此演算法的目的是要讓未超時的工作數量最大化，也就是要讓逾期的工作量最小<br>整的核心就是 <strong>Due</strong><br>所以先用 Due 去由小到大排序，再依序把一個一個工作加到排程中<br>若發現加入當前工作後此工作會超時，就從以加入的工作中選一個<strong>最耗費時間的</strong>把他刪除掉<br>可以想成是讓整體的彈性時間更大 ( 也就是完成目前排程工作的時間到排程最後一個工作期限的這段緩衝 )<br>重複此動作到所以工作皆加入，就會是一個 Minimum number of late jobs 的 Schedule</p>
+<p><br></p>
+<h2 id="證明演算法"><a href="#證明演算法" class="headerlink" title="證明演算法"></a>證明演算法</h2><p>我這邊就沒有證明了，因為我也沒有搞很懂QQ<br>若是有大大有興趣，可以看一下參考<br>我有放一些 Reference<br><strong>記得搞懂了要來留言教我呀</strong></p>
+<p><br></p>
+<hr>
+<h2 id="參考網站"><a href="#參考網站" class="headerlink" title="參考網站"></a>參考網站</h2><ul>
+<li><a href="https://books.google.com.tw/books?id=MAY1ZstmGPkC&amp;pg=SA12-PA2&amp;lpg=SA12-PA2&amp;dq=Hodgson%E2%80%99s+Algorithm&amp;source=bl&amp;ots=FCZ7dOX7u6&amp;sig=ACfU3U2KJIvRbc31LJAQpGiqxCHO0FxWHA&amp;hl=zh-TW&amp;sa=X&amp;ved=2ahUKEwi1vZX-5e3gAhXHfLwKHUB7B_0Q6AEwC3oECAgQAQ#v=onepage&amp;q=Hodgson%E2%80%99s%20Algorithm&amp;f=false" target="_blank" rel="noopener">Handbook of Scheduling: Algorithms, Models, and Performance Analysis</a></li>
+<li><a href="http://morris821028.github.io/2014/11/21/uva-10154/" target="_blank" rel="noopener">讓我發現這個演算法的網站</a></li>
+<li>論文 : <a href="https://www.sciencedirect.com/science/article/pii/0895717794902097" target="_blank" rel="noopener">Knapsack-like scheduling problems, the Moore-Hodgson algorithm and the ‘tower of sets’ property</a></li>
+<li>論文 : <a href="https://pubsonline.informs.org/doi/abs/10.1287/mnsc.15.1.102" target="_blank" rel="noopener">An n Job, One Machine Sequencing Algorithm for Minimizing the Number of Late Jobs</a> ( 最早出現的文獻 )</li>
+<li>論文 : <a href="./MooreHodgson.pdf">MooreHodgson</a></li>
+</ul>
+
       
     </div>
     
@@ -425,6 +1042,12 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Scheduling-Algorithm-排程演算法/" rel="tag"> <i class="fa fa-tag"></i> Scheduling Algorithm ( 排程演算法 )</a>
+          
+        </div>
       
 
       
@@ -505,8 +1128,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -545,7 +1177,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
@@ -584,6 +1216,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#問題描述"><span class="nav-number">1.</span> <span class="nav-text">問題描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Moore-Hodgson-演算法"><span class="nav-number">2.</span> <span class="nav-text">Moore-Hodgson 演算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#例子一"><span class="nav-number">3.</span> <span class="nav-text">例子一</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#例子二"><span class="nav-number">4.</span> <span class="nav-text">例子二</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#暴力程式碼-O-N2"><span class="nav-number">5.</span> <span class="nav-text">暴力程式碼 O( N2 )</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#優化程式碼-O-NlogN"><span class="nav-number">6.</span> <span class="nav-text">優化程式碼 O( NlogN )</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#演算法"><span class="nav-number">6.1.</span> <span class="nav-text">演算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#例子"><span class="nav-number">6.2.</span> <span class="nav-text">例子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#程式碼"><span class="nav-number">6.3.</span> <span class="nav-text">程式碼</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#思考"><span class="nav-number">7.</span> <span class="nav-text">思考</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#證明演算法"><span class="nav-number">8.</span> <span class="nav-text">證明演算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#參考網站"><span class="nav-number">9.</span> <span class="nav-text">參考網站</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -780,7 +1428,7 @@
         var disqus_config = function () {
           this.page.url = 'https://nicknick0630.github.io/2019/03/07/Moore-Hodgson-s-Algorithm-Minimizing-the-number-of-late-jobs/';
           this.page.identifier = '2019/03/07/Moore-Hodgson-s-Algorithm-Minimizing-the-number-of-late-jobs/';
-          this.page.title = 'Moore-Hodgson\'s Algorithm : Minimizing the number of late jobs';
+          this.page.title = 'Moore-Hodgson\'s Algorithm';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://conding-road.disqus.com/embed.js';
