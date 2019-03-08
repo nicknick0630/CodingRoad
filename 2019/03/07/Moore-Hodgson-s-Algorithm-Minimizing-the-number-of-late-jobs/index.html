@@ -125,7 +125,7 @@
 <meta property="og:site_name" content="Coding Road">
 <meta property="og:description" content="此演算法將一個 O( N2 ) 的 Scheduling 問題縮減到了 O( NlogN )   問題描述有 N 個 Jobs，每個 Job 耗時 p 且期限 (due) 為 d，求最少逾期工作數量 ( Minimum number of late jobs )的排程方式也就是說，要找出一個排程方式是能夠讓在期限之前完成的工作數量最大化  Moore-Hodgson 演算法 設 J = ∅ (">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-03-07T17:11:56.576Z">
+<meta property="og:updated_time" content="2019-03-08T12:24:45.061Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Moore-Hodgson&#39;s Algorithm">
 <meta name="twitter:description" content="此演算法將一個 O( N2 ) 的 Scheduling 問題縮減到了 O( NlogN )   問題描述有 N 個 Jobs，每個 Job 耗時 p 且期限 (due) 為 d，求最少逾期工作數量 ( Minimum number of late jobs )的排程方式也就是說，要找出一個排程方式是能夠讓在期限之前完成的工作數量最大化  Moore-Hodgson 演算法 設 J = ∅ (">
@@ -443,7 +443,7 @@
 <h2 id="Moore-Hodgson-演算法"><a href="#Moore-Hodgson-演算法" class="headerlink" title="Moore-Hodgson 演算法"></a>Moore-Hodgson 演算法</h2><ol>
 <li>設 J = ∅ ( J 是一個 subschedule 且為空集合 )</li>
 <li>將 Jobs 按照期限遞增排序 ( d<sub>1</sub> &lt; d<sub>2</sub> &lt; …… &lt; d<sub>n</sub> )，也就是依照 Earliest Due Date ( EDD ) 的方式，並放入 J 中</li>
-<li>令 k = subschedule J 中的第一個逾期工作的 index，如果沒有找到，代表已完成排程，跳到步驟 7</li>
+<li>令 k = subschedule J 中的第一個<strong>逾期</strong>工作的 index，如果沒有找到，代表已完成排程，跳到步驟 7</li>
 <li>找出 p<sub>m</sub> = max{ p<sub>i</sub>, for i = 1 ~ k } ( <strong>找出 index &lt;= k 中最耗時的工作</strong>)</li>
 <li>將 Job m 移出 subschedule J，放入集合 S 中</li>
 <li>重複步驟 3</li>
@@ -1017,7 +1017,7 @@
 <p>輸出</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Schedule 1 : 2 3 4 6 1 5</span><br><span class="line">Schedule 2 : 2 3 5 1 4</span><br></pre></td></tr></table></figure>
 <p><br></p>
-<h2 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h2><p>此演算法的目的是要讓未超時的工作數量最大化，也就是要讓逾期的工作量最小<br>整的核心就是 <strong>Due</strong><br>所以先用 Due 去由小到大排序，再依序把一個一個工作加到排程中<br>若發現加入當前工作後此工作會超時，就從以加入的工作中選一個<strong>最耗費時間的</strong>把他刪除掉<br>可以想成是讓整體的彈性時間更大 ( 也就是完成目前排程工作的時間到排程最後一個工作期限的這段緩衝 )<br>重複此動作到所以工作皆加入，就會是一個 Minimum number of late jobs 的 Schedule</p>
+<h2 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h2><p>此演算法的目的是要讓未超時的工作數量最大化，也就是要讓逾期的工作量最小<br>整體的核心就是 <strong>Due</strong><br>所以先用 Due 去由小到大排序，再依序把一個一個工作加到排程中<br>若發現加入當前工作後此工作會超時，就從以加入的工作中選一個<strong>最耗費時間的</strong>把他刪除掉<br>可以想成是讓整體的彈性時間更大 ( 也就是完成目前排程工作的時間到排程最後一個工作期限的這段緩衝 )<br>重複此動作到所以工作皆加入，就會是一個 Minimum number of late jobs 的 Schedule</p>
 <p><br></p>
 <h2 id="證明演算法"><a href="#證明演算法" class="headerlink" title="證明演算法"></a>證明演算法</h2><p>我這邊就沒有證明了，因為我也沒有搞很懂QQ<br>若是有大大有興趣，可以看一下參考<br>我有放一些 Reference<br><strong>記得搞懂了要來留言教我呀</strong></p>
 <p><br></p>
