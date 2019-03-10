@@ -1869,7 +1869,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #218352;
+  background: #eefeff;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -3256,10 +3256,14 @@ blockquote {
   background-color: #f8f8f8;
   margin: 20px 0 20px 0;
 }
-.posts-expand .post-body a {
+.posts-expand .post-body a:not(.btn) {
   color: #3ca1f8;
   text-decoration: none;
   border-bottom: 0;
+}
+.posts-expand .post-body a:not(.btn):hover {
+  color: #0070d1;
+  border-bottom: 1px solid #999;
 }
 .highlight .gutter pre {
   color: #ec60fa;
