@@ -1869,7 +1869,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #46ff9e;
+  background: #ff604b;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -3182,6 +3182,7 @@ pre .javascript .function {
   text-align: center;
 }
 .posts-expand .post-tags a {
+  color: #222;
   border-bottom: 0px;
   background-color: #e8e8e8;
   margin-right: 12px;
@@ -3254,6 +3255,11 @@ p {
 blockquote {
   background-color: #f8f8f8;
   margin: 20px 0 20px 0;
+}
+.post-body a {
+  color: #3ca1f8;
+  text-decoration: none;
+  border-bottom: 0;
 }
 .highlight .gutter pre {
   color: #ec60fa;
