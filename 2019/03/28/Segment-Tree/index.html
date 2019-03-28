@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.6/jquery.fancybox.min.css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+
+  
+    
+    
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Noto Sans TC:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
+  
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.0.1',
+    sidebar: {"position":"right","display":"post","offset":15,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: true,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="當需要大量對 array 中給定範圍做諮詢，並且也會大量的做某些值的修改時，我們就可以使用線段數 ( Segment Tree )此外，針對範圍查詢或是值的修改，我們也可以使用其他的資料結構或方法，以下為比較表格    —- Query a range change a value 資料結構適用條件     一般陣列 O(N) O(1) 少量查詢，大量修改   Prefix Sum Array O">
+<meta name="keywords" content="Segment Tree,C++">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Segment Tree">
+<meta property="og:url" content="https://nicknick0630.github.io/2019/03/28/Segment-Tree/index.html">
+<meta property="og:site_name" content="Coding Road">
+<meta property="og:description" content="當需要大量對 array 中給定範圍做諮詢，並且也會大量的做某些值的修改時，我們就可以使用線段數 ( Segment Tree )此外，針對範圍查詢或是值的修改，我們也可以使用其他的資料結構或方法，以下為比較表格    —- Query a range change a value 資料結構適用條件     一般陣列 O(N) O(1) 少量查詢，大量修改   Prefix Sum Array O">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://nicknick0630.github.io/2019/03/28/Segment-Tree/1.png">
+<meta property="og:image" content="https://nicknick0630.github.io/2019/03/28/Segment-Tree/2.png">
+<meta property="og:updated_time" content="2019-03-28T15:03:17.967Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Segment Tree">
+<meta name="twitter:description" content="當需要大量對 array 中給定範圍做諮詢，並且也會大量的做某些值的修改時，我們就可以使用線段數 ( Segment Tree )此外，針對範圍查詢或是值的修改，我們也可以使用其他的資料結構或方法，以下為比較表格    —- Query a range change a value 資料結構適用條件     一般陣列 O(N) O(1) 少量查詢，大量修改   Prefix Sum Array O">
+<meta name="twitter:image" content="https://nicknick0630.github.io/2019/03/28/Segment-Tree/1.png">
+
+
+
+
+
+
+  <link rel="canonical" href="https://nicknick0630.github.io/2019/03/28/Segment-Tree/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Segment Tree | Coding Road</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Coding Road</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-目錄">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/Index/" rel="section"><i class="menu-item-icon fa fa-fw fa-book"></i> <br>目錄</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>About</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://nicknick0630.github.io/2019/03/28/Segment-Tree/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chen Yu Sheng">
+      <meta itemprop="description" content="紀錄我的程式學習">
+      <meta itemprop="image" content="/upload/image/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coding Road">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Segment Tree
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-03-28 20:08:09" itemprop="dateCreated datePublished" datetime="2019-03-28T20:08:09+08:00">2019-03-28</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/演算法-Algorithm/" itemprop="url" rel="index"><span itemprop="name">演算法 ( Algorithm )</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye fa-lg"></i>
+            
+             &nbsp; 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+            
+              
+
+                
+                
+                 <br> 
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-cog fa-spin fa-lg fa-fw" aria-hidden="true" style="color: #1FA4F0"></i>
+                </span>
+                
+                  
+                  <span class="post-meta-item-text">Symbols &#58;</span>
+                
+                <span title="post.wordcount">
+                  1.3k 字
+                </span>
+              
+
+              
+
+              
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>當需要大量對 array 中給定範圍做諮詢，並且也會大量的做某些值的修改時，我們就可以使用<strong>線段數 ( Segment Tree )</strong><br>此外，針對範圍查詢或是值的修改，我們也可以使用其他的資料結構或方法，以下為比較表格</p>
+<table>
+<thead>
+<tr>
+<th>—-</th>
+<th>Query a range</th>
+<th>change a value</th>
+<th>資料結構適用條件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>一般陣列</td>
+<td>O(N)</td>
+<td>O(1)</td>
+<td>少量查詢，大量修改</td>
+</tr>
+<tr>
+<td>Prefix Sum Array</td>
+<td>O(1)</td>
+<td>O(N)</td>
+<td>大量查詢，少量修改</td>
+</tr>
+<tr>
+<td>Segment Tree</td>
+<td>O(logN)</td>
+<td>O(logN)</td>
+<td>大量查詢，大量修改</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<hr>
+<p><br></p>
+<h2 id="甚麼是-Segment-Tree"><a href="#甚麼是-Segment-Tree" class="headerlink" title="甚麼是 Segment Tree"></a>甚麼是 Segment Tree</h2><p>假設有一陣列 A 共有 N 個元素，可以建構出一棵線段數 T，其中</p>
+<ol>
+<li>T 的 leaf node 代表陣列 A 中的一個元素 A[i] , 1 &lt;= i &lt;= N</li>
+<li>T 的 internal nodes 代表陣列 A 中一個範圍內所有元素的集合 A[i : k] , 1 &lt;= i &lt; k &lt;= N</li>
+<li>T 的 root 代表陣列 A 所有元素的集合 A[1 : N]</li>
+</ol>
+<p>因此，因為 T 的 root 所代表的範圍是 1 ~ N，所以他的 2 個 children 代表的範圍分別為 [1 ~ M] 和 [M+1 ~ N]  ( M = (1+N)/2)<br>一直使用二分法去 build，所以 Segment Tree 的樹高為 $ ceil({ \log_2 N }) $<br>此外，由於 Segment Tree 是 binary tree，因此 internal node 為 <strong>N - 1</strong> 個，總節點數為 <strong>2*N - 1</strong></p>
+<p>例如下圖<br><br><br><img src="./1.png"></p>
+<p>藍色為 internal nodes，紅色為 leaves，中間為他們所代表的 array 範圍，且 leaf 就會等於 array 中單一元素的值</p>
+<p><br></p>
+<h2 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h2><p>Segment Tree 有 2 種操作 : </p>
+<ol>
+<li>Update : 將 Array A 的某個元素更新，並且要修正相對應的 Segment Tree</li>
+<li>Query : 利用 segment tree 獲取指定 array 範圍的資訊。例如求最大值、最小值、元素總和或是其他的操作</li>
+</ol>
+<p><br></p>
+<h2 id="實作"><a href="#實作" class="headerlink" title="實作"></a>實作</h2><p>我們可以使用一維陣列來實現 Segment Tree，就像是 Heap 一樣，若 parent 的 index 為 <strong>i</strong><br>則左子樹為 <strong>i * 2</strong> 且右子樹為 <strong>i*2 + 1</strong> ， 注意 index 是從 <strong>1</strong> 開始</p>
+<p><strong>那我們要將存甚麼資料在 Tree Node 中呢 ?</strong><br>這就取決於你要用線段樹來做甚麼操作，若是求線段總和，那就要存該 range 的總和。若是求最大值，則要存的是區間中的最大值<br>而對於線段樹的操作 ( build tree、update、query )，我們都可以使用 recursive 的方式去達成</p>
+<p>例如下圖為有 7 個元素的 array 所建出來的線段樹<br><br><br><img src="./2.png"></p>
+<p>用一為陣列來表示</p>
+<table>
+<thead>
+<tr>
+<th>Index</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>10</th>
+<th>11</th>
+<th>12</th>
+<th>13</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tree</td>
+<td>A[1:7]</td>
+<td>A[1:4]</td>
+<td>A[5:7]</td>
+<td>A[1:2]</td>
+<td>A[3:4]</td>
+<td>A[5:6]</td>
+<td>A[7]</td>
+<td>A[1]</td>
+<td>A[2]</td>
+<td>A[3]</td>
+<td>A[4]</td>
+<td>A[5]</td>
+<td>A[6]</td>
+</tr>
+</tbody>
+</table>
+<p>接下來我們用計算總合的 segment tree 來說明</p>
+<p><br></p>
+<h3 id="Build-Tree-bottom-up-approach"><a href="#Build-Tree-bottom-up-approach" class="headerlink" title="Build Tree (bottom-up approach)"></a>Build Tree (bottom-up approach)</h3><p>首先，我們要先知道 segment tree 的 array 大小，若 data array 的大小為 N<br>先算出樹高  h =  $ { \log_2 N } $，在算出此高度全滿所需要的 node 個數為 $ { 2^{h+1} } $<br><strong>( 注意 index 從 1 開始 )</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">initial</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">double</span> h = log2(size);</span><br><span class="line">	h = <span class="built_in">ceil</span>(h) + <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">int</span> tree_size = <span class="keyword">static_cast</span>&lt;<span class="keyword">int</span>&gt;(<span class="built_in">pow</span>(<span class="number">2</span>, h)) - <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">	tree.clear();</span><br><span class="line">	tree.resize(tree_size + <span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>接下來就是要 build tree</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">build</span><span class="params">(<span class="keyword">int</span> root_idx, <span class="keyword">int</span> range_start, <span class="keyword">int</span> range_end)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (range_start == range_end)</span><br><span class="line">	&#123;</span><br><span class="line">		tree[root_idx] = data[range_start];</span><br><span class="line">		<span class="keyword">return</span> tree[root_idx];</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">int</span> mid = get_mid(range_start, range_end);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">int</span> lv = build(root_idx * <span class="number">2</span>, range_start, mid);</span><br><span class="line">	<span class="keyword">int</span> rv = build(root_idx * <span class="number">2</span> + <span class="number">1</span>, mid + <span class="number">1</span>, range_end);</span><br><span class="line"></span><br><span class="line">	tree[root_idx] = lv + rv;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> tree[root_idx];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>若 start == end ，代表此為 leaf node<br>否則就遞迴求出左子樹與右子樹的值並相加</p>
+<p>由於要建立每一個節點，因此 <strong>Build 耗時 $ O(N) $ </strong></p>
+<p><br></p>
+<h3 id="Update"><a href="#Update" class="headerlink" title="Update"></a>Update</h3><p>要去判別要更新的點是屬於左子樹的範圍還是右子樹的範圍<br>並且更新的值我們要用差 ( difference ) 去計算</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">update</span><span class="params">(<span class="keyword">int</span> index, <span class="keyword">int</span> val)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (index &lt; <span class="number">1</span> || index &gt; size)</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (data[index] == val)</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">	_update(<span class="number">1</span>, <span class="number">1</span>, size, index, val - data[index]);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> _update(<span class="keyword">int</span> root_idx, <span class="keyword">int</span> range_start, <span class="keyword">int</span> range_end, <span class="keyword">int</span> data_idx, <span class="keyword">int</span> dif)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span> (range_start == range_end)</span><br><span class="line">	&#123;</span><br><span class="line">		data[data_idx] += dif;</span><br><span class="line">		tree[root_idx] += dif;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">int</span> mid = get_mid(range_start, range_end);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (data_idx &lt;= mid)</span><br><span class="line">		_update(root_idx * <span class="number">2</span>, range_start, mid, data_idx, dif);</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		_update(root_idx * <span class="number">2</span> + <span class="number">1</span>, mid + <span class="number">1</span>, range_end, data_idx, dif);</span><br><span class="line"></span><br><span class="line">	tree[root_idx] = tree[root_idx * <span class="number">2</span>] + tree[root_idx * <span class="number">2</span> + <span class="number">1</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>update 類似於二分搜尋，因此<strong>耗時 $ O({log_2 N}) $ </strong></p>
+<p><br></p>
+<h3 id="Query"><a href="#Query" class="headerlink" title="Query"></a>Query</h3><p>對於要查找的範圍 R 與目前正在查找的 node 範圍 P 可以分成 3 種情況 : </p>
+<ol>
+<li>若 node 範圍 P 完全包含於 範圍 R 中，則直接回傳該 node 值</li>
+<li>若 node 範圍 P 完全不在範圍 R 中，則回傳一個不改變計算結果的值 ( 若是算總和，則是 0，因為 X+0=X)</li>
+<li>若 node 範圍 P 有部分在範圍 R 中，部分在 R 外面，則將 P 分割成左右部分繼續遞迴呼叫，並相加其結果</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">query</span><span class="params">(<span class="keyword">int</span> l_idx, <span class="keyword">int</span> r_idx)</span> <span class="keyword">const</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> _query(<span class="number">1</span>, <span class="number">1</span>, size, l_idx, r_idx);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> _query(<span class="keyword">int</span> root_idx, <span class="keyword">int</span> range_start, <span class="keyword">int</span> range_end, <span class="keyword">int</span> l_idx, <span class="keyword">int</span> r_idx) <span class="keyword">const</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">// the range of this node is completely in the searching range</span></span><br><span class="line">	<span class="keyword">if</span> (l_idx &lt;= range_start &amp;&amp; range_end &lt;= r_idx)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">return</span> tree[root_idx];</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// the range of this node is completely out of the searching range</span></span><br><span class="line">	<span class="keyword">if</span> (range_end &lt; l_idx || range_start &gt; r_idx)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">// return the value which will not affect the answer after adding it</span></span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// the range of this node is partially in the searching range and partially out of the searching range</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">int</span> mid = get_mid(range_start, range_end);</span><br><span class="line">	<span class="keyword">int</span> lv = _query(root_idx * <span class="number">2</span>, range_start, mid, l_idx, r_idx);</span><br><span class="line">	<span class="keyword">int</span> rv = _query(root_idx * <span class="number">2</span> + <span class="number">1</span>, mid + <span class="number">1</span>, range_end, l_idx, r_idx);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> lv + rv;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>同樣地是類似於二分搜尋法，因此 <strong>Query 耗時 $ O({log_2 N}) $ </strong></p>
+<p><br></p>
+<hr>
+<h2 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h2><ul>
+<li><a href="https://www.hackerearth.com/zh/practice/data-structures/advanced-data-structures/segment-trees/tutorial/" target="_blank" rel="noopener">Segment Tree</a></li>
+<li><a href="https://www.geeksforgeeks.org/segment-tree-set-1-sum-of-given-range/" target="_blank" rel="noopener">GeeksforGeeks</a></li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Segment-Tree/" rel="tag"> <i class="fa fa-tag"></i> <span class="mypost_tag"> Segment Tree </span> </a>
+          
+            <a href="/tags/C/" rel="tag"> <i class="fa fa-tag"></i> <span class="mypost_tag"> C++ </span> </a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/09/獲取-UVa-測資-Get-UVa-test-data/" rel="next" title="獲取 UVa 測資 ( Get UVa test data )">
+                <i class="fa fa-chevron-left"></i> 獲取 UVa 測資 ( Get UVa test data )
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/upload/image/avatar.gif" alt="Chen Yu Sheng">
+            
+              <p class="site-author-name" itemprop="name">Chen Yu Sheng</p>
+              <div class="site-description motion-element" itemprop="description">紀錄我的程式學習</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">12</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/nicknick0630" title="GitHub &rarr; https://github.com/nicknick0630" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:nicknick0630@gmail.com" title="E-Mail &rarr; mailto:nicknick0630@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#甚麼是-Segment-Tree"><span class="nav-number">1.</span> <span class="nav-text">甚麼是 Segment Tree</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#操作"><span class="nav-number">2.</span> <span class="nav-text">操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#實作"><span class="nav-number">3.</span> <span class="nav-text">實作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Build-Tree-bottom-up-approach"><span class="nav-number">3.1.</span> <span class="nav-text">Build Tree (bottom-up approach)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Update"><span class="nav-number">3.2.</span> <span class="nav-text">Update</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Query"><span class="nav-number">3.3.</span> <span class="nav-text">Query</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#參考"><span class="nav-number">4.</span> <span class="nav-text">參考</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chen Yu Sheng</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a></div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="Total Visitors">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="Total Views">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+    
+    
+      
+    
+  
+  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-nest@1/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/velocity/1.2.1/velocity.min.js"></script>
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/velocity/1.2.1/velocity.ui.min.js"></script>
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.6/jquery.fancybox.min.js"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.1"></script>
+
+  <script src="/js/src/motion.js?v=7.0.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=7.0.1"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=7.0.1"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
+
+  
+
+
+  <script src="/js/src/next-boot.js?v=7.0.1"></script>
+
+
+  
+
+  
+
+  
+
+  
+  
+
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://nicknick0630.github.io/2019/03/28/Segment-Tree/";
+    this.page.identifier = "2019/03/28/Segment-Tree/";
+    this.page.title = 'Segment Tree';
+    };
+  function loadComments() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://conding-road.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', '' + +new Date());
+    (d.head || d.body).appendChild(s);
+  }
+  
+    loadComments();
+  
+</script>
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') { next = next.nextSibling }
+        if (next && next.nodeName.toLowerCase() === 'br') { next.parentNode.removeChild(next) }
+      }
+    });
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<style>
+.MathJax_Display {
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
+</style>
+
+    
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<style>
+  .copy-btn {
+    display: inline-block;
+    padding: 6px 12px;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 20px;
+    color: #333;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+    
+    user-select: none;
+    outline: 0;
+  }
+
+  .highlight-wrap .copy-btn {
+    transition: opacity .3s ease-in-out;
+    opacity: 0;
+    padding: 2px 6px;
+    position: absolute;
+    
+      right: 4px;
+      top: 8px;
+    
+  }
+
+  .highlight-wrap:hover .copy-btn,
+  .highlight-wrap .copy-btn:focus {
+    opacity: 1;
+  }
+
+  .highlight-wrap {
+    position: relative;
+  }
+</style>
+<script>
+  $('.highlight').each(function(i, e) {
+    var $wrap = $('<div>').addClass('highlight-wrap');
+    $(e).after($wrap);
+    $wrap.append($('<button>').addClass('copy-btn').append('Copy').on('click', function(e) {
+      var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+        return $(e).text();
+      }).toArray().join('\n');
+      var ta = document.createElement('textarea');
+      var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+      ta.style.top = yPosition + 'px'; // Prevent page scroll
+      ta.style.position = 'absolute';
+      ta.style.opacity = '0';
+      ta.readOnly = true;
+      ta.value = code;
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, code.length);
+      ta.readOnly = false;
+      var result = document.execCommand('copy');
+      
+        if (result) $(this).text('Copied');
+        else $(this).text('Copy failed');
+      
+      ta.blur(); // For iOS
+      $(this).blur();
+    })).on('mouseleave', function(e) {
+      var $b = $(this).find('.copy-btn');
+      setTimeout(function() {
+        $b.text('Copy');
+      }, 300);
+    }).append(e);
+  })
+</script>
+
+
+</body>
+</html>
