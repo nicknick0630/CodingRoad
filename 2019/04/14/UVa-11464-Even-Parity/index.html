@@ -1,0 +1,1171 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.6/jquery.fancybox.min.css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+
+  
+    
+    
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Noto Sans TC:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
+  
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.0.1',
+    sidebar: {"position":"right","display":"post","offset":15,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: true,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="題目 :  UVa Link 給一 N x N 的矩陣，裡面每個元素皆為 0 或 1，且每個元素的 parity 定義為該元素位置的上、下、左、右四個位置中 1 的數目題目要求我們要把其中一些 0 改成 1，讓所有元素的 parity 皆為偶數 ( 也就是 0、2、4個 )，並輸出改變次數最少的值 ( 若無法的話輸出 -1 ) 測資Input :   330 0 00 0 00 0 030 0 0">
+<meta name="keywords" content="C++">
+<meta property="og:type" content="article">
+<meta property="og:title" content="UVa 11464 : Even Parity">
+<meta property="og:url" content="https://nicknick0630.github.io/2019/04/14/UVa-11464-Even-Parity/index.html">
+<meta property="og:site_name" content="Coding Road">
+<meta property="og:description" content="題目 :  UVa Link 給一 N x N 的矩陣，裡面每個元素皆為 0 或 1，且每個元素的 parity 定義為該元素位置的上、下、左、右四個位置中 1 的數目題目要求我們要把其中一些 0 改成 1，讓所有元素的 parity 皆為偶數 ( 也就是 0、2、4個 )，並輸出改變次數最少的值 ( 若無法的話輸出 -1 ) 測資Input :   330 0 00 0 00 0 030 0 0">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://nicknick0630.github.io/2019/04/14/UVa-11464-Even-Parity/1.png">
+<meta property="og:image" content="https://nicknick0630.github.io/2019/04/14/UVa-11464-Even-Parity/2.png">
+<meta property="og:image" content="https://nicknick0630.github.io/2019/04/14/UVa-11464-Even-Parity/3.png">
+<meta property="og:image" content="https://nicknick0630.github.io/2019/04/14/UVa-11464-Even-Parity/4.png">
+<meta property="og:image" content="https://nicknick0630.github.io/2019/04/14/UVa-11464-Even-Parity/9.png">
+<meta property="og:image" content="https://nicknick0630.github.io/2019/04/14/UVa-11464-Even-Parity/10.png">
+<meta property="og:image" content="https://nicknick0630.github.io/2019/04/14/UVa-11464-Even-Parity/11.png">
+<meta property="og:image" content="https://nicknick0630.github.io/2019/04/14/UVa-11464-Even-Parity/12.png">
+<meta property="og:updated_time" content="2019-04-14T16:14:18.910Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="UVa 11464 : Even Parity">
+<meta name="twitter:description" content="題目 :  UVa Link 給一 N x N 的矩陣，裡面每個元素皆為 0 或 1，且每個元素的 parity 定義為該元素位置的上、下、左、右四個位置中 1 的數目題目要求我們要把其中一些 0 改成 1，讓所有元素的 parity 皆為偶數 ( 也就是 0、2、4個 )，並輸出改變次數最少的值 ( 若無法的話輸出 -1 ) 測資Input :   330 0 00 0 00 0 030 0 0">
+<meta name="twitter:image" content="https://nicknick0630.github.io/2019/04/14/UVa-11464-Even-Parity/1.png">
+
+
+
+
+
+
+  <link rel="canonical" href="https://nicknick0630.github.io/2019/04/14/UVa-11464-Even-Parity/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>UVa 11464 : Even Parity | Coding Road</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Coding Road</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-目錄">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/Index/" rel="section"><i class="menu-item-icon fa fa-fw fa-book"></i> <br>目錄</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>About</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://nicknick0630.github.io/2019/04/14/UVa-11464-Even-Parity/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chen Yu Sheng">
+      <meta itemprop="description" content="紀錄我的程式學習">
+      <meta itemprop="image" content="/upload/image/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coding Road">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">UVa 11464 : Even Parity
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-04-14 20:03:28" itemprop="dateCreated datePublished" datetime="2019-04-14T20:03:28+08:00">2019-04-14</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/UVa/" itemprop="url" rel="index"><span itemprop="name">UVa</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye fa-lg"></i>
+            
+             &nbsp; 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+            
+              
+
+                
+                
+                 <br> 
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-cog fa-spin fa-lg fa-fw" aria-hidden="true" style="color: #1FA4F0"></i>
+                </span>
+                
+                  
+                  <span class="post-meta-item-text">Symbols &#58;</span>
+                
+                <span title="post.wordcount">
+                  1.3k 字
+                </span>
+              
+
+              
+
+              
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="題目-UVa-Link"><a href="#題目-UVa-Link" class="headerlink" title="題目 :  UVa Link "></a>題目 : <a href="https://uva.onlinejudge.org/index.php?option=com_onlinejudge&amp;Itemid=8&amp;page=show_problem&amp;problem=2459" target="_blank" rel="noopener"> <small><b>UVa Link</b></small> </a></h2><p>給一 N x N 的矩陣，裡面每個元素皆為 0 或 1，且每個元素的 parity 定義為該元素位置的上、下、左、右四個位置中 1 的數目<br>題目要求我們要把其中一些 0 改成 1，讓所有元素的 parity 皆為偶數 ( 也就是 0、2、4個 )，並輸出改變次數最少的值 ( 若無法的話輸出 -1 )</p>
+<p><strong>測資</strong><br><strong>Input : </strong></p>
+<blockquote>
+<p>3<br>3<br>0 0 0<br>0 0 0<br>0 0 0<br>3<br>0 0 0<br>1 0 0<br>0 0 0<br>3<br>1 1 1<br>1 1 1<br>0 0 0</p>
+</blockquote>
+<p><strong>Output : </strong></p>
+<blockquote>
+<p>Case 1: 0<br>Case 2: 3<br>Case 3: -1</p>
+</blockquote>
+<p><br></p>
+<h2 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h2><p>我們先從 2 x 2 的來看一下，列出所以可能的情況組合，共有 2<sup>2x2</sup> = 16 種情況</p>
+<p><img src="./1.png" width="60%"></p>
+<p>其中，合法的只有 4 個 ( 每個元素周圍的 1 必須為偶數 )</p>
+<p><img src="./2.png" width="60%"></p>
+<p>因此，若題目給個矩陣是 2 x 2 的，我們只要把他與這 4 個矩陣比對一下<br>找出 0 -&gt; 1 轉換次數最少的，就是解答<br>也有可能會無解，因為只能 0 變 1 不能 1 變 0，所以有可能會湊不出偶數個 1</p>
+<p>但是，題目最多會給到 15 x 15，這樣所有的可能組合為 2<sup>15x15</sup> = 2<sup>225</sup> 種<br>是一個很大的數目，若要全部暴力找出來會耗時很久，所以我們要想辦法優化</p>
+<p>思考一下，每次都要全部列舉出來再找出合法的矩陣並在和題目的矩陣比對，太冗長了<br>題目都已經給我們一個矩陣的了，所以我們應該要從這個矩陣出發</p>
+<p>首先，在列舉所有矩陣的時候，我們先列舉出第一列 ( row )<br>若題目矩陣的第一列沒有辦法轉換成此矩陣的話，就放棄他<br>例如一個 4 x 4 的例子，題目給定</p>
+<p><img src="./3.png" width="40%"></p>
+<p>我們就列舉出 2<sup>4</sup> = 16 種可能，並把題目沒辦法轉換到的情況給刪除 (注意 1 沒辦法變換成 0)</p>
+<p><img src="./4.png" width="50%"></p>
+<p>只有 4 種情況是可以從題目的矩陣轉換過來的</p>
+<p>接下來，我們有了第一列，為了讓第一列的 parity 都為偶數，我們就可以推出<strong>合法</strong>的第二列</p>
+<p><img src="./9.png" width="35%"></p>
+<p>再用第二列推出第三列</p>
+<p><img src="./10.png" width="35%"></p>
+<p>再推出第四列</p>
+<p><img src="./11.png" width="35%"></p>
+<p>同樣地方法，推出其他 3 個矩陣</p>
+<p><img src="./12.png"></p>
+<p>最後將題目的矩陣與這四個矩陣去做比對，找出 0 –&gt; 1 轉換次數的最少值</p>
+<h3 id="推廣"><a href="#推廣" class="headerlink" title="推廣"></a>推廣</h3><p>若題目輸入 N x N 矩陣 M，N 最大為 15</p>
+<blockquote>
+<ol>
+<li>先列舉出第一列的所有可能 : 2<sup>N</sup> 種，若 M 無法轉換成這種情況，則刪除</li>
+<li>對合法情況推導出矩陣，Row 1 -&gt; Row 2 -&gt; … -&gt; Row N</li>
+<li>與題目的矩陣進行比對，找出最小的轉換次數</li>
+</ol>
+</blockquote>
+<p><br></p>
+<h2 id="證明"><a href="#證明" class="headerlink" title="證明"></a>證明</h2><p>我們用 Row 1 推導出 Row 2，在推導出 Row 3 … 到 Row N<br>除了 Row N，每一列 Row t 的元素皆可以保證 parity 為偶數<br>因為在推導的過程中，可以用 Row t+1 來修正 Row t<br>但是 Row N 沒辦法用 Row N+1 來修正，只是他似乎還是會是正確的</p>
+<p>證明待補 … QQ</p>
+<p><br></p>
+<h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	Solution() : m(MAX, <span class="built_in">vector</span>&lt;<span class="keyword">bool</span>&gt;(MAX, <span class="literal">false</span>)), temp(MAX, <span class="built_in">vector</span>&lt;<span class="keyword">bool</span>&gt;(MAX, <span class="literal">false</span>))</span><br><span class="line">	&#123;</span><br><span class="line">		ios::sync_with_stdio(<span class="literal">false</span>);</span><br><span class="line">		<span class="built_in">cin</span>.tie(<span class="literal">nullptr</span>);</span><br><span class="line">		<span class="built_in">cout</span>.tie(<span class="literal">nullptr</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">input</span><span class="params">(<span class="keyword">const</span> <span class="keyword">int</span> num)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">int</span> t;</span><br><span class="line">		n = num;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i)</span><br><span class="line">			<span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; n; ++k)</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="built_in">cin</span> &gt;&gt; t;</span><br><span class="line"></span><br><span class="line">				<span class="keyword">if</span> (t)</span><br><span class="line">					m[i][k] = <span class="literal">true</span>;</span><br><span class="line">				<span class="keyword">else</span></span><br><span class="line">					m[i][k] = <span class="literal">false</span>;</span><br><span class="line">			&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">solve</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">const</span> <span class="keyword">int</span> MaxNum = <span class="number">1</span> &lt;&lt; n;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">int</span> cnt = INF;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; MaxNum; ++i)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span> (!expand_binary(i))</span><br><span class="line">				<span class="keyword">continue</span>;</span><br><span class="line"></span><br><span class="line">			<span class="keyword">if</span> (!calculate_other_rows())</span><br><span class="line">				<span class="keyword">continue</span>;</span><br><span class="line"></span><br><span class="line">			cnt = min(cnt, compare());</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span> cnt == INF ? <span class="number">-1</span> : cnt;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line"></span><br><span class="line">	<span class="keyword">using</span> Matrix = <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">bool</span>&gt;&gt;;</span><br><span class="line">	<span class="keyword">const</span> <span class="keyword">int</span> INF = numeric_limits&lt;<span class="keyword">int</span>&gt;::max();</span><br><span class="line">	<span class="keyword">const</span> <span class="keyword">int</span> MAX = <span class="number">15</span> + <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">int</span> n;</span><br><span class="line"></span><br><span class="line">	Matrix m;</span><br><span class="line">	Matrix temp;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">init_temp</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> r = <span class="number">0</span>; r &lt;= n; ++r)</span><br><span class="line">			<span class="keyword">for</span> (<span class="keyword">int</span> c = <span class="number">0</span>; c &lt; n; ++c)</span><br><span class="line">				temp[r][c] = <span class="literal">false</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">expand_binary</span><span class="params">(<span class="keyword">const</span> <span class="keyword">int</span> num)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		init_temp();</span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; n; ++k)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span> (num &amp; (<span class="number">1</span> &lt;&lt; k))		<span class="comment">// use binary to enumerate</span></span><br><span class="line">				temp[<span class="number">0</span>][k] = <span class="literal">true</span>;</span><br><span class="line">			<span class="keyword">else</span> <span class="keyword">if</span> (m[<span class="number">0</span>][k])		<span class="comment">// if the binary is 0 and m is 1, invalid changing from 1 to 0</span></span><br><span class="line">				<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">calculate_other_rows</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> row = <span class="number">0</span>; row &lt; n; ++row)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">for</span> (<span class="keyword">int</span> col = <span class="number">0</span>; col &lt; n; ++col)</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">				<span class="keyword">if</span> (row &gt; <span class="number">0</span> &amp;&amp; temp[row - <span class="number">1</span>][col])		<span class="comment">// check top</span></span><br><span class="line">					++sum;</span><br><span class="line"></span><br><span class="line">				<span class="keyword">if</span> (col &gt; <span class="number">0</span> &amp;&amp; temp[row][col - <span class="number">1</span>])		<span class="comment">// check left</span></span><br><span class="line">					++sum;</span><br><span class="line"></span><br><span class="line">				<span class="keyword">if</span> (col &lt; n - <span class="number">1</span> &amp;&amp; temp[row][col + <span class="number">1</span>])	<span class="comment">// check right</span></span><br><span class="line">					++sum;</span><br><span class="line"></span><br><span class="line">				<span class="keyword">if</span> (sum &amp; <span class="number">0x01</span>)							<span class="comment">// if sum is odd</span></span><br><span class="line">					temp[row + <span class="number">1</span>][col] = <span class="literal">true</span>;</span><br><span class="line">				<span class="keyword">else</span> <span class="keyword">if</span> (row &lt; n - <span class="number">1</span> &amp;&amp; m[row + <span class="number">1</span>][col])<span class="comment">// if sum is even and m is 1, invalid changing from 1 to 0</span></span><br><span class="line">					<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">compare</span><span class="params">(<span class="keyword">void</span>)</span> <span class="keyword">const</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">int</span> cnt = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> row = <span class="number">0</span>; row &lt; n; ++row)</span><br><span class="line">			<span class="keyword">for</span> (<span class="keyword">int</span> col = <span class="number">0</span>; col &lt; n; ++col)</span><br><span class="line">				<span class="keyword">if</span> (m[row][col] != temp[row][col])</span><br><span class="line">					++cnt;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span> cnt;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> t, i, n, ans;</span><br><span class="line">	Solution s;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; t;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; t; ++i)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">cin</span> &gt;&gt; n;</span><br><span class="line"></span><br><span class="line">		s.input(n);</span><br><span class="line"></span><br><span class="line">		ans = s.solve();</span><br><span class="line"></span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"Case "</span> &lt;&lt; i + <span class="number">1</span> &lt;&lt; <span class="string">": "</span> &lt;&lt; ans &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><br></p>
+<h2 id="時間複雜度"><a href="#時間複雜度" class="headerlink" title="時間複雜度"></a>時間複雜度</h2><p>列舉第一列的時間複雜度為 O( 2<sup>N<sup> )<br>推導矩陣與比較矩陣為 O( N<sup>2<sup> )</sup></sup></sup></sup></p>
+<p>總時間複雜度為 *<em>O( 2<sup>N<sup> </sup></sup></em> N<sup>2<sup> )</sup></sup></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/C/" rel="tag"> <i class="fa fa-tag"></i> <span class="mypost_tag"> C++ </span> </a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/28/UVa-12532-Interval-Product/" rel="next" title="UVa 12532 : Interval Product">
+                <i class="fa fa-chevron-left"></i> UVa 12532 : Interval Product
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/upload/image/avatar.gif" alt="Chen Yu Sheng">
+            
+              <p class="site-author-name" itemprop="name">Chen Yu Sheng</p>
+              <div class="site-description motion-element" itemprop="description">紀錄我的程式學習</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">14</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/nicknick0630" title="GitHub &rarr; https://github.com/nicknick0630" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:nicknick0630@gmail.com" title="E-Mail &rarr; mailto:nicknick0630@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#題目-UVa-Link"><span class="nav-number">1.</span> <span class="nav-text">題目 :  UVa Link </span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解法"><span class="nav-number">2.</span> <span class="nav-text">解法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#推廣"><span class="nav-number">2.1.</span> <span class="nav-text">推廣</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#證明"><span class="nav-number">3.</span> <span class="nav-text">證明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#程式碼"><span class="nav-number">4.</span> <span class="nav-text">程式碼</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#時間複雜度"><span class="nav-number">5.</span> <span class="nav-text">時間複雜度</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chen Yu Sheng</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a></div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="Total Visitors">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="Total Views">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+    
+    
+      
+    
+  
+  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-nest@1/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/velocity/1.2.1/velocity.min.js"></script>
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/velocity/1.2.1/velocity.ui.min.js"></script>
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.6/jquery.fancybox.min.js"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.1"></script>
+
+  <script src="/js/src/motion.js?v=7.0.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=7.0.1"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=7.0.1"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
+
+  
+
+
+  <script src="/js/src/next-boot.js?v=7.0.1"></script>
+
+
+  
+
+  
+
+  
+
+  
+  
+
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://nicknick0630.github.io/2019/04/14/UVa-11464-Even-Parity/";
+    this.page.identifier = "2019/04/14/UVa-11464-Even-Parity/";
+    this.page.title = 'UVa 11464 : Even Parity';
+    };
+  function loadComments() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://conding-road.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', '' + +new Date());
+    (d.head || d.body).appendChild(s);
+  }
+  
+    loadComments();
+  
+</script>
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<style>
+  .copy-btn {
+    display: inline-block;
+    padding: 6px 12px;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 20px;
+    color: #333;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+    
+    user-select: none;
+    outline: 0;
+  }
+
+  .highlight-wrap .copy-btn {
+    transition: opacity .3s ease-in-out;
+    opacity: 0;
+    padding: 2px 6px;
+    position: absolute;
+    
+      right: 4px;
+      top: 8px;
+    
+  }
+
+  .highlight-wrap:hover .copy-btn,
+  .highlight-wrap .copy-btn:focus {
+    opacity: 1;
+  }
+
+  .highlight-wrap {
+    position: relative;
+  }
+</style>
+<script>
+  $('.highlight').each(function(i, e) {
+    var $wrap = $('<div>').addClass('highlight-wrap');
+    $(e).after($wrap);
+    $wrap.append($('<button>').addClass('copy-btn').append('Copy').on('click', function(e) {
+      var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+        return $(e).text();
+      }).toArray().join('\n');
+      var ta = document.createElement('textarea');
+      var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+      ta.style.top = yPosition + 'px'; // Prevent page scroll
+      ta.style.position = 'absolute';
+      ta.style.opacity = '0';
+      ta.readOnly = true;
+      ta.value = code;
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, code.length);
+      ta.readOnly = false;
+      var result = document.execCommand('copy');
+      
+        if (result) $(this).text('Copied');
+        else $(this).text('Copy failed');
+      
+      ta.blur(); // For iOS
+      $(this).blur();
+    })).on('mouseleave', function(e) {
+      var $b = $(this).find('.copy-btn');
+      setTimeout(function() {
+        $b.text('Copy');
+      }, 300);
+    }).append(e);
+  })
+</script>
+
+
+</body>
+</html>
