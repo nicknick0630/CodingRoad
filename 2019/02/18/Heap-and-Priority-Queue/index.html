@@ -151,7 +151,7 @@
 <meta property="og:description" content="HeapHeap 是一種 Data Structure ，要符合 Heap Condition (or Heap Property)Heap property 是指 parent 和 children 的關係 (但 children 之間順序無關)  Min Heap : parent &amp;lt;= children Max Heap : parent &amp;gt;= children  Heap 有一">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://nicknick0630.github.io/2019/02/18/Heap-and-Priority-Queue/Heap.png">
-<meta property="og:updated_time" content="2019-02-20T15:20:27.178Z">
+<meta property="og:updated_time" content="2019-05-01T15:27:56.201Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Heap and Priority Queue">
 <meta name="twitter:description" content="HeapHeap 是一種 Data Structure ，要符合 Heap Condition (or Heap Property)Heap property 是指 parent 和 children 的關係 (但 children 之間順序無關)  Min Heap : parent &amp;lt;= children Max Heap : parent &amp;gt;= children  Heap 有一">
@@ -795,7 +795,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">14</span>
+                    <span class="site-state-item-count">15</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -1154,6 +1154,53 @@
   
   
 
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') { next = next.nextSibling }
+        if (next && next.nodeName.toLowerCase() === 'br') { next.parentNode.removeChild(next) }
+      }
+    });
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<style>
+.MathJax_Display {
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
+</style>
+
+    
   
 
 
