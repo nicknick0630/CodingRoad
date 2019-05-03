@@ -164,7 +164,7 @@
 <meta property="og:image" content="https://nicknick0630.github.io/2019/05/01/UVa-12075-Counting-Triangles/12.png">
 <meta property="og:image" content="https://nicknick0630.github.io/2019/05/01/UVa-12075-Counting-Triangles/13.png">
 <meta property="og:image" content="https://nicknick0630.github.io/2019/05/01/UVa-12075-Counting-Triangles/14.png">
-<meta property="og:updated_time" content="2019-05-03T13:33:06.133Z">
+<meta property="og:updated_time" content="2019-05-03T13:35:29.003Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="UVa 12075 : Counting Triangles">
 <meta name="twitter:description" content="題目 :  UVa Link 給定一個 m x n 大小的格子點，求在這之中所有的三角形個數。 測資Input :   1 11 20 0  Output :   Case 1: 4Case 2: 18   思考一我們先來看一下題目給的範例，若是 1 x 2 的格子點，則情況就會是這樣，共有 18 個三角形在裡面  看起來似乎很複雜，所以我們來分析一下$ 1 \times 2 $ 的格子點中總共有">
@@ -651,7 +651,7 @@
 <h2 id="優化"><a href="#優化" class="headerlink" title="優化"></a>優化</h2><p>由於列舉格子點的過程有對稱性，所以在 Class Solution 的 init method 中，可以減少一半的計算量</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">int</span> i, k;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span> (i = <span class="number">2</span>; i &lt; MAX; ++i)</span><br><span class="line">			<span class="keyword">for</span> (k = i; k &lt; MAX; ++k)</span><br><span class="line">				dp[i][k] = dp[k][i] = dp[i - <span class="number">1</span>][k] + dp[i][k - <span class="number">1</span>] - dp[i - <span class="number">1</span>][k - <span class="number">1</span>] + gcd(i, k) - <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span> (i = <span class="number">2</span>; i &lt; MAX; ++i)</span><br><span class="line">			<span class="keyword">for</span> (k = i; k &lt; MAX; ++k)</span><br><span class="line">				ans[i][k] = ans[k][i] = ans[i - <span class="number">1</span>][k] + ans[i][k - <span class="number">1</span>] - ans[i - <span class="number">1</span>][k - <span class="number">1</span>] + dp[i][k];</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
 <p><br></p>
-<h2 id="UVa-測資"><a href="#UVa-測資" class="headerlink" title="UVa 測資"></a>UVa 測資</h2><p>請低調服用 : <a href="&quot;./UVa-12075-測資.txt&quot;">UVa 12075 測資</a></p>
+<h2 id="UVa-測資"><a href="#UVa-測資" class="headerlink" title="UVa 測資"></a>UVa 測資</h2><p>請低調服用 : <a href="UVa-12075-測資.txt">UVa 12075 測資</a></p>
 
       
     </div>
