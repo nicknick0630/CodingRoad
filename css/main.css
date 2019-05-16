@@ -1944,7 +1944,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #d4ffff;
+  background: #77cf38;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -3265,6 +3265,9 @@ ul.breadcrumb li+li:last-child {
 .posts-expand .post-meta time {
   border-bottom: 0;
   cursor: none;
+}
+.post-body {
+  letter-spacing: 1px;
 }
 hr {
   height: 0.2em;

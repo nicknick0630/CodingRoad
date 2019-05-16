@@ -1,0 +1,1312 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.6/jquery.fancybox.min.css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+
+  
+    
+    
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Noto Sans TC:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
+  
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.0.1',
+    sidebar: {"position":"right","display":"post","offset":15,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: true,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="對於實作記憶體管理，通常會有好幾種 pattern 可以使用，其中包含以下 2 種 :   單純的 linked list，單一的 memory pool 。 可參考 k&amp;amp;r 多條不同大小的 linked list，例如有 chunk 大小為 8 bytes、 16 bytes、 24 bytes… 128 bytes、 128 bytes 以上的 linked lists 多個 memo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="實作與解析 malloc &amp; free">
+<meta property="og:url" content="https://nicknick0630.github.io/2019/05/13/實作與解析-malloc-free/index.html">
+<meta property="og:site_name" content="Coding Road">
+<meta property="og:description" content="對於實作記憶體管理，通常會有好幾種 pattern 可以使用，其中包含以下 2 種 :   單純的 linked list，單一的 memory pool 。 可參考 k&amp;amp;r 多條不同大小的 linked list，例如有 chunk 大小為 8 bytes、 16 bytes、 24 bytes… 128 bytes、 128 bytes 以上的 linked lists 多個 memo">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://nicknick0630.github.io/2019/05/13/實作與解析-malloc-free/1.png">
+<meta property="og:image" content="https://nicknick0630.github.io/2019/05/13/實作與解析-malloc-free/2.png">
+<meta property="og:image" content="https://nicknick0630.github.io/2019/05/13/實作與解析-malloc-free/3.png">
+<meta property="og:image" content="https://nicknick0630.github.io/2019/05/13/實作與解析-malloc-free/4.png">
+<meta property="og:image" content="https://nicknick0630.github.io/2019/05/13/實作與解析-malloc-free/5.png">
+<meta property="og:image" content="https://nicknick0630.github.io/2019/05/13/實作與解析-malloc-free/6.png">
+<meta property="og:image" content="https://nicknick0630.github.io/2019/05/13/實作與解析-malloc-free/7.png">
+<meta property="og:image" content="https://nicknick0630.github.io/2019/05/13/實作與解析-malloc-free/8.png">
+<meta property="og:image" content="https://nicknick0630.github.io/2019/05/13/實作與解析-malloc-free/9.png">
+<meta property="og:image" content="https://nicknick0630.github.io/2019/05/13/實作與解析-malloc-free/10.png">
+<meta property="og:image" content="https://nicknick0630.github.io/2019/05/13/實作與解析-malloc-free/11.png">
+<meta property="og:image" content="https://nicknick0630.github.io/2019/05/13/實作與解析-malloc-free/12.png">
+<meta property="og:updated_time" content="2019-05-16T13:01:58.811Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="實作與解析 malloc &amp; free">
+<meta name="twitter:description" content="對於實作記憶體管理，通常會有好幾種 pattern 可以使用，其中包含以下 2 種 :   單純的 linked list，單一的 memory pool 。 可參考 k&amp;amp;r 多條不同大小的 linked list，例如有 chunk 大小為 8 bytes、 16 bytes、 24 bytes… 128 bytes、 128 bytes 以上的 linked lists 多個 memo">
+<meta name="twitter:image" content="https://nicknick0630.github.io/2019/05/13/實作與解析-malloc-free/1.png">
+
+
+
+
+
+
+  <link rel="canonical" href="https://nicknick0630.github.io/2019/05/13/實作與解析-malloc-free/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>實作與解析 malloc & free | Coding Road</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Coding Road</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-目錄">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/Index/" rel="section"><i class="menu-item-icon fa fa-fw fa-book"></i> <br>目錄</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>About</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://nicknick0630.github.io/2019/05/13/實作與解析-malloc-free/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chen Yu Sheng">
+      <meta itemprop="description" content="紀錄我的程式學習">
+      <meta itemprop="image" content="/upload/image/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coding Road">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">實作與解析 malloc & free
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-05-13 19:50:03" itemprop="dateCreated datePublished" datetime="2019-05-13T19:50:03+08:00">2019-05-13</time>
+            
+
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye fa-lg"></i>
+            
+             &nbsp; 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+            
+              
+
+                
+                
+                 <br> 
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-cog fa-spin fa-lg fa-fw" aria-hidden="true" style="color: #1FA4F0"></i>
+                </span>
+                
+                  
+                  <span class="post-meta-item-text">Symbols &#58;</span>
+                
+                <span title="post.wordcount">
+                  5.4k 字
+                </span>
+              
+
+              
+
+              
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>對於實作記憶體管理，通常會有好幾種 pattern 可以使用，其中包含以下 2 種 : </p>
+<ol>
+<li>單純的 linked list，單一的 memory pool 。 可參考 <a href="https://en.wikipedia.org/wiki/The_C_Programming_Language" target="_blank" rel="noopener">k&amp;r</a></li>
+<li>多條不同大小的 linked list，例如有 chunk 大小為 8 bytes、 16 bytes、 24 bytes… 128 bytes、 128 bytes 以上的 linked lists<br> 多個 memory pool。 可參考 <a href="https://book.douban.com/subject/1110934/" target="_blank" rel="noopener">STL 源碼剖析</a> 中所介紹的</li>
+</ol>
+<p>此篇為講解第一種較簡單的 <strong>malloc</strong> 和 <strong>free</strong> 的實作方法，並且可以在 Linux 與 Windows 二種平台上運作</p>
+<p><br></p>
+<h2 id="預備知識"><a href="#預備知識" class="headerlink" title="預備知識"></a>預備知識</h2><p><br></p>
+<h3 id="記憶體分布"><a href="#記憶體分布" class="headerlink" title="記憶體分布"></a>記憶體分布</h3><p>我們先來看一下 process 的記憶體分布</p>
+<p><img src="./1.png"></p>
+<ul>
+<li>Text 區段 : 就是放程式碼的部分</li>
+<li>Data 區段 : 放置已初始化的靜態變數</li>
+<li>BSS  區段 : 放置沒有初始化的靜態變數</li>
+<li>Heap 區段 : 這邊就是使用者可以自由管理的記憶體部分</li>
+<li>Stack 區段 : 區域變數</li>
+</ul>
+<p><br><br>另外，Stack 是會由上往下生長的，也就是會從 high address 往 low address 延伸，Heap 則相反，是由下往上長的</p>
+<p>而當使用者需要使用到動態記憶體時，就會呼叫 malloc 來獲得所需要的 memory<br>但是事實上 malloc 的底層是會需要和 <strong>OS (作業系統)</strong> 去獲得 memory<br>還記得剛剛說的嗎 ? <strong>Heap 是會生長的</strong><br>OS 會記錄每個 process 的記憶體中，Heap 的<strong>頂部 (最高位址)</strong>，會存在一個 pointer 當中<br>當我們需要更多的記憶體時，只需要請 OS 幫我們把 Heap 的頂部往上增加，我們就可以使用他們</p>
+<p>若是使用者去存取到 Heap 頂部以上的部分時 ( 也就是 <strong>“尚未使用區域”</strong>)，這是不合法且危險的行為<br>例如駭客可以再該區域放入 shell code 並執行，因此目前大多的作業系統都會去防範這種 <strong>“越界”</strong> 行為</p>
+<p><br></p>
+<h3 id="Linux-與-Windows-的-Heap-Functions"><a href="#Linux-與-Windows-的-Heap-Functions" class="headerlink" title="Linux 與 Windows 的 Heap Functions"></a>Linux 與 Windows 的 Heap Functions</h3><p>Linux 和 Windows 都有提供可以更改 Heap 頂部的 system call，更改 Heap 頂部就等同於和 OS 要記憶體</p>
+<p>在 Linux 中，有提供 2 個 system call</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">brk</span><span class="params">(<span class="keyword">void</span> *addr)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span>* <span class="title">sbrk</span><span class="params">(<span class="keyword">intptr_t</span> increment)</span></span>;</span><br></pre></td></tr></table></figure>
+<p><a href="http://man7.org/linux/man-pages/man2/sbrk.2.html" target="_blank" rel="noopener">man page</a> 上的描述為 :</p>
+<blockquote>
+<p>brk() and sbrk() change the location of the program break, which defines the end of<br>the process’s data segment (i.e., the program break is the first location after the<br>end of the uninitialized data segment).<br>Increasing the program break has the effect of allocating memory to the process;<br>decreasing the break deallocates memory.</p>
+<p>brk() sets the end of the data segment to the value specified by addr, when that<br>value is reasonable, the system has enough memory,<br>and the process does not exceed its maximum data size (see setrlimit(2)).</p>
+<p>sbrk() increments the program’s data space by increment bytes.<br>Calling sbrk() with an increment of 0 can be used to find the current location of<br>the program break.</p>
+</blockquote>
+<p>大略意思是說 brk() 和 sbrk() 可以改變 program break 的位置<br>且往上增加就等同於分配記憶體</p>
+<ul>
+<li><code>int brk(void *addr)</code><br> brk() 會把 program break 設定到 addr，如果設定成功會 return zero，失敗會回傳 -1</li>
+<li><code>void* sbrk(intptr_t increment)</code><br> sbrk() 會把 program break 增加 <strong>increment</strong>，設定成功就會回傳<strong>上一個program break</strong>位址，失敗會回傳 <strong>(void*)-1</strong><br> 當 increment = 0，回傳直則代表當前 program break 的位址</li>
+</ul>
+<p><br></p>
+<p>在 Windows 中，有許多 Heap Function，可以參考<a href="https://docs.microsoft.com/zh-tw/windows/desktop/Memory/heap-functions" target="_blank" rel="noopener">MSDN</a>，這邊我們只提到幾個</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">HANDLE <span class="title">GetProcessHeap</span><span class="params">( )</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function">HANDLE <span class="title">HeapCreate</span><span class="params">( DWORD flOptions, SIZE_T dwInitialSize, SIZE_T dwMaximumSize )</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function">DECLSPEC_ALLOCATOR LPVOID <span class="title">HeapAlloc</span><span class="params">( HANDLE hHeap, DWORD dwFlags, SIZE_T dwBytes )</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function">BOOL <span class="title">HeapFree</span><span class="params">( HANDLE hHeap, DWORD dwFlags, _Frees_ptr_opt_ LPVOID lpMem )</span></span>;</span><br></pre></td></tr></table></figure>
+<p>在 Windows 中，每個 process 都會擁有一個 Defualt Heap，我們可以使用 <code>GetProcessHeap()</code> 來獲得 Heap 的 Handle<br>有了 Heap Handle，就可以使用 <code>HeapAlloc()</code> 與 <code>HeapFree()</code> 來分配與回收記憶體<br>Windows 還允許我們用 <code>HeapCreate()</code> 來創建 <strong>Private Heap</strong>，詳細資訊可以參考 <a href="https://docs.microsoft.com/en-us/windows/desktop/api/HeapApi/nf-heapapi-heapcreate" target="_blank" rel="noopener">MSDN</a></p>
+<ul>
+<li><code>HANDLE GetProcessHeap()</code><br> 回傳 Process 的 Default Heap</li>
+<li><code>DECLSPEC_ALLOCATOR LPVOID HeapAlloc( HANDLE hHeap, DWORD dwFlags, SIZE_T dwBytes )</code><br> hHeap : heap handle<br> dwFlags : 參數，可以放置 0 就好<br> dwBytes : 要獲得的記憶體大小</li>
+</ul>
+<p><br><br>這邊簡略介紹完了 Linux 與 Windows 二大作業系統有關於 Heap 的 system call 之後<br>我們就可以進入實作 malloc 的環節了</p>
+<p><br></p>
+<h2 id="記憶體分配模式"><a href="#記憶體分配模式" class="headerlink" title="記憶體分配模式"></a>記憶體分配模式</h2><p>本篇所講解的是參考 <a href="https://en.wikipedia.org/wiki/The_C_Programming_Language" target="_blank" rel="noopener">k&amp;r</a> 中的實作方式，並用我<strong>個人</strong>的理解講解與說明他為甚麼會這麼做</p>
+<ul>
+<li><p><strong>Pattern 1</strong><br>首先，我們來思考一下 malloc &amp; free 的行為模式<br>對於使用者來說 ( 也就是 programmer )，需要記憶體時就呼叫 malloc，不需要用到的時候就用 free 將他歸還<br>這個動作也許在一支普通的程式中出現上百次上千次都很正常<br>因此，若每次呼叫 malloc 時，底層都呼叫了 system call (上面介紹的) 來和作業系統要記憶體<br>然後 free 也都會呼叫 system call 來歸還記憶體給 OS<br>這支程式光是在 allocating memroy 時就呼叫了一大堆的 system call<br>我們都知道 system call 的 overhead 是很大的，它會需要做 context switch 與 space 的轉換<br>因此就有了 <strong>memory pool</strong> 的概念</p>
+</li>
+<li><p><strong>Pattern 2</strong><br>現在我們呼叫 malloc 時，就不要再直接去 call system call 了，先去檢查 memory pool 中有沒有一塊夠大的記憶體可以滿足需求<br>若有的話，就把它交給使用者，若沒有的話，再去呼叫 system call 和 OS 要記憶體<br>當使用者呼叫 free 時，我們就把它存入 memory pool 中，不再把這塊記憶體歸還給 OS，因為歸還記憶體其實是沒有必要的<br>programmer 要求記憶體時，可以從 memory pool 去找，當真的 memory pool 無法提供時，才會需要去求助於 OS<br>所以<strong>不會有無止盡的和 OS 要求記憶體</strong>，造成耗光 memroy 的問題，而且程式結束時這些記憶體都會還給 OS<br>當然在非常極端狀況下，不管是甚麼方法，會爆掉就是會爆掉</p>
+</li>
+<li><p><strong>Pattern 2.5</strong><br>若使用者要求了 n bytes 的記憶體，我們不需要每次都老老實實和 OS 說 “給我 n bytes” 的記憶體<br>可以設定一個門檻值 T，若 n 小於 T，則我們就直接要求 T bytes，大於 T 的話才會乖乖的要求 n bytes<br>這樣的好處是能夠減少 system call 的次數<br>另外當使用者 free 記憶體時，把 memory 丟進 memory pool 的同時，可以檢查有沒有記憶體和這塊 memory 是相鄰的<br>例如 A 的範圍是 0x10 ~ 0x20，檢查 memory pool 時發現 B 的範圍是 0x21 ~ 0x35，我們就可以把它們合併在一起<br>變成範圍是 0x10 ~ 0x35 的 C，這樣能夠讓之後較容易找到 “夠大的記憶體區塊”</p>
+</li>
+<li><p><strong>Pattern 3</strong><br>由於我們把一塊記憶體交給使用者使用的時候，我們還是需要去紀錄一些資訊，例如 : 這塊記憶體的大小等等<br>有一種方法是可以建一個 table 來記錄，例如 :</p>
+<p><img src="./2.png"></p>
+<p>但這樣會有幾個缺點:</p>
+<ol>
+<li>Table size 可能會很大</li>
+<li>若要進行 <strong>Patern 2.5</strong> 的 memroy 合併動作，會需要大量的 search，或是會需要對 Address 進行排序</li>
+</ol>
+<p>因此不採用這種作法，另一種做法是，在每個記憶體區塊的前面加上 Header，來記錄所需要的資訊</p>
+<p><img src="./3.png"></p>
+<p>Info 中會記錄 memory 所需要的資訊，例如大小，然而使用者<strong>能夠看到且能夠使用</strong>的就是 Body 的部分，也就是 B ~ C<br>這樣的實作方式就不會上述 2 種問題了</p>
+</li>
+<li><p><strong>Pattern 3.5</strong><br>現在大部分的 machine 會要求記憶體需要<strong>對齊 ( Alignment )</strong>，所以用 Bytes 來當作紀錄 memory 的單位有時候會碰上一些麻煩<br>那如果可以確保 Header 會是對齊的，我們就能夠使用 <strong>Header</strong> 來當作基本單位，也就是每一塊記憶體的大小就會是<br>記錄成 N 個 Header，實際上的大小為 <strong>N x sizeof(Header)</strong></p>
+</li>
+<li><p><strong>Pattern 4</strong><br>由於每一塊記憶體 Block 都會有以下特性 :</p>
+<blockquote>
+<ol>
+<li>連續性。( 如 Pattern 3 的圖 )</li>
+<li>獨立性。( 任 2 塊 memory block 一定不會也不能夠重疊 )</li>
+<li>可比較。( 由於上述 2 點，任 2 塊 memory block 必定可以用起始 address 來比較大小 )</li>
+</ol>
+</blockquote>
+<p>那麼我們就可以使用一個 linked list 將 memory blocks 串接起來，且每一塊 block 必定是由低位址到高位址連接起來</p>
+<p><img src="./4.png"></p>
+<p>使用 <strong>free list</strong> 指標來維護這條 linked list，這也就是 memory pool<br>其中紫色和綠色的部分是 OS 已經分配給 malloc，可以讓使用者自行去運用，而灰色的部分是還未分配給 process 的區段</p>
+<p>此外，當 programmer 呼叫 malloc 時，我們就會遍歷 linked list 去尋找合適的 block<br>對於搜尋<strong>合適的 block</strong>，我們有幾種選擇:</p>
+<blockquote>
+<ol>
+<li>最契合的大小 : 若要求 n 個 header size 的 memory，就尋找所有 &gt;= n 的 blocks 中大小最小的，也就是<br>   越靠近 n 越好，等於 n 最好，會需要遍歷一次 linked list</li>
+<li>第一個合適的 : 若要求 n 個 header size 的 memory，就去遍歷 linked list，只要找到有大於等於 n 的 block<br>  就回傳給使用者</li>
+</ol>
+</blockquote>
+<p>本篇文章使用<em>第二個方法的改良</em>，我們不直接回傳該 block，要先檢查他的大小，若大於 n 的話，就把他<strong>分割成 2 部分</strong><br>一部分大小就等於 n 並回傳給使用者，剩下的那部份就繼續放回 linked list，如下圖所示</p>
+<p><img src="./5.png"><br>若要求 n = 20，且第一個找到 size 大於 n 的 block 大小為 60，就把他分隔成 2 個 block，大小分別為 20 與 40</p>
+</li>
+<li><p><strong>Pattern 5</strong><br>剛剛 Pattern 4 的 lilst 是不管 memory block 的大小，通通給他串在一起，但我們還可以讓他進一步的分類<br><img src="./6.png"><br>可以用一個 array of pointers 來儲存不同 block size 的 linked lists，這樣可以讓查找合適 size 的步驟加快許多<br>詳細可以參見 <a href="https://book.douban.com/subject/1110934/" target="_blank" rel="noopener">STL 源碼剖析</a></p>
+</li>
+</ul>
+<p><br></p>
+<h2 id="實作"><a href="#實作" class="headerlink" title="實作"></a>實作</h2><p>我們先來對函式明確分工一下</p>
+<ol>
+<li>malloc : 會維護一條 linked list，當使用者要求記憶體時，會先去 list 中查找，並使用<strong>第一個合適</strong>的搜尋方法<br> 若沒有足夠大的 block，則會和 OS 要更多 memory</li>
+<li>free : 將使用者歸還的 memroy block 放回 linked list，且必須要維持 list 中依照 address 低到高排序的規則<br> 此外，也順便檢查使否有相鄰的 block 可以合併 ( <strong>Pattern 2.5</strong> )</li>
+<li>morecore : 負責和 OS 要求記憶體，也是能夠將不同作業系統的 system call 封裝起來的函式</li>
+</ol>
+<h3 id="Part-1"><a href="#Part-1" class="headerlink" title="Part 1"></a>Part 1</h3><p>有了各個函式的明確定義，我們再來看一下 memory block 的 Header 與一些基本定義</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MIN_ALLOC_SIZE 128</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ALIGN long</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">union</span> _Header</span><br><span class="line">&#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> </span></span><br><span class="line"><span class="class">    &#123;</span></span><br><span class="line">        <span class="keyword">union</span> _Header *next;</span><br><span class="line">        <span class="keyword">size_t</span> size;</span><br><span class="line">    &#125; meta;</span><br><span class="line">    </span><br><span class="line">    ALIGN a;</span><br><span class="line">&#125; Header;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>MIN_ALLOC_SIZE</code> : 就是 <strong>Pattern 2.5</strong> 所提到的最小門檻值</li>
+<li><code>ALIGN</code> : 我們用 <code>long</code> 來當作 alignment</li>
+<li><code>Header</code> : 注意他是一個 <a href="https://www.geeksforgeeks.org/union-c/" target="_blank" rel="noopener">union</a>，強迫 Header 最小必須要和 <code>ALIGN</code> 對齊<br> 另一個<em>物件</em> (<a href="http://ultra.pr.erau.edu/~jaffem/classes/cs420/cs420_homework/shared_memory/structures.htm" target="_blank" rel="noopener">Anonymous Structures</a>) 紀錄 2 個資訊<ol>
+<li>next : 下一個 Header 的位址 (linked list) </li>
+<li>size : 此 block 的 size ( 單位是<strong>多少個 Header</strong>，且也包含 Header 本身 )</li>
+</ol>
+</li>
+</ul>
+<p>再來就是 header file 的其他定義:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> _WIN32</span></span><br><span class="line">    <span class="meta">#<span class="meta-keyword">define</span> __WINDOWS__</span></span><br><span class="line">    <span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;Windows.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">/* _WIN32 */</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> __linux__</span></span><br><span class="line">    <span class="meta">#<span class="meta-keyword">define</span> __LINUX__</span></span><br><span class="line">    <span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">/* __linux__ */</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span>* <span class="title">my_malloc</span><span class="params">(<span class="keyword">size_t</span> bytes)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span>* <span class="title">my_calloc</span><span class="params">(<span class="keyword">size_t</span> num, <span class="keyword">size_t</span> size)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span>* <span class="title">my_realloc</span><span class="params">(<span class="keyword">void</span> *ptr, <span class="keyword">size_t</span> bytes)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">my_free</span><span class="params">(<span class="keyword">void</span> *ptr)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">void</span>* __os_alloc(<span class="keyword">size_t</span> num);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">static</span> Header* <span class="title">morecore</span><span class="params">(<span class="keyword">size_t</span> num)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>前面的條件式編譯是判斷作業系統是 Windows 還是 Linux<br>另外為了讓 <code>morecore</code> 在切換作業時不用去做更動，我們把呼叫 system call 的實作放進了 <code>__os_alloc</code></p>
+<p><strong>Windows 系統</strong> ( 可以回到最上面複習一下 )</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">void</span>* __os_alloc(<span class="keyword">size_t</span> num)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">static</span> HANDLE h_heap = <span class="literal">NULL</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (!h_heap)</span><br><span class="line">		h_heap = GetProcessHeap();</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> HeapAlloc(h_heap, <span class="number">0</span>, num);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>Linux 系統</strong> ( 可以回到最上面複習一下 )</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">void</span>* __os_alloc(<span class="keyword">size_t</span> num)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">void</span>* ptr = sbrk(num);</span><br><span class="line">	<span class="keyword">return</span> (ptr == (<span class="keyword">void</span>*)<span class="number">-1</span>) ? <span class="literal">NULL</span> : ptr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><br></p>
+<h3 id="Part-2-my-malloc"><a href="#Part-2-my-malloc" class="headerlink" title="Part 2 : my_malloc"></a>Part 2 : my_malloc</h3><p>我們需要維護一條 linked list 當作 memory pool，對於實作 linked list 的方法，我個人比較喜歡使用 <strong>Handle</strong>，如下圖</p>
+<p><img src="7.png"></p>
+<p>當 linked list 是空的時候，就只剩下 Handle 會自己指向自己，不為空時，list 的頭尾都會連接到 Handle<br>這樣的好處是可以很方便的插入一個元素到<strong>Empty List</strong>，也可以很方便的刪除掉 list 的最後一個元素 <strong>( size=1 -&gt; size-&gt;0 )</strong></p>
+<p>但此處我們除了使用 Handle 來時做 linked list 外，還有使用一個 <strong>free_list</strong> 指標來指向 linked list 中的某個元素<br>並把該元素當作是<strong>遍歷 list 的起點</strong>，然而 free_list 指向的元素是可以改變的，也就是<u><em>搜尋的起點是會改變的</em></u><br>至於為甚麼要這樣做的理由，在文章 <strong>Part 3 : free</strong> 會做說明</p>
+<p>因此我們需要 2 個 global varible</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> Header base;  <span class="comment">// the handle of list</span></span><br><span class="line"><span class="keyword">static</span> Header *free_list = <span class="literal">NULL</span>;</span><br></pre></td></tr></table></figure>
+<p>再來我們先來看一下 <strong>my_malloc</strong> 完整程式碼，下面會一一解說</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span>* <span class="title">my_malloc</span><span class="params">(<span class="keyword">size_t</span> bytes)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">size_t</span> units;</span><br><span class="line">    Header *prev, *now;</span><br><span class="line"></span><br><span class="line">    units = (bytes + <span class="keyword">sizeof</span>(Header) - <span class="number">1</span>)/<span class="keyword">sizeof</span>(Header) + <span class="number">1</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// no free list</span></span><br><span class="line">    prev = free_list;</span><br><span class="line">    <span class="keyword">if</span>(prev == <span class="literal">NULL</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        base.meta.next = &amp;base;</span><br><span class="line">        free_list = &amp;base;</span><br><span class="line">        prev = &amp;base;</span><br><span class="line">        base.meta.size = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(now = prev-&gt;meta.next; ; prev = now, now=now-&gt;meta.next)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// big enough</span></span><br><span class="line">        <span class="keyword">if</span>(now-&gt;meta.size &gt;= units)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(now-&gt;meta.size == units) <span class="comment">// equal</span></span><br><span class="line">            &#123;</span><br><span class="line">                prev-&gt;meta.next = now-&gt;meta.next;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span>                        <span class="comment">// larger</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="comment">// split</span></span><br><span class="line">                now-&gt;meta.size -= units;</span><br><span class="line">                now += now-&gt;meta.size;</span><br><span class="line">                now-&gt;meta.size = units;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            free_list = prev;</span><br><span class="line">            <span class="keyword">return</span> (<span class="keyword">void</span>*)(now + <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// go around and back to the free_list (start)</span></span><br><span class="line">        <span class="keyword">if</span>(now == free_list)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// allocate a new memory</span></span><br><span class="line">            now = morecore(units);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span>(now == <span class="literal">NULL</span>)</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><br></p>
+<p>首先在 line 6，我們使用<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">units = (bytes + <span class="keyword">sizeof</span>(Header) - <span class="number">1</span>)/<span class="keyword">sizeof</span>(Header) + <span class="number">1</span>;</span><br></pre></td></tr></table></figure></p>
+<p>來計算使用者要求的記憶體 bytes 所需要的 Header block 數量，注意還要包含真正紀錄 info 的那塊 Header</p>
+<p>然後 <code>prev</code> 和 <code>now</code> 兩個指標代表的意思為</p>
+<ol>
+<li><code>now</code> : 現在要進行操作的 list node</li>
+<li><code>prev</code> : now 的前一個 list node<br>我們不需要再另外設一個變數去紀錄 <code>now</code> 的下一個 list node 是誰，因為可以很輕易地使用 <code>now-&gt;meta.next</code> 來取得</li>
+</ol>
+<p>接下來就是要判斷是否是使用者<strong>第一次</strong>呼叫 my_malloc，若是第一次呼叫的話，會有以下幾種情形 :</p>
+<ol>
+<li>Linked List is empty</li>
+<li>base 還未初始化</li>
+<li>free_list 指標是 NULL，也就是還沒指向 lisked list 中的任何元素</li>
+</ol>
+<p>因此若是第一次呼叫的話，我們會需要做幾個初始化的動作:</p>
+<ol>
+<li>讓 base 自己指向自己，變成一個環狀 linked list 的狀態</li>
+<li>把 free_list 指向 list 中唯一個 node，也就是 base</li>
+<li>更新 prev 的值</li>
+<li>把 base 的 size 設成 0，目的是為了接下來在查找是否有合適的 block size 時，list handle 不會去影響到結果</li>
+</ol>
+<p>就是以下這段程式碼<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">prev = free_list;</span><br><span class="line"><span class="keyword">if</span>(prev == <span class="literal">NULL</span>)</span><br><span class="line">&#123;</span><br><span class="line">   base.meta.next = &amp;base;</span><br><span class="line">   free_list = &amp;base;</span><br><span class="line">   prev = &amp;base;</span><br><span class="line">   base.meta.size = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>再來就是要遍歷 linked list，找出第一個夠大的 block，注意起始點是 free_list 所指到 node 的下一個 node<br>因為剛剛上面已經讓 <code>prev = free_list</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(now = prev-&gt;meta.next; ; prev = now, now=now-&gt;meta.next)</span><br><span class="line">&#123;</span><br><span class="line">   <span class="comment">// big enough</span></span><br><span class="line">   <span class="keyword">if</span>(now-&gt;meta.size &gt;= units)</span><br><span class="line">   &#123;</span><br><span class="line">      <span class="keyword">if</span>(now-&gt;meta.size == units) <span class="comment">// equal</span></span><br><span class="line">      &#123;</span><br><span class="line">         prev-&gt;meta.next = now-&gt;meta.next;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">else</span>                        <span class="comment">// larger</span></span><br><span class="line">      &#123;</span><br><span class="line">         <span class="comment">// split</span></span><br><span class="line">         now-&gt;meta.size -= units;</span><br><span class="line">         now += now-&gt;meta.size;</span><br><span class="line">         now-&gt;meta.size = units;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      free_list = prev;</span><br><span class="line">      <span class="keyword">return</span> (<span class="keyword">void</span>*)(now + <span class="number">1</span>);</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="comment">// go around and back to the free_list (start)</span></span><br><span class="line">   <span class="keyword">if</span>(now == free_list)</span><br><span class="line">   &#123;</span><br><span class="line">      <span class="comment">// allocate a new memory</span></span><br><span class="line">      now = morecore(units);</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span>(now == <span class="literal">NULL</span>)</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在迴圈中，我們要檢查 2 件事 :</p>
+<ol>
+<li><p>now node 的 size 是否大於使用者個需求<br>若 now node size 恰好等於使用者需求時，就把前一個 node 的 next 指標指向 now node 的下一個 node<br>若 now node size 大於使用者需求，我們就需要把它分割，並把多餘的部分繼續留在 Linked list 中，分割的步驟如下圖</p>
+<p><img src="8.png" width="70%"></p>
+<p>注意從頭到尾<strong>原始 now</strong> 的 next 指標都沒有更動，整個過程就只是<u><em>把這個過大的 block 分割，並回傳後半段給使用者</em></u></p>
+<p>然後再把 <code>free_list = prev</code>，這樣下一次搜索時，就會從<strong>原始的 now node</strong> 繼續搜尋<br>最後要回傳 <code>(void*)(now + 1)</code>，因為使用者不會看到我們用來記錄 Info 的 Header</p>
+</li>
+<li><p>now node 是否等於 free_list<br>若相等的話，代表已經搜索完整個 linked list 了，就要呼叫 <code>morecore</code> 來和作業系統要更多 memory<br>若不相同，代表還沒搜尋完整個 linked list</p>
+</li>
+</ol>
+<p><br></p>
+<h3 id="Part-3-my-free"><a href="#Part-3-my-free" class="headerlink" title="Part 3 : my_free"></a>Part 3 : my_free</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">my_free</span><span class="params">(<span class="keyword">void</span> *p)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Header *ptr;</span><br><span class="line">    Header *header = (Header*)p - <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// find the right position of header in the linked list</span></span><br><span class="line">    <span class="keyword">for</span>(ptr = free_list; !(header &gt; ptr &amp;&amp; header &lt; ptr-&gt;meta.next); ptr = ptr-&gt;meta.next)</span><br><span class="line">        <span class="keyword">if</span>(ptr &gt;= ptr-&gt;meta.next &amp;&amp; (header &gt; ptr || header &lt; ptr-&gt;meta.next))</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// check the right hand side of the header</span></span><br><span class="line">    <span class="keyword">if</span>(header + header-&gt;meta.size == ptr-&gt;meta.next)    <span class="comment">// if header is adjacent to the ptr-&gt;meta.next</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// merge</span></span><br><span class="line">        header-&gt;meta.size += ptr-&gt;meta.size;</span><br><span class="line">        header-&gt;meta.next = ptr-&gt;meta.next-&gt;meta.next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        header-&gt;meta.next = ptr-&gt;meta.next-&gt;meta.next;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// check the left hand side of the header</span></span><br><span class="line">    <span class="keyword">if</span>(ptr + ptr-&gt;meta.size == header)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// merge</span></span><br><span class="line">        ptr-&gt;meta.size += header-&gt;meta.size;</span><br><span class="line">        ptr-&gt;meta.next = header-&gt;meta.next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        ptr-&gt;meta.next = header;</span><br><span class="line"></span><br><span class="line">    free_list = ptr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>首先，我們要先把使用者回傳的 <code>pointer p</code> 推移回來，這樣我們才看的到紀錄 Info 的 Header</p>
+<p>對於第一個迴圈</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// find the right position of header in the linked list</span></span><br><span class="line"><span class="keyword">for</span>(ptr = free_list; !(header &gt; ptr &amp;&amp; header &lt; ptr-&gt;meta.next); ptr = ptr-&gt;meta.next)</span><br><span class="line">   <span class="keyword">if</span>(ptr &gt;= ptr-&gt;meta.next &amp;&amp; (header &gt; ptr || header &lt; ptr-&gt;meta.next))</span><br><span class="line">      <span class="keyword">break</span>;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><code>!(header &gt; ptr &amp;&amp; header &lt; ptr-&gt;meta.next)</code> : 中間的 <code>header &gt; ptr &amp;&amp; header &lt; ptr-&gt;meta.next</code> 代表<br>header 會在 ptr 與 ptr-&gt;meta.next 的中間，如下圖所示</p>
+<p><img src="9.png" width="60%"></p>
+<p> 因此若 <code>!(header &gt; ptr &amp;&amp; header &lt; ptr-&gt;meta.next) = false</code>，代表 header 介於 ptr 與 ptr-&gt;meta.next 的之間</p>
+</li>
+<li><p><code>ptr &gt;= ptr-&gt;meta.next</code> : 代表 ptr 是 list 中 <strong>address 最大的</strong> 元素，且 ptr-&gt;meta.next 是 <strong>address 最小的</strong></p>
+<p> <img src="10.png" width="60%"></p>
+</li>
+<li><p><code>(header &gt; ptr || header &lt; ptr-&gt;meta.next)</code> : 代表在上面那種狀況下，header 會出現在這 2 個位置的其中一個</p>
+<p> <img src="11.png" width="60%"></p>
+<p> 也就是比 ptr 還要右邊，或是比 ptr-&gt;meta.next 還要左邊</p>
+</li>
+</ul>
+<p><br><br>因此，總和以上，最後跳出迴圈的時候，header 只會出現在 3 種可能的位置</p>
+<p><img src="12.png" width="80%"></p>
+<ol>
+<li>在 ptr 與 ptr-&gt;meta.next 的中間</li>
+<li>在 linked list 的最右邊</li>
+<li>在 linked list 的最左邊</li>
+</ol>
+<p>接下來我們就要來檢查是否有可以合併的 block 和把 header 插入到 list 中<br>觀察一下，若是要從 header 的右邊進行 block 合併，可能的情況就只有 <strong>1 和 3</strong><br>另外，要從左邊進行合併的話，可能的位置為 <strong>1 和 2</strong></p>
+<p>程式碼如下:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// check the right hand side of the header</span></span><br><span class="line"><span class="keyword">if</span>(header + header-&gt;meta.size == ptr-&gt;meta.next)    <span class="comment">// if header is adjacent to the ptr-&gt;meta.next</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// merge</span></span><br><span class="line">    header-&gt;meta.size += ptr-&gt;meta.size;</span><br><span class="line">    header-&gt;meta.next = ptr-&gt;meta.next-&gt;meta.next;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    header-&gt;meta.next = ptr-&gt;meta.next-&gt;meta.next;</span><br><span class="line"></span><br><span class="line"><span class="comment">// check the left hand side of the header</span></span><br><span class="line"><span class="keyword">if</span>(ptr + ptr-&gt;meta.size == header)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// merge</span></span><br><span class="line">    ptr-&gt;meta.size += header-&gt;meta.size;</span><br><span class="line">    ptr-&gt;meta.next = header-&gt;meta.next;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    ptr-&gt;meta.next = header;</span><br></pre></td></tr></table></figure>
+<ol>
+<li>先檢查 header 的<strong>右邊</strong>有沒有和 ptr-&gt;meta.next 相鄰<br>有的話，將 ptr-&gt;meta.next 合併到 header，並更新 header-&gt;meta.next 指標<br>沒有的話，只要更新 header-&gt;meta.next 指標就好</li>
+<li>在檢查 header 的<strong>左邊</strong>有沒有和 ptr 相鄰<br>有的話，把 header 合併到 ptr 中，並更新 ptr-&gt;meta.next 為 header 的下一個 node <u><em>(上一個步驟的結果)</em></u><br>沒有的話，就把 ptr-&gt;meta.next 指向 header</li>
+</ol>
+<p>最後再把 <code>free_list</code> 指到 ptr，這樣下一次就會從 ptr 的下一個 node 開始遍歷 list<br>可能會是 <code>ptr-&gt;meta.next</code> ( ptr 與 header 合併)，或是 <code>header</code> ( header 獨立或是和 ptr-&gt;meta.next 合併)</p>
+<p><br></p>
+<h3 id="Part-4-morecore"><a href="#Part-4-morecore" class="headerlink" title="Part 4 : morecore"></a>Part 4 : morecore</h3><p>此函式就是要負責與作業系統溝通，不過實際上 system call 的部分都已經包裝在 <code>__os_alloc()</code> 中了<br>程式碼如下:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> Header* <span class="title">morecore</span><span class="params">(<span class="keyword">size_t</span> num)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Header *header;</span><br><span class="line">    <span class="keyword">void</span> *ptr;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(num &lt; MIN_ALLOC_SIZE)</span><br><span class="line">        num = MIN_ALLOC_SIZE;</span><br><span class="line"></span><br><span class="line">    ptr = __os_alloc(num * <span class="keyword">sizeof</span>(Header));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(!ptr)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line"></span><br><span class="line">    header = (Header*)ptr;</span><br><span class="line">    header-&gt;meta.size = num;</span><br><span class="line"></span><br><span class="line">    my_free((<span class="keyword">void</span>*)(header+<span class="number">1</span>));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> free_list;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>首先我們先檢查使用者要求的記憶體大小有沒有小於門檻值<br>再來就呼叫 <code>__os_alloc()</code> 來和 OS 要 memory<br>若回傳 <code>NULL</code> 則代表失敗，直接回傳給使用者 ( 要他們自己去負責這個狀況 )</p>
+<p>接著再將 header 的 size 設定好<br>最後，<strong>利用 my_free() 來將這塊新要來的記憶體插入到 free_list 中</strong><br>並回傳 free_list</p>
+<p>我們再回顧一下 <strong>Part 2</strong> 有關 <code>morecore</code> 的程式碼</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// go around and back to the free_list (start)</span></span><br><span class="line"><span class="keyword">if</span>(now == free_list)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// allocate a new memory</span></span><br><span class="line">    now = morecore(units);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(now == <span class="literal">NULL</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>now</code> 會接住 <code>morecore</code> 回傳的值，也就是 <code>free_list</code>，然後 <code>my_malloc</code> 會進行下一次的迴圈<br><code>now</code> 會往下一個 node 移動，<code>now = free_list-&gt;meta.next</code><br>由 <strong>Part 3</strong> 我們可以知道， <code>my_free</code> 的最後會把 free_list 設為 ptr<br>且根據 header 是否有合併可以分成幾種情況:</p>
+<ol>
+<li>header 都沒有合併 : <code>free_list-&gt;meta.next</code> = ptr-&gt;meta.next = <strong>header</strong></li>
+<li>header 只和右邊合併 : <code>free_list-&gt;meta.next</code> = ptr-&gt;meta.next = <strong>合併後的 header</strong></li>
+<li>header 只和左邊合併 : free_list = ptr = header，因此 <code>free_list-&gt;meta.next</code> = <strong>原本的 ptr-&gt;meta.next</strong></li>
+<li>header 和左右邊都合併 : free_list = ptr = header，因此 <code>free_list-&gt;meta.next</code> = <strong>原本的 ptr 後 2 個 node</strong></li>
+</ol>
+<p>因此當 <code>my_malloc</code> 遍歷完整個 linked list 後，還是找不到夠大的 block，就會呼叫 <code>morecore</code> 來獲得新的 memory<br>然後再<strong>從頭開始遍歷 linked list</strong>，整合後上面那 4 種狀況，可以發現<br><strong>情況一和情況二</strong> 都會在重新遍歷 list 的第一次迴圈就找到那塊和 OS 要的 memory (也就是 header) –&gt; <strong>O(1)</strong><br><strong>情況三和情況四</strong> 就必須要重新遍歷完整個 list 後才會找到 header –&gt; <strong>O(N)</strong></p>
+<p>不過我個人認為，應該是情況一發生的機率比較大，所以這種作法的效率應該還是不錯的</p>
+<p><br></p>
+<h2 id="完整程式碼"><a href="#完整程式碼" class="headerlink" title="完整程式碼"></a>完整程式碼</h2><p>完整檔案 : <a href="./mm.c">mm.c</a>、<a href="./mm.h">mm.h</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/01/UVa-12075-Counting-Triangles/" rel="next" title="UVa 12075 : Counting Triangles">
+                <i class="fa fa-chevron-left"></i> UVa 12075 : Counting Triangles
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/upload/image/avatar.gif" alt="Chen Yu Sheng">
+            
+              <p class="site-author-name" itemprop="name">Chen Yu Sheng</p>
+              <div class="site-description motion-element" itemprop="description">紀錄我的程式學習</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">16</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/nicknick0630" title="GitHub &rarr; https://github.com/nicknick0630" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:nicknick0630@gmail.com" title="E-Mail &rarr; mailto:nicknick0630@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#預備知識"><span class="nav-number">1.</span> <span class="nav-text">預備知識</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#記憶體分布"><span class="nav-number">1.1.</span> <span class="nav-text">記憶體分布</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux-與-Windows-的-Heap-Functions"><span class="nav-number">1.2.</span> <span class="nav-text">Linux 與 Windows 的 Heap Functions</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#記憶體分配模式"><span class="nav-number">2.</span> <span class="nav-text">記憶體分配模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#實作"><span class="nav-number">3.</span> <span class="nav-text">實作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Part-1"><span class="nav-number">3.1.</span> <span class="nav-text">Part 1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Part-2-my-malloc"><span class="nav-number">3.2.</span> <span class="nav-text">Part 2 : my_malloc</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Part-3-my-free"><span class="nav-number">3.3.</span> <span class="nav-text">Part 3 : my_free</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Part-4-morecore"><span class="nav-number">3.4.</span> <span class="nav-text">Part 4 : morecore</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#完整程式碼"><span class="nav-number">4.</span> <span class="nav-text">完整程式碼</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chen Yu Sheng</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a></div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="Total Visitors">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="Total Views">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+    
+    
+      
+    
+  
+  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-nest@1/canvas-nest-nomobile.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/velocity/1.2.1/velocity.min.js"></script>
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/velocity/1.2.1/velocity.ui.min.js"></script>
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.6/jquery.fancybox.min.js"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.1"></script>
+
+  <script src="/js/src/motion.js?v=7.0.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=7.0.1"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=7.0.1"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
+
+  
+
+
+  <script src="/js/src/next-boot.js?v=7.0.1"></script>
+
+
+  
+
+  
+
+  
+
+  
+  
+
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://nicknick0630.github.io/2019/05/13/實作與解析-malloc-free/";
+    this.page.identifier = "2019/05/13/實作與解析-malloc-free/";
+    this.page.title = '實作與解析 malloc & free';
+    };
+  function loadComments() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://conding-road.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', '' + +new Date());
+    (d.head || d.body).appendChild(s);
+  }
+  
+    loadComments();
+  
+</script>
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<style>
+  .copy-btn {
+    display: inline-block;
+    padding: 6px 12px;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 20px;
+    color: #333;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+    
+    user-select: none;
+    outline: 0;
+  }
+
+  .highlight-wrap .copy-btn {
+    transition: opacity .3s ease-in-out;
+    opacity: 0;
+    padding: 2px 6px;
+    position: absolute;
+    
+      right: 4px;
+      top: 8px;
+    
+  }
+
+  .highlight-wrap:hover .copy-btn,
+  .highlight-wrap .copy-btn:focus {
+    opacity: 1;
+  }
+
+  .highlight-wrap {
+    position: relative;
+  }
+</style>
+<script>
+  $('.highlight').each(function(i, e) {
+    var $wrap = $('<div>').addClass('highlight-wrap');
+    $(e).after($wrap);
+    $wrap.append($('<button>').addClass('copy-btn').append('Copy').on('click', function(e) {
+      var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+        return $(e).text();
+      }).toArray().join('\n');
+      var ta = document.createElement('textarea');
+      var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+      ta.style.top = yPosition + 'px'; // Prevent page scroll
+      ta.style.position = 'absolute';
+      ta.style.opacity = '0';
+      ta.readOnly = true;
+      ta.value = code;
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, code.length);
+      ta.readOnly = false;
+      var result = document.execCommand('copy');
+      
+        if (result) $(this).text('Copied');
+        else $(this).text('Copy failed');
+      
+      ta.blur(); // For iOS
+      $(this).blur();
+    })).on('mouseleave', function(e) {
+      var $b = $(this).find('.copy-btn');
+      setTimeout(function() {
+        $b.text('Copy');
+      }, 300);
+    }).append(e);
+  })
+</script>
+
+
+</body>
+</html>
