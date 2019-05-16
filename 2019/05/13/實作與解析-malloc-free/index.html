@@ -143,6 +143,7 @@
 
 
   <meta name="description" content="對於實作記憶體管理，通常會有好幾種 pattern 可以使用，其中包含以下 2 種 :   單純的 linked list，單一的 memory pool 。 可參考 k&amp;amp;r 多條不同大小的 linked list，例如有 chunk 大小為 8 bytes、 16 bytes、 24 bytes… 128 bytes、 128 bytes 以上的 linked lists 多個 memo">
+<meta name="keywords" content="C,malloc,跨平台">
 <meta property="og:type" content="article">
 <meta property="og:title" content="實作與解析 malloc &amp; free">
 <meta property="og:url" content="https://nicknick0630.github.io/2019/05/13/實作與解析-malloc-free/index.html">
@@ -161,7 +162,7 @@
 <meta property="og:image" content="https://nicknick0630.github.io/2019/05/13/實作與解析-malloc-free/10.png">
 <meta property="og:image" content="https://nicknick0630.github.io/2019/05/13/實作與解析-malloc-free/11.png">
 <meta property="og:image" content="https://nicknick0630.github.io/2019/05/13/實作與解析-malloc-free/12.png">
-<meta property="og:updated_time" content="2019-05-16T13:01:58.811Z">
+<meta property="og:updated_time" content="2019-05-16T13:06:18.156Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="實作與解析 malloc &amp; free">
 <meta name="twitter:description" content="對於實作記憶體管理，通常會有好幾種 pattern 可以使用，其中包含以下 2 種 :   單純的 linked list，單一的 memory pool 。 可參考 k&amp;amp;r 多條不同大小的 linked list，例如有 chunk 大小為 8 bytes、 16 bytes、 24 bytes… 128 bytes、 128 bytes 以上的 linked lists 多個 memo">
@@ -465,6 +466,24 @@
           </span>
 
           
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/程式教學/" itemprop="url" rel="index"><span itemprop="name">程式教學</span></a></span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -757,6 +776,16 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/C/" rel="tag"> <i class="fa fa-tag"></i> <span class="mypost_tag"> C </span> </a>
+          
+            <a href="/tags/malloc/" rel="tag"> <i class="fa fa-tag"></i> <span class="mypost_tag"> malloc </span> </a>
+          
+            <a href="/tags/跨平台/" rel="tag"> <i class="fa fa-tag"></i> <span class="mypost_tag"> 跨平台 </span> </a>
+          
+        </div>
+      
 
       
       
@@ -875,7 +904,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">3</span>
+                      
+                    
+                    <span class="site-state-item-count">4</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -912,7 +943,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">10</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
