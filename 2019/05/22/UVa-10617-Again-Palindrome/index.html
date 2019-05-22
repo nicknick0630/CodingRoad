@@ -1,0 +1,1224 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.6/jquery.fancybox.min.css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Noto Sans TC:300,300italic,400,400italic,700,700italic|Consolas:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
+  
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.0.1',
+    sidebar: {"position":"right","display":"post","offset":15,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: true,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="題目 :  UVa Link 給定一個字串 S，可以去掉 0 個或多個字元形成 substring S’，求所有 S’ 集合中，回文字串的個數 測資Input :   3BAOBABAAAAABA  Output :   22155   解法一若 S 字串長度為 N，則所有 S’ 的可能性有 2N-1 種，-1 是排除掉全部都沒取的情況再針對所有 S’ 去檢查是不是回文 檢查一字串是否為回文需耗時">
+<meta name="keywords" content="C++,DP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="UVa 10617 : Again Palindrome">
+<meta property="og:url" content="https://nicknick0630.github.io/2019/05/22/UVa-10617-Again-Palindrome/index.html">
+<meta property="og:site_name" content="Coding Road">
+<meta property="og:description" content="題目 :  UVa Link 給定一個字串 S，可以去掉 0 個或多個字元形成 substring S’，求所有 S’ 集合中，回文字串的個數 測資Input :   3BAOBABAAAAABA  Output :   22155   解法一若 S 字串長度為 N，則所有 S’ 的可能性有 2N-1 種，-1 是排除掉全部都沒取的情況再針對所有 S’ 去檢查是不是回文 檢查一字串是否為回文需耗時">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://nicknick0630.github.io/2019/05/22/UVa-10617-Again-Palindrome/1.png">
+<meta property="og:image" content="https://nicknick0630.github.io/2019/05/22/UVa-10617-Again-Palindrome/2.png">
+<meta property="og:image" content="https://nicknick0630.github.io/2019/05/22/UVa-10617-Again-Palindrome/3.png">
+<meta property="og:image" content="https://nicknick0630.github.io/2019/05/22/UVa-10617-Again-Palindrome/4.png">
+<meta property="og:image" content="https://nicknick0630.github.io/2019/05/22/UVa-10617-Again-Palindrome/5.png">
+<meta property="og:image" content="https://nicknick0630.github.io/2019/05/22/UVa-10617-Again-Palindrome/6.png">
+<meta property="og:image" content="https://nicknick0630.github.io/2019/05/22/UVa-10617-Again-Palindrome/7.png">
+<meta property="og:image" content="https://nicknick0630.github.io/2019/05/22/UVa-10617-Again-Palindrome/8.png">
+<meta property="og:image" content="https://nicknick0630.github.io/2019/05/22/UVa-10617-Again-Palindrome/9.png">
+<meta property="og:image" content="https://nicknick0630.github.io/2019/05/22/UVa-10617-Again-Palindrome/10.png">
+<meta property="og:image" content="https://nicknick0630.github.io/2019/05/22/UVa-10617-Again-Palindrome/11.PNG">
+<meta property="og:image" content="https://nicknick0630.github.io/2019/05/22/UVa-10617-Again-Palindrome/12.PNG">
+<meta property="og:image" content="https://nicknick0630.github.io/2019/05/22/UVa-10617-Again-Palindrome/13.PNG">
+<meta property="og:image" content="https://nicknick0630.github.io/2019/05/22/UVa-10617-Again-Palindrome/14.PNG">
+<meta property="og:image" content="https://nicknick0630.github.io/2019/05/22/UVa-10617-Again-Palindrome/15.PNG">
+<meta property="og:image" content="https://nicknick0630.github.io/2019/05/22/UVa-10617-Again-Palindrome/16.PNG">
+<meta property="og:image" content="https://nicknick0630.github.io/2019/05/22/UVa-10617-Again-Palindrome/17.PNG">
+<meta property="og:image" content="https://nicknick0630.github.io/2019/05/22/UVa-10617-Again-Palindrome/17.PNG">
+<meta property="og:updated_time" content="2019-05-22T13:59:02.106Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="UVa 10617 : Again Palindrome">
+<meta name="twitter:description" content="題目 :  UVa Link 給定一個字串 S，可以去掉 0 個或多個字元形成 substring S’，求所有 S’ 集合中，回文字串的個數 測資Input :   3BAOBABAAAAABA  Output :   22155   解法一若 S 字串長度為 N，則所有 S’ 的可能性有 2N-1 種，-1 是排除掉全部都沒取的情況再針對所有 S’ 去檢查是不是回文 檢查一字串是否為回文需耗時">
+<meta name="twitter:image" content="https://nicknick0630.github.io/2019/05/22/UVa-10617-Again-Palindrome/1.png">
+
+
+
+
+
+
+  <link rel="canonical" href="https://nicknick0630.github.io/2019/05/22/UVa-10617-Again-Palindrome/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>UVa 10617 : Again Palindrome | Coding Road</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Coding Road</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-目錄">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/Index/" rel="section"><i class="menu-item-icon fa fa-fw fa-book"></i> <br>目錄</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>About</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://nicknick0630.github.io/2019/05/22/UVa-10617-Again-Palindrome/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chen Yu Sheng">
+      <meta itemprop="description" content="紀錄我的程式學習">
+      <meta itemprop="image" content="/upload/image/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coding Road">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">UVa 10617 : Again Palindrome
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-05-22 14:56:27" itemprop="dateCreated datePublished" datetime="2019-05-22T14:56:27+08:00">2019-05-22</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/UVa/" itemprop="url" rel="index"><span itemprop="name">UVa</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye fa-lg"></i>
+            
+             &nbsp; 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+            
+              
+
+                
+                
+                 <br> 
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-cog fa-spin fa-lg fa-fw" aria-hidden="true" style="color: #1FA4F0"></i>
+                </span>
+                
+                  
+                  <span class="post-meta-item-text">Symbols &#58;</span>
+                
+                <span title="post.wordcount">
+                  1.1k 字
+                </span>
+              
+
+              
+
+              
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="題目-UVa-Link"><a href="#題目-UVa-Link" class="headerlink" title="題目 :  UVa Link "></a>題目 : <a href="https://uva.onlinejudge.org/index.php?option=com_onlinejudge&amp;Itemid=8&amp;page=show_problem&amp;problem=1558" target="_blank" rel="noopener"> <small><b>UVa Link</b></small> </a></h2><p>給定一個字串 S，可以去掉 0 個或多個字元形成 substring S’，求所有 S’ 集合中，回文字串的個數</p>
+<p><strong>測資</strong><br><strong>Input : </strong></p>
+<blockquote>
+<p>3<br>BAOBAB<br>AAAA<br>ABA</p>
+</blockquote>
+<p><strong>Output : </strong></p>
+<blockquote>
+<p>22<br>15<br>5</p>
+</blockquote>
+<p><br></p>
+<h2 id="解法一"><a href="#解法一" class="headerlink" title="解法一"></a>解法一</h2><p>若 S 字串長度為 N，則所有 S’ 的可能性有 2<sup>N</sup>-1 種，<strong>-1</strong> 是排除掉全部都沒取的情況<br>再針對所有 S’ 去檢查是不是回文</p>
+<p>檢查一字串是否為回文需耗時 <strong>O( N )</strong>，因此總耗時為 <strong>O( 2<sup>N</sup> x N)</strong><br>由於有指數項，所以會非常耗時</p>
+<p><br></p>
+<h2 id="解法二"><a href="#解法二" class="headerlink" title="解法二"></a>解法二</h2><p>我們可以用 Dynamic Programming ( 動態規劃 ) 來解這個問題<br>可以用小問題的最佳解去建構出大問題的最佳解</p>
+<p>首先，若有一字串 S，且字串<strong>頭尾的字元是不同的 ( X != Y )</strong><br>我們要求 S 的所有回文字串數量</p>
+<p><img src="./1.png"></p>
+<p>我們希望可以從小問題去求得大問題<br>因此若可以得知 <strong>S<sub>1</sub></strong> 與 <strong>S<sub>2</sub></strong></p>
+<p><img src="./2.png"></p>
+<p><img src="./3.png"></p>
+<p>我們就可以利用他們來建構出 <code>S = S1 + S2</code>，但還要扣除多加的 <strong>S<sub>3</sub></strong> ( 類似排容原理 )</p>
+<p><img src="./4.png"></p>
+<p>可以得到 <code>S = S1 + S2 - S3</code>，也就是</p>
+<blockquote>
+<p>S 字串的回文數量 = 左子串回文數量 + 右字串回文數量 - 中間重複子字串的回文數量</p>
+</blockquote>
+<p><br></p>
+<p>那若 S 字串的<strong>頭尾的字元是相同的 ( X == X )</strong><br>我們要求 S 的所有回文字串數量</p>
+<p><img src="./5.png"></p>
+<p>同樣的可以用左右子字串來建構並扣掉中間的重複字串</p>
+<p><img src="./6.png"></p>
+<p><img src="./7.png"></p>
+<p><img src="./8.png"></p>
+<p>得到 <code>S = S1 + S2 - S3</code><br>但由於 S 字串的頭尾是相同的，我們可以把 S 字串看作是<strong>S<sub>3</sub>字串頭尾都加上 X</strong><br>因此我們還要考慮 <strong>X{ S<sub>3</sub> }X</strong> 的回文字串數量 ( 頭尾 X 不能去掉，中間 {S<sub>3</sub>} 的部分則可以全空 )</p>
+<p>例如 : S<sub>3</sub> = ABA</p>
+<p>則 S<sub>3</sub> 的所有回文字串數量有 5 種</p>
+<p><img src="./9.png"></p>
+<p>X{ S<sub>3</sub> }X 的所有回文字串數量有 6 種</p>
+<p><img src="./10.png"></p>
+<p>可以發現 X{ S<sub>3</sub> }X 比 S<sub>3</sub> 多了一種組合，那就是 <strong>S<sub>3</sub> 全部不選</strong><br>因此，字串 S 的全部回文數量為 <code>S = ( S1 + S2 - S3 ) + ( S3 + 1 )</code><br>整理後得到 <code>S = S1 + S2 + 1</code>，也就是</p>
+<blockquote>
+<p>S 字串的回文數量 = 左子串回文數量 + 右字串回文數量 + 1</p>
+</blockquote>
+<p><br></p>
+<h2 id="實作細節"><a href="#實作細節" class="headerlink" title="實作細節"></a>實作細節</h2><p>若要求 S 字串中的 S<sub>1</sub> 子字串，index = i ~ k<br>並且用 <code>dp[i][k]</code> 來記錄 substring S<sub>1</sub> : <code>S[i] ~ S[k]</code> 的所有回文數量<br>有 2 個規則 :</p>
+<blockquote>
+<ol>
+<li>若 S[i] == S[k] : <code>dp[i][k] = dp[i+1][k] + dp[i][k-1] + 1</code></li>
+<li>若 S[i] != S[k] : <code>dp[i][k] = dp[i+1][k] + dp[i][k-1] - dp[i+1][k-1]</code></li>
+</ol>
+</blockquote>
+<p>在程式一開始，我們需要先對 dp 2D Array 去做初始化</p>
+<ol>
+<li>一個字元的子字串就是一個回文</li>
+<li>k 必須大於等於 i，因此 k &lt; i 的部分回文數量為 0</li>
+</ol>
+<p>因此可以得到下列狀態</p>
+<p><img src="./11.PNG"></p>
+<p>由於 dp[i][k] 的字串會需要 dp[i+1][k] ( 該格子左方 )、dp[i][k-1] ( 該格子下方 ) 與 dp[i+1][k-1] ( 左下方 )<br>所以計算方式為斜的 ( 如上圖 )</p>
+<p><strong>舉例</strong><br>假設 <code>S = BAOBAB</code>，初始化後狀態如下</p>
+<p><img src="./12.PNG"></p>
+<p>首先計算 <code>dp[0][1]</code>，由於 S[0] = B 且 S[1] = A，不相等<br>因此 <code>dp[0][1] = dp[1][1] + dp[0][0] - dp[1][0] = 2</code></p>
+<p><img src="./13.PNG"></p>
+<p>再來是 <code>dp[1][2]</code></p>
+<p><img src="./14.PNG"></p>
+<p>直到這條斜線的最後</p>
+<p><img src="./15.PNG"></p>
+<p>換下一條斜線</p>
+<p><img src="./16.PNG"></p>
+<p>到最後<br>注意這邊 S[3] = B 與 S[5] = B 相等，因此<br><code>dp[3][5] = dp[3][4] + dp[4][5] + 1 = 5</code></p>
+<p><img src="./17.PNG"></p>
+<p>然後一直做到最後</p>
+<p><img src="./17.PNG"></p>
+<p><strong>S[0][5]</strong> 就是答案</p>
+<p><br></p>
+<h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">S</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="keyword">using</span> Type = <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">long</span>;</span><br><span class="line"></span><br><span class="line">	S()</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">cin</span>.tie(<span class="literal">nullptr</span>);</span><br><span class="line">		<span class="built_in">cout</span>.tie(<span class="literal">nullptr</span>);</span><br><span class="line">		ios::sync_with_stdio(<span class="literal">false</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function">Type <span class="title">solve</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span> &amp;str)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">int</span> i, k, t;</span><br><span class="line">		<span class="keyword">int</span> size = str.size();</span><br><span class="line"></span><br><span class="line">		<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;Type&gt;&gt; dp(size, <span class="built_in">vector</span>&lt;Type&gt;(size, <span class="number">0</span>));</span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; size; ++i)</span><br><span class="line">			dp[i][i] = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span> (k = <span class="number">1</span>; k &lt; size; ++k)</span><br><span class="line">			<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; size - k; ++i)</span><br><span class="line">			&#123;</span><br><span class="line">				t = i + k;</span><br><span class="line"></span><br><span class="line">				<span class="keyword">if</span> (str[i] == str[t])</span><br><span class="line">					dp[i][t] = dp[i + <span class="number">1</span>][t] + dp[i][t - <span class="number">1</span>] + <span class="number">1</span>;</span><br><span class="line">				<span class="keyword">else</span></span><br><span class="line">					dp[i][t] = dp[i + <span class="number">1</span>][t] + dp[i][t - <span class="number">1</span>] - dp[i + <span class="number">1</span>][t - <span class="number">1</span>];</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span> dp[<span class="number">0</span>][size - <span class="number">1</span>];</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; &amp;dp)</span> <span class="keyword">const</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; dp.size(); ++i)</span><br><span class="line">			dp[i][i] = <span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> n;</span><br><span class="line">	S s;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">string</span> line;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; n;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">cin</span>.get();</span><br><span class="line"></span><br><span class="line">	<span class="keyword">while</span> (n--)</span><br><span class="line">	&#123;</span><br><span class="line">		getline(<span class="built_in">cin</span>, line);</span><br><span class="line"></span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; s.solve(line) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/C/" rel="tag"> <i class="fa fa-tag"></i> <span class="mypost_tag"> C++ </span> </a>
+          
+            <a href="/tags/DP/" rel="tag"> <i class="fa fa-tag"></i> <span class="mypost_tag"> DP </span> </a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/13/實作與解析-malloc-free/" rel="next" title="實作與解析 malloc & free">
+                <i class="fa fa-chevron-left"></i> 實作與解析 malloc & free
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/upload/image/avatar.gif" alt="Chen Yu Sheng">
+            
+              <p class="site-author-name" itemprop="name">Chen Yu Sheng</p>
+              <div class="site-description motion-element" itemprop="description">紀錄我的程式學習</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">17</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/nicknick0630" title="GitHub &rarr; https://github.com/nicknick0630" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:nicknick0630@gmail.com" title="E-Mail &rarr; mailto:nicknick0630@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#題目-UVa-Link"><span class="nav-number">1.</span> <span class="nav-text">題目 :  UVa Link </span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解法一"><span class="nav-number">2.</span> <span class="nav-text">解法一</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解法二"><span class="nav-number">3.</span> <span class="nav-text">解法二</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#實作細節"><span class="nav-number">4.</span> <span class="nav-text">實作細節</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#程式碼"><span class="nav-number">5.</span> <span class="nav-text">程式碼</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chen Yu Sheng</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a></div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="Total Visitors">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="Total Views">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+    
+    
+      
+    
+  
+  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-nest@1/canvas-nest-nomobile.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/velocity/1.2.1/velocity.min.js"></script>
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/velocity/1.2.1/velocity.ui.min.js"></script>
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.6/jquery.fancybox.min.js"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.1"></script>
+
+  <script src="/js/src/motion.js?v=7.0.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=7.0.1"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=7.0.1"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
+
+  
+
+
+  <script src="/js/src/next-boot.js?v=7.0.1"></script>
+
+
+  
+
+  
+
+  
+
+  
+  
+
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://nicknick0630.github.io/2019/05/22/UVa-10617-Again-Palindrome/";
+    this.page.identifier = "2019/05/22/UVa-10617-Again-Palindrome/";
+    this.page.title = 'UVa 10617 : Again Palindrome';
+    };
+  function loadComments() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://conding-road.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', '' + +new Date());
+    (d.head || d.body).appendChild(s);
+  }
+  
+    loadComments();
+  
+</script>
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<style>
+  .copy-btn {
+    display: inline-block;
+    padding: 6px 12px;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 20px;
+    color: #333;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+    
+    user-select: none;
+    outline: 0;
+  }
+
+  .highlight-wrap .copy-btn {
+    transition: opacity .3s ease-in-out;
+    opacity: 0;
+    padding: 2px 6px;
+    position: absolute;
+    
+      right: 4px;
+      top: 8px;
+    
+  }
+
+  .highlight-wrap:hover .copy-btn,
+  .highlight-wrap .copy-btn:focus {
+    opacity: 1;
+  }
+
+  .highlight-wrap {
+    position: relative;
+  }
+</style>
+<script>
+  $('.highlight').each(function(i, e) {
+    var $wrap = $('<div>').addClass('highlight-wrap');
+    $(e).after($wrap);
+    $wrap.append($('<button>').addClass('copy-btn').append('Copy').on('click', function(e) {
+      var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+        return $(e).text();
+      }).toArray().join('\n');
+      var ta = document.createElement('textarea');
+      var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+      ta.style.top = yPosition + 'px'; // Prevent page scroll
+      ta.style.position = 'absolute';
+      ta.style.opacity = '0';
+      ta.readOnly = true;
+      ta.value = code;
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, code.length);
+      ta.readOnly = false;
+      var result = document.execCommand('copy');
+      
+        if (result) $(this).text('Copied');
+        else $(this).text('Copy failed');
+      
+      ta.blur(); // For iOS
+      $(this).blur();
+    })).on('mouseleave', function(e) {
+      var $b = $(this).find('.copy-btn');
+      setTimeout(function() {
+        $b.text('Copy');
+      }, 300);
+    }).append(e);
+  })
+</script>
+
+
+</body>
+</html>
