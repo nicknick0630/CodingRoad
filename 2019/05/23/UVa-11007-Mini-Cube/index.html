@@ -1,0 +1,1511 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.6/jquery.fancybox.min.css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Noto Sans TC:300,300italic,400,400italic,700,700italic|Consolas:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
+  
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.0.1',
+    sidebar: {"position":"right","display":"post","offset":15,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: true,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="題目 :  UVa Link 本題是要解一個二階魔術方塊 ( 2x2x2 )，題目會給定一個魔術方塊的狀態，要求出復原方塊的最少步驟是多少 輸入六個面，依序為 Top、Front、Right、Bottom、Back、Left而復原狀態的方塊顏色依上面的順序為 White、Reg、Yellow、Blue、Orange、Green並且每一面輸入字串的順序依照下圖 :  測資Input :   2 GG">
+<meta name="keywords" content="C++,BFS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="UVa 11007 : Mini Cube">
+<meta property="og:url" content="https://nicknick0630.github.io/2019/05/23/UVa-11007-Mini-Cube/index.html">
+<meta property="og:site_name" content="Coding Road">
+<meta property="og:description" content="題目 :  UVa Link 本題是要解一個二階魔術方塊 ( 2x2x2 )，題目會給定一個魔術方塊的狀態，要求出復原方塊的最少步驟是多少 輸入六個面，依序為 Top、Front、Right、Bottom、Back、Left而復原狀態的方塊顏色依上面的順序為 White、Reg、Yellow、Blue、Orange、Green並且每一面輸入字串的順序依照下圖 :  測資Input :   2 GG">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://nicknick0630.github.io/2019/05/23/UVa-11007-Mini-Cube/1.PNG">
+<meta property="og:updated_time" content="2019-05-23T16:21:13.686Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="UVa 11007 : Mini Cube">
+<meta name="twitter:description" content="題目 :  UVa Link 本題是要解一個二階魔術方塊 ( 2x2x2 )，題目會給定一個魔術方塊的狀態，要求出復原方塊的最少步驟是多少 輸入六個面，依序為 Top、Front、Right、Bottom、Back、Left而復原狀態的方塊顏色依上面的順序為 White、Reg、Yellow、Blue、Orange、Green並且每一面輸入字串的順序依照下圖 :  測資Input :   2 GG">
+<meta name="twitter:image" content="https://nicknick0630.github.io/2019/05/23/UVa-11007-Mini-Cube/1.PNG">
+
+
+
+
+
+
+  <link rel="canonical" href="https://nicknick0630.github.io/2019/05/23/UVa-11007-Mini-Cube/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>UVa 11007 : Mini Cube | Coding Road</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Coding Road</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-目錄">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/Index/" rel="section"><i class="menu-item-icon fa fa-fw fa-book"></i> <br>目錄</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>About</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://nicknick0630.github.io/2019/05/23/UVa-11007-Mini-Cube/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chen Yu Sheng">
+      <meta itemprop="description" content="紀錄我的程式學習">
+      <meta itemprop="image" content="/upload/image/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coding Road">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">UVa 11007 : Mini Cube
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-05-23 01:27:46" itemprop="dateCreated datePublished" datetime="2019-05-23T01:27:46+08:00">2019-05-23</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/UVa/" itemprop="url" rel="index"><span itemprop="name">UVa</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye fa-lg"></i>
+            
+             &nbsp; 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+            
+              
+
+                
+                
+                 <br> 
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-cog fa-spin fa-lg fa-fw" aria-hidden="true" style="color: #1FA4F0"></i>
+                </span>
+                
+                  
+                  <span class="post-meta-item-text">Symbols &#58;</span>
+                
+                <span title="post.wordcount">
+                  5.5k 字
+                </span>
+              
+
+              
+
+              
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="題目-UVa-Link"><a href="#題目-UVa-Link" class="headerlink" title="題目 :  UVa Link "></a>題目 : <a href="https://uva.onlinejudge.org/index.php?option=com_onlinejudge&amp;Itemid=8&amp;page=show_problem&amp;problem=1948" target="_blank" rel="noopener"> <small><b>UVa Link</b></small> </a></h2><p>本題是要解一個二階魔術方塊 ( 2x2x2 )，題目會給定一個魔術方塊的狀態，要求出復原方塊的<strong>最少步驟</strong>是多少</p>
+<p>輸入六個面，依序為 Top、Front、Right、Bottom、Back、Left<br>而復原狀態的方塊顏色依上面的順序為 White、Reg、Yellow、Blue、Orange、Green<br>並且每一面輸入字串的順序依照下圖 :</p>
+<p><img src="./1.PNG"></p>
+<p><strong>測資</strong><br><strong>Input : </strong></p>
+<blockquote>
+<p>2</p>
+<p>GGGG<br>WWBB<br>OORR<br>YYYY<br>BBWW<br>RROO</p>
+<p>WRRG<br>WORO<br>BGBW<br>YYOG<br>BORY<br>GYWB</p>
+</blockquote>
+<p><strong>Output : </strong></p>
+<blockquote>
+<p>2<br>6</p>
+</blockquote>
+<p><br></p>
+<h2 id="想法"><a href="#想法" class="headerlink" title="想法"></a>想法</h2><p>參考<a href="https://zh.wikipedia.org/wiki/%E4%BA%8C%E9%98%B6%E9%AD%94%E6%96%B9" target="_blank" rel="noopener">Wiki</a>，可以得知二街魔術方塊只有</p>
+<p>$ \frac{ 8! 3^7 }{ 24 } = 7! 3^6 = 3674160 $</p>
+<p>且<strong>最多 14 步</strong>r就可以還原魔術方塊，如下表</p>
+<table>
+<thead>
+<tr>
+<th>旋轉次數</th>
+<th>狀態數量</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>6</td>
+</tr>
+<tr>
+<td>2</td>
+<td>27</td>
+</tr>
+<tr>
+<td>3</td>
+<td>120</td>
+</tr>
+<tr>
+<td>4</td>
+<td>534</td>
+</tr>
+<tr>
+<td>5</td>
+<td>2256</td>
+</tr>
+<tr>
+<td>6</td>
+<td>8969</td>
+</tr>
+<tr>
+<td>7</td>
+<td>33058</td>
+</tr>
+<tr>
+<td>8</td>
+<td>114149</td>
+</tr>
+<tr>
+<td>9</td>
+<td>360508</td>
+</tr>
+<tr>
+<td>10</td>
+<td>930588</td>
+</tr>
+<tr>
+<td>11</td>
+<td>1350852</td>
+</tr>
+<tr>
+<td>12</td>
+<td>782536</td>
+</tr>
+<tr>
+<td>13</td>
+<td>90280</td>
+</tr>
+<tr>
+<td>14</td>
+<td>276</td>
+</tr>
+</tbody>
+</table>
+<p>再來就是對方塊的一些操作<br>( 注意旋轉時的方式是依照<strong>將該面面對自己</strong>的順時針方向與逆時針方向 )</p>
+<table>
+<thead>
+<tr>
+<th>代號</th>
+<th>意思</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>F</td>
+<td>Front face 正面</td>
+<td>面向你的那一面順時針轉 90 度</td>
+</tr>
+<tr>
+<td>R</td>
+<td>Right face 右面</td>
+<td>右邊那一面順時針轉 90 度</td>
+</tr>
+<tr>
+<td>B</td>
+<td>Back face 背面</td>
+<td>背面順時針轉 90 度</td>
+</tr>
+<tr>
+<td>L</td>
+<td>Left face 左面</td>
+<td>左面順時針轉 90 度</td>
+</tr>
+<tr>
+<td>U</td>
+<td>Up face 上面</td>
+<td>上面順時針轉 90 度</td>
+</tr>
+<tr>
+<td>D</td>
+<td>Down face 底面</td>
+<td>下面順時針轉 90 度</td>
+</tr>
+</tbody>
+</table>
+<p>若在代號後面加上 <code>p</code> 的話，代表那個一面 <strong>逆時針轉90度</strong><br>例 : Lp 就是 Left face 逆時針轉 90 度<br>因此總共有 12 種旋轉面的方式</p>
+<p>接下來還有轉動整個方塊的操作</p>
+<table>
+<thead>
+<tr>
+<th>代號</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>X</td>
+<td>整個方塊依照 Up 的方向轉動 90 度</td>
+</tr>
+<tr>
+<td>Y</td>
+<td>整個方塊依照 R 的方向轉動 90 度</td>
+</tr>
+<tr>
+<td>Z</td>
+<td>整個方塊依照 F 的方向轉動 90 度</td>
+</tr>
+</tbody>
+</table>
+<p>同樣的若是在代號後面加上 <code>p</code> 的話，代表 <strong>旋轉相反方向</strong><br>例 : Yp 就是將整個方塊依照 Rp 的方向轉動 90 度<br>總共有 6 種旋轉整個方塊的方式</p>
+<p><br></p>
+<p>但是為了方便辨識方塊，我們可以將方塊統一定點到一個固定的方位<br>例如，將復原的方塊依照上述的方向面對自己 ( Top 是 White、Front 是 <font color="red">Red</font>、Right 是 <font color="#D6DC00">Yellow</font> )<br>可以發現 Front、Bottom 與 Right 的那個交界邊角，顏色依序為 Front = <font color="red">Red</font>、Bottom = <font color="blue">Blue</font> 與 Right = <font color="#D6DC00">Yellow</font></p>
+<p>因此我們就令這塊邊角為基準點來轉動方塊的面的話，就只剩下 6 種面的操作</p>
+<table>
+<thead>
+<tr>
+<th>代號</th>
+<th>意思</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>B</td>
+<td>Back face 背面</td>
+<td>背面順時針轉 90 度</td>
+</tr>
+<tr>
+<td>Bp</td>
+<td>Back face 背面</td>
+<td>背面逆時針轉 90 度</td>
+</tr>
+<tr>
+<td>L</td>
+<td>Left face 左面</td>
+<td>左面順時針轉 90 度</td>
+</tr>
+<tr>
+<td>Lp</td>
+<td>Left face 左面</td>
+<td>左面逆時針轉 90 度</td>
+</tr>
+<tr>
+<td>U</td>
+<td>Up face 上面</td>
+<td>上面順時針轉 90 度</td>
+</tr>
+<tr>
+<td>Up</td>
+<td>Up face 上面</td>
+<td>上面逆時針轉 90 度</td>
+</tr>
+</tbody>
+</table>
+<p>另一個設立基準地的好處是，題目給的方塊不一樣會剛好就是我們所存的方向<br>因此我們只要利用<strong>轉動方塊</strong>的操作，就可以把方塊調整到與剛好契合基準點</p>
+<p><br></p>
+<h2 id="解法一"><a href="#解法一" class="headerlink" title="解法一"></a>解法一</h2><p>我們可以把全部 3674160 種方塊的可能性利用 BFS 全部列舉出來<br>從還原狀態 step 0 ( 旋轉次數 0 ) 開始，對方塊做 6 種<strong>面</strong>的操作 ( L、Lp、U、Up、B、Bp )<br>就可以得到 step 1 ( 旋轉次數 1 ) 的 6 個情況，其中每一種情況同樣地在操作 6 個面的操作<br>得到 $ 6^6 = 36 $ 種 step 2 的情況，依序做下去直到 step 14<br>不過可以發現從 step 2 開始，就會有重複的情況發生，<strong>有 36 - 27 = 9 種</strong><br>step 14 = $ 6^14 = 78364164096 $ ，可以發現和真正的狀態數量 276 差了十萬八千里</p>
+<p>因此，我們要來找一下會重複的規則:</p>
+<ol>
+<li>若此步驟做了與上一步驟相反方向的操作，那就是多餘的。<br>例 : 上一步是 L，那這步驟就不能再做 Lp 了</li>
+<li>連續做 2 次同樣的操作就會等於連續做 2 次相反的操作。<br>例 : L L 就會等於 Lp Lp，所以我選擇遇到逆時針 ( <code>p</code> ) 的 2 次操作就不要做</li>
+<li>連續做 3 次同樣的操作就等同於做 1 次相反的操作。<br>例 : L L L 就等同於 Lp，注意只有 L、U、B 才有可能會用到這個規則，因為 <code>p</code> 被規則二給去掉了</li>
+</ol>
+<p>有了這三個規則，我們每一次對該狀態去做 6 次面操作的時候，就可以去檢查有沒有符合這三個規則<br>若有的話就不做這個面操作</p>
+<p>但若各位有真的去試試看的話，會發現在 step 5 的時候，又會發生重複的情況，會等於 <strong>2376</strong> 而非 <strong>2256</strong><br>那這就是沒辦法用規則去發現的重複狀況，所以我們會需要將之前<strong>成功列舉</strong>過的狀態紀錄起來<br>每當成功的做了某個面操作後，還要去檢查有沒有和之前列舉過的狀態重複</p>
+<p>我是使用 <strong>Hash Table</strong> 來記錄成功列舉過的狀態，由於可能會發生 Collision，所以不能只有單純地存 key 值而已<br>還是需要把該相同 key 值的狀態都記錄下來，若又有一新的狀態的 key 值相同，則去和那些狀態檢查<br>因此我選用 <strong>C++ unordered_multimap</strong>，期待搜索可以為 <strong>O(1)</strong></p>
+<ul>
+<li>key : 利用方塊的 6 個面 ( 每個面有 4 格 ) 去做 hash function。(depend on your implement)</li>
+<li>value : 該方塊的 Reference。( 這是一個不好的習慣，我為了減少記憶體而已，而且我也確保該方塊記憶體不會更動 )</li>
+</ul>
+<p><br></p>
+<p>整理一下解法一的步驟:</p>
+<p>首先，從 step 0 開始，對每個狀態依序去做 6 種面的操作，然後</p>
+<ol>
+<li>檢查 3 個重複規則，若符合，就去掉這個操作</li>
+<li>通過 3 個規則後，對方塊做該操作</li>
+<li>對此新的狀態去計算他的 hash 值</li>
+<li>Search the hash table，若發先該 hash 值已經存在，則進入步驟 5，否則進入步驟 7</li>
+<li>利用 <strong>unordered_multimap</strong> 的 <code>equal_range(key)</code> 去獲得所有 hash value = key 的方塊 list</li>
+<li>一一去比對方塊 list 與此新狀態是否有相同狀態，若相同，則去掉此狀態，若否，則加入此狀態</li>
+<li>若還沒做完 6 的面操作，則繼續下一種操作，若做完了，就進入下一個 step，直到 step 14</li>
+</ol>
+<p>再來，全部都列舉完後，就可以來解題目了</p>
+<ol>
+<li>讀進題目給的方塊狀態</li>
+<li>將該狀態<strong>歸位</strong>到對齊<strong>基準點</strong></li>
+<li>算出此已經對齊的狀態的 hash value</li>
+<li>搜尋 hash table，並得到方塊 list</li>
+<li>一一比對方塊 list，找到與此狀態相同的那個方塊，就可以知道他是 step 幾，這就是他的最少步數</li>
+</ol>
+<h3 id="缺點"><a href="#缺點" class="headerlink" title="缺點"></a>缺點</h3><p>若各位有試過的話，可以發現在列舉的時候就會很耗時間了，UVa 只有 3 秒，我本人實測列舉完就要 12 秒了<br>所以一定會 TLE，因此我們還要想想其他可以改進的方法，有幾個方向可以去改進:</p>
+<ol>
+<li>大部分的時間都是耗在 <code>equal_range()</code> 這個 method</li>
+<li>可以發現我們列舉大部分的狀態都是在 step 11 附近，若我們可以避開這裡，也就是不要做這麼多狀態的話<br>時間可以加快很多</li>
+</ol>
+<p><br></p>
+<h2 id="解法二"><a href="#解法二" class="headerlink" title="解法二"></a>解法二</h2><p>解法二就是解決了解法一的第二個缺點</p>
+<p>首先，我們一樣要從還原狀態的方塊開始列舉，和解法一一樣，不過<strong>我們只列舉到 step 7 ( step 8 也可以 )</strong><br>因此我們就只需紀錄 step 0 ~ step 7 的狀態共 44971 種，想比原本的 3674160 少了一脫拉庫</p>
+<p>然後對於題目所輸入的方塊狀態，先把他歸位對齊基準點後，再對他去做列舉 step 0 (初始狀態) ~ step 7<br>不過和上面的列舉不同的是 : <strong>除了 3 個規則，不去檢查有沒有之前的是重覆的</strong><br>因此會比原本的狀態還要多一些，但也不會多太多</p>
+<table>
+<thead>
+<tr>
+<th>旋轉次數</th>
+<th>有檢察之前的</th>
+<th>沒檢查</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>6</td>
+<td>6</td>
+</tr>
+<tr>
+<td>2</td>
+<td>27</td>
+<td>27</td>
+</tr>
+<tr>
+<td>3</td>
+<td>120</td>
+<td>120</td>
+</tr>
+<tr>
+<td>4</td>
+<td>534</td>
+<td>534</td>
+</tr>
+<tr>
+<td>5</td>
+<td>2256</td>
+<td>2376</td>
+</tr>
+<tr>
+<td>6</td>
+<td>8969</td>
+<td>10572</td>
+</tr>
+<tr>
+<td>7</td>
+<td>33058</td>
+<td>47040</td>
+</tr>
+<tr>
+<td>Total</td>
+<td>44971</td>
+<td>60676</td>
+</tr>
+</tbody>
+</table>
+<p>因此解法二的整個過程如下 :</p>
+<ol>
+<li>先用還原狀態列舉出完整的 step 0 ~ step 7 所有狀態，且<strong>要用 Hash Table 去檢查有沒有重複</strong></li>
+<li>讀入題目給定的方塊狀態，然後將它對其基準點歸位 ( 用 <strong>P</strong> 表示此已經對齊的狀態 )</li>
+<li>計算 P 的 hash value，檢查有沒有再 Hash Table 中<br>若有，得到 Table 中存的方塊資訊 –&gt; step = k，那麼 P 的最短步數就是 k ( k &lt;= 7 )<br>若沒有，進行步驟 4</li>
+<li>對 P 列舉出 step 1 ~ step 7 的所有狀態 ( P 就是 step 0 )<br>注意<strong>不需要再額外用 Hash Table 檢查有沒有重複</strong><br>對於每一狀態，去做 6 種面的操作，且要檢查有沒有符合 3 個規則<br>若符合，則去除這個操作<br>若不符合，就<strong>直接記錄起來，並進行步驟 5</strong>，不用再用另一個 Hash Table 去檢查有沒有和之前的重複</li>
+<li>對於每個新的合法狀態 ( 符合 3 個規則 )，要去計算他的 hash 值，檢查有沒有再 Hash Table 中<br>若有，得到 Table 中存的方塊資訊 –&gt; step = k，且目前列舉的 step = t，那麼 P 的最短步數就是 S = k + t (8&lt;=S&lt;=14)<br>若沒有，則回到步驟 4 進行下一個面操作</li>
+<li>找到 P 的最短步數後，就可以回到步驟 2 讀入下一個題目了</li>
+</ol>
+<p>簡單來說，就是用 <strong>雙向 BFS</strong> 去加速，對方塊還原狀態做<strong>一次</strong> BFS 列舉 step 0 ~ step 7 得到 Hash Table<br>之後再針對每個題目輸入的待解狀態做<strong>一次</strong> BFS 列舉 step 0 ~ step 7，且邊做邊檢查有沒有在剛剛的 Hash Table 中</p>
+<p>這樣就可以很有效的加速了</p>
+<p><br></p>
+<h2 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h2><p>這份程式碼寫得很冗長，可以看看就好，參考一下<br>最下面有稍微對程式碼的解說</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br><span class="line">384</span><br><span class="line">385</span><br><span class="line">386</span><br><span class="line">387</span><br><span class="line">388</span><br><span class="line">389</span><br><span class="line">390</span><br><span class="line">391</span><br><span class="line">392</span><br><span class="line">393</span><br><span class="line">394</span><br><span class="line">395</span><br><span class="line">396</span><br><span class="line">397</span><br><span class="line">398</span><br><span class="line">399</span><br><span class="line">400</span><br><span class="line">401</span><br><span class="line">402</span><br><span class="line">403</span><br><span class="line">404</span><br><span class="line">405</span><br><span class="line">406</span><br><span class="line">407</span><br><span class="line">408</span><br><span class="line">409</span><br><span class="line">410</span><br><span class="line">411</span><br><span class="line">412</span><br><span class="line">413</span><br><span class="line">414</span><br><span class="line">415</span><br><span class="line">416</span><br><span class="line">417</span><br><span class="line">418</span><br><span class="line">419</span><br><span class="line">420</span><br><span class="line">421</span><br><span class="line">422</span><br><span class="line">423</span><br><span class="line">424</span><br><span class="line">425</span><br><span class="line">426</span><br><span class="line">427</span><br><span class="line">428</span><br><span class="line">429</span><br><span class="line">430</span><br><span class="line">431</span><br><span class="line">432</span><br><span class="line">433</span><br><span class="line">434</span><br><span class="line">435</span><br><span class="line">436</span><br><span class="line">437</span><br><span class="line">438</span><br><span class="line">439</span><br><span class="line">440</span><br><span class="line">441</span><br><span class="line">442</span><br><span class="line">443</span><br><span class="line">444</span><br><span class="line">445</span><br><span class="line">446</span><br><span class="line">447</span><br><span class="line">448</span><br><span class="line">449</span><br><span class="line">450</span><br><span class="line">451</span><br><span class="line">452</span><br><span class="line">453</span><br><span class="line">454</span><br><span class="line">455</span><br><span class="line">456</span><br><span class="line">457</span><br><span class="line">458</span><br><span class="line">459</span><br><span class="line">460</span><br><span class="line">461</span><br><span class="line">462</span><br><span class="line">463</span><br><span class="line">464</span><br><span class="line">465</span><br><span class="line">466</span><br><span class="line">467</span><br><span class="line">468</span><br><span class="line">469</span><br><span class="line">470</span><br><span class="line">471</span><br><span class="line">472</span><br><span class="line">473</span><br><span class="line">474</span><br><span class="line">475</span><br><span class="line">476</span><br><span class="line">477</span><br><span class="line">478</span><br><span class="line">479</span><br><span class="line">480</span><br><span class="line">481</span><br><span class="line">482</span><br><span class="line">483</span><br><span class="line">484</span><br><span class="line">485</span><br><span class="line">486</span><br><span class="line">487</span><br><span class="line">488</span><br><span class="line">489</span><br><span class="line">490</span><br><span class="line">491</span><br><span class="line">492</span><br><span class="line">493</span><br><span class="line">494</span><br><span class="line">495</span><br><span class="line">496</span><br><span class="line">497</span><br><span class="line">498</span><br><span class="line">499</span><br><span class="line">500</span><br><span class="line">501</span><br><span class="line">502</span><br><span class="line">503</span><br><span class="line">504</span><br><span class="line">505</span><br><span class="line">506</span><br><span class="line">507</span><br><span class="line">508</span><br><span class="line">509</span><br><span class="line">510</span><br><span class="line">511</span><br><span class="line">512</span><br><span class="line">513</span><br><span class="line">514</span><br><span class="line">515</span><br><span class="line">516</span><br><span class="line">517</span><br><span class="line">518</span><br><span class="line">519</span><br><span class="line">520</span><br><span class="line">521</span><br><span class="line">522</span><br><span class="line">523</span><br><span class="line">524</span><br><span class="line">525</span><br><span class="line">526</span><br><span class="line">527</span><br><span class="line">528</span><br><span class="line">529</span><br><span class="line">530</span><br><span class="line">531</span><br><span class="line">532</span><br><span class="line">533</span><br><span class="line">534</span><br><span class="line">535</span><br><span class="line">536</span><br><span class="line">537</span><br><span class="line">538</span><br><span class="line">539</span><br><span class="line">540</span><br><span class="line">541</span><br><span class="line">542</span><br><span class="line">543</span><br><span class="line">544</span><br><span class="line">545</span><br><span class="line">546</span><br><span class="line">547</span><br><span class="line">548</span><br><span class="line">549</span><br><span class="line">550</span><br><span class="line">551</span><br><span class="line">552</span><br><span class="line">553</span><br><span class="line">554</span><br><span class="line">555</span><br><span class="line">556</span><br><span class="line">557</span><br><span class="line">558</span><br><span class="line">559</span><br><span class="line">560</span><br><span class="line">561</span><br><span class="line">562</span><br><span class="line">563</span><br><span class="line">564</span><br><span class="line">565</span><br><span class="line">566</span><br><span class="line">567</span><br><span class="line">568</span><br><span class="line">569</span><br><span class="line">570</span><br><span class="line">571</span><br><span class="line">572</span><br><span class="line">573</span><br><span class="line">574</span><br><span class="line">575</span><br><span class="line">576</span><br><span class="line">577</span><br><span class="line">578</span><br><span class="line">579</span><br><span class="line">580</span><br><span class="line">581</span><br><span class="line">582</span><br><span class="line">583</span><br><span class="line">584</span><br><span class="line">585</span><br><span class="line">586</span><br><span class="line">587</span><br><span class="line">588</span><br><span class="line">589</span><br><span class="line">590</span><br><span class="line">591</span><br><span class="line">592</span><br><span class="line">593</span><br><span class="line">594</span><br><span class="line">595</span><br><span class="line">596</span><br><span class="line">597</span><br><span class="line">598</span><br><span class="line">599</span><br><span class="line">600</span><br><span class="line">601</span><br><span class="line">602</span><br><span class="line">603</span><br><span class="line">604</span><br><span class="line">605</span><br><span class="line">606</span><br><span class="line">607</span><br><span class="line">608</span><br><span class="line">609</span><br><span class="line">610</span><br><span class="line">611</span><br><span class="line">612</span><br><span class="line">613</span><br><span class="line">614</span><br><span class="line">615</span><br><span class="line">616</span><br><span class="line">617</span><br><span class="line">618</span><br><span class="line">619</span><br><span class="line">620</span><br><span class="line">621</span><br><span class="line">622</span><br><span class="line">623</span><br><span class="line">624</span><br><span class="line">625</span><br><span class="line">626</span><br><span class="line">627</span><br><span class="line">628</span><br><span class="line">629</span><br><span class="line">630</span><br><span class="line">631</span><br><span class="line">632</span><br><span class="line">633</span><br><span class="line">634</span><br><span class="line">635</span><br><span class="line">636</span><br><span class="line">637</span><br><span class="line">638</span><br><span class="line">639</span><br><span class="line">640</span><br><span class="line">641</span><br><span class="line">642</span><br><span class="line">643</span><br><span class="line">644</span><br><span class="line">645</span><br><span class="line">646</span><br><span class="line">647</span><br><span class="line">648</span><br><span class="line">649</span><br><span class="line">650</span><br><span class="line">651</span><br><span class="line">652</span><br><span class="line">653</span><br><span class="line">654</span><br><span class="line">655</span><br><span class="line">656</span><br><span class="line">657</span><br><span class="line">658</span><br><span class="line">659</span><br><span class="line">660</span><br><span class="line">661</span><br><span class="line">662</span><br><span class="line">663</span><br><span class="line">664</span><br><span class="line">665</span><br><span class="line">666</span><br><span class="line">667</span><br><span class="line">668</span><br><span class="line">669</span><br><span class="line">670</span><br><span class="line">671</span><br><span class="line">672</span><br><span class="line">673</span><br><span class="line">674</span><br><span class="line">675</span><br><span class="line">676</span><br><span class="line">677</span><br><span class="line">678</span><br><span class="line">679</span><br><span class="line">680</span><br><span class="line">681</span><br><span class="line">682</span><br><span class="line">683</span><br><span class="line">684</span><br><span class="line">685</span><br><span class="line">686</span><br><span class="line">687</span><br><span class="line">688</span><br><span class="line">689</span><br><span class="line">690</span><br><span class="line">691</span><br><span class="line">692</span><br><span class="line">693</span><br><span class="line">694</span><br><span class="line">695</span><br><span class="line">696</span><br><span class="line">697</span><br><span class="line">698</span><br><span class="line">699</span><br><span class="line">700</span><br><span class="line">701</span><br><span class="line">702</span><br><span class="line">703</span><br><span class="line">704</span><br><span class="line">705</span><br><span class="line">706</span><br><span class="line">707</span><br><span class="line">708</span><br><span class="line">709</span><br><span class="line">710</span><br><span class="line">711</span><br><span class="line">712</span><br><span class="line">713</span><br><span class="line">714</span><br><span class="line">715</span><br><span class="line">716</span><br><span class="line">717</span><br><span class="line">718</span><br><span class="line">719</span><br><span class="line">720</span><br><span class="line">721</span><br><span class="line">722</span><br><span class="line">723</span><br><span class="line">724</span><br><span class="line">725</span><br><span class="line">726</span><br><span class="line">727</span><br><span class="line">728</span><br><span class="line">729</span><br><span class="line">730</span><br><span class="line">731</span><br><span class="line">732</span><br><span class="line">733</span><br><span class="line">734</span><br><span class="line">735</span><br><span class="line">736</span><br><span class="line">737</span><br><span class="line">738</span><br><span class="line">739</span><br><span class="line">740</span><br><span class="line">741</span><br><span class="line">742</span><br><span class="line">743</span><br><span class="line">744</span><br><span class="line">745</span><br><span class="line">746</span><br><span class="line">747</span><br><span class="line">748</span><br><span class="line">749</span><br><span class="line">750</span><br><span class="line">751</span><br><span class="line">752</span><br><span class="line">753</span><br><span class="line">754</span><br><span class="line">755</span><br><span class="line">756</span><br><span class="line">757</span><br><span class="line">758</span><br><span class="line">759</span><br><span class="line">760</span><br><span class="line">761</span><br><span class="line">762</span><br><span class="line">763</span><br><span class="line">764</span><br><span class="line">765</span><br><span class="line">766</span><br><span class="line">767</span><br><span class="line">768</span><br><span class="line">769</span><br><span class="line">770</span><br><span class="line">771</span><br><span class="line">772</span><br><span class="line">773</span><br><span class="line">774</span><br><span class="line">775</span><br><span class="line">776</span><br><span class="line">777</span><br><span class="line">778</span><br><span class="line">779</span><br><span class="line">780</span><br><span class="line">781</span><br><span class="line">782</span><br><span class="line">783</span><br><span class="line">784</span><br><span class="line">785</span><br><span class="line">786</span><br><span class="line">787</span><br><span class="line">788</span><br><span class="line">789</span><br><span class="line">790</span><br><span class="line">791</span><br><span class="line">792</span><br><span class="line">793</span><br><span class="line">794</span><br><span class="line">795</span><br><span class="line">796</span><br><span class="line">797</span><br><span class="line">798</span><br><span class="line">799</span><br><span class="line">800</span><br><span class="line">801</span><br><span class="line">802</span><br><span class="line">803</span><br><span class="line">804</span><br><span class="line">805</span><br><span class="line">806</span><br><span class="line">807</span><br><span class="line">808</span><br><span class="line">809</span><br><span class="line">810</span><br><span class="line">811</span><br><span class="line">812</span><br><span class="line">813</span><br><span class="line">814</span><br><span class="line">815</span><br><span class="line">816</span><br><span class="line">817</span><br><span class="line">818</span><br><span class="line">819</span><br><span class="line">820</span><br><span class="line">821</span><br><span class="line">822</span><br><span class="line">823</span><br><span class="line">824</span><br><span class="line">825</span><br><span class="line">826</span><br><span class="line">827</span><br><span class="line">828</span><br><span class="line">829</span><br><span class="line">830</span><br><span class="line">831</span><br><span class="line">832</span><br><span class="line">833</span><br><span class="line">834</span><br><span class="line">835</span><br><span class="line">836</span><br><span class="line">837</span><br><span class="line">838</span><br><span class="line">839</span><br><span class="line">840</span><br><span class="line">841</span><br><span class="line">842</span><br><span class="line">843</span><br><span class="line">844</span><br><span class="line">845</span><br><span class="line">846</span><br><span class="line">847</span><br><span class="line">848</span><br><span class="line">849</span><br><span class="line">850</span><br><span class="line">851</span><br><span class="line">852</span><br><span class="line">853</span><br><span class="line">854</span><br><span class="line">855</span><br><span class="line">856</span><br><span class="line">857</span><br><span class="line">858</span><br><span class="line">859</span><br><span class="line">860</span><br><span class="line">861</span><br><span class="line">862</span><br><span class="line">863</span><br><span class="line">864</span><br><span class="line">865</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unordered_map&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Face</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="keyword">enum</span> &#123; W = <span class="number">0</span>, R, B, Y, O, G &#125;;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">using</span> Type = <span class="keyword">uint16_t</span>;</span><br><span class="line"></span><br><span class="line">	Face() : data&#123; <span class="number">0</span> &#125; &#123;&#125;</span><br><span class="line"></span><br><span class="line">	Face(<span class="keyword">const</span> <span class="built_in">string</span> &amp;input) : data&#123; <span class="number">0</span> &#125;</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; SIZE; ++i)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">switch</span> (input[i])</span><br><span class="line">			&#123;</span><br><span class="line">			<span class="keyword">case</span> <span class="string">'W'</span>:</span><br><span class="line">				data += (W &lt;&lt; (i * MASK));</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			<span class="keyword">case</span> <span class="string">'R'</span>:</span><br><span class="line">				data += (R &lt;&lt; (i * MASK));</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			<span class="keyword">case</span> <span class="string">'B'</span>:</span><br><span class="line">				data += (B &lt;&lt; (i * MASK));</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			<span class="keyword">case</span> <span class="string">'Y'</span>:</span><br><span class="line">				data += (Y &lt;&lt; (i * MASK));</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			<span class="keyword">case</span> <span class="string">'O'</span>:</span><br><span class="line">				data += (O &lt;&lt; (i * MASK));</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			<span class="keyword">case</span> <span class="string">'G'</span>:</span><br><span class="line">				data += (G &lt;&lt; (i * MASK));</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">operator</span>[](<span class="keyword">int</span> idx)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">return</span> (data &amp; M[idx]) &gt;&gt; (idx * MASK);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">operator</span>[](<span class="keyword">int</span> idx) <span class="keyword">const</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">return</span> (data &amp; M[idx]) &gt;&gt; (idx * MASK);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">set</span><span class="params">(<span class="keyword">int</span> idx, Type c)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		data -= (data &amp; M[idx]);</span><br><span class="line"></span><br><span class="line">		data += (c &lt;&lt; (idx * MASK));</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">bool</span> <span class="keyword">operator</span>==(<span class="keyword">const</span> Face &amp;f) <span class="keyword">const</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">return</span> data == f.data;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">bool</span> <span class="keyword">operator</span>!=(<span class="keyword">const</span> Face &amp;f) <span class="keyword">const</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">return</span> data != f.data;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">rotation</span><span class="params">(<span class="keyword">int</span> i)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (i == <span class="number">0</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">auto</span> tem = (*<span class="keyword">this</span>)[<span class="number">0</span>];</span><br><span class="line">			<span class="keyword">auto</span> tem2 = (*<span class="keyword">this</span>)[<span class="number">1</span>];</span><br><span class="line">			<span class="built_in">set</span>(<span class="number">0</span>, (*<span class="keyword">this</span>)[<span class="number">3</span>]);</span><br><span class="line">			<span class="built_in">set</span>(<span class="number">1</span>, (*<span class="keyword">this</span>)[<span class="number">2</span>]);</span><br><span class="line">			<span class="built_in">set</span>(<span class="number">2</span>, tem2);</span><br><span class="line">			<span class="built_in">set</span>(<span class="number">3</span>, tem);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (i == <span class="number">1</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="comment">// 3 2 1 0 -&gt; 1 3 0 2</span></span><br><span class="line"></span><br><span class="line">			<span class="keyword">auto</span> tem = (*<span class="keyword">this</span>)[<span class="number">0</span>];</span><br><span class="line">			<span class="built_in">set</span>(<span class="number">0</span>, (*<span class="keyword">this</span>)[<span class="number">2</span>]);</span><br><span class="line">			<span class="built_in">set</span>(<span class="number">2</span>, (*<span class="keyword">this</span>)[<span class="number">3</span>]);</span><br><span class="line">			<span class="built_in">set</span>(<span class="number">3</span>, (*<span class="keyword">this</span>)[<span class="number">1</span>]);</span><br><span class="line">			<span class="built_in">set</span>(<span class="number">1</span>, tem);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">		&#123;</span><br><span class="line">			<span class="comment">// 3 2 1 0 -&gt; 2 0 3 1</span></span><br><span class="line">			<span class="keyword">auto</span> tem = (*<span class="keyword">this</span>)[<span class="number">0</span>];</span><br><span class="line">			<span class="built_in">set</span>(<span class="number">0</span>, (*<span class="keyword">this</span>)[<span class="number">1</span>]);</span><br><span class="line">			<span class="built_in">set</span>(<span class="number">1</span>, (*<span class="keyword">this</span>)[<span class="number">3</span>]);</span><br><span class="line">			<span class="built_in">set</span>(<span class="number">3</span>, (*<span class="keyword">this</span>)[<span class="number">2</span>]);</span><br><span class="line">			<span class="built_in">set</span>(<span class="number">2</span>, tem);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function">Type <span class="title">get_data</span><span class="params">(<span class="keyword">void</span>)</span> <span class="keyword">const</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> data;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line"></span><br><span class="line">	<span class="keyword">enum</span> &#123;MASK = <span class="number">4</span>, SIZE = <span class="number">4</span>&#125;;</span><br><span class="line">	<span class="keyword">static</span> <span class="keyword">const</span> <span class="built_in">vector</span>&lt;Type&gt; M;</span><br><span class="line"></span><br><span class="line">	Type data;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="built_in">vector</span>&lt;Face::Type&gt; Face::M&#123; <span class="number">0xF</span>,<span class="number">0xF0</span>, <span class="number">0xF00</span>, <span class="number">0xF000</span> &#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Cube</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="keyword">enum</span> &#123;TOP = <span class="number">0</span>, FRONT, RIGHT, BOTTOM, BACK, LEFT&#125;;</span><br><span class="line">	<span class="keyword">enum</span> &#123;_1 = <span class="number">0</span>, _2 = <span class="number">1</span>, _3 = <span class="number">2</span>, _4 = <span class="number">3</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="keyword">using</span> Type = <span class="keyword">unsigned</span> <span class="keyword">int</span>;</span><br><span class="line"></span><br><span class="line">	Cube() : data&#123; Face&#123;<span class="string">"WWWW"</span>&#125;, Face&#123;<span class="string">"RRRR"</span>&#125;, Face&#123;<span class="string">"YYYY"</span>&#125;, Face&#123;<span class="string">"BBBB"</span>&#125;, Face&#123;<span class="string">"OOOO"</span>&#125;, Face&#123;<span class="string">"GGGG"</span>&#125; &#125;,repeat_cnt&#123; <span class="number">0</span> &#125;, last_step&#123; <span class="number">0</span> &#125;, step_cnt&#123; <span class="number">0</span> &#125; &#123;&#125; <span class="comment">//"WWWW", "RRRR", "YYYY", "BBBB", "OOOO", "GGGG"</span></span><br><span class="line"></span><br><span class="line">	Cube(<span class="keyword">const</span> <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; &amp;input) : repeat_cnt&#123; <span class="number">0</span> &#125;, last_step&#123; <span class="number">0</span> &#125;, step_cnt&#123; <span class="number">0</span> &#125;</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">6</span>; ++i)</span><br><span class="line">			data.push_back(Face&#123; input[i] &#125;);</span><br><span class="line"></span><br><span class="line">		set_position();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	Cube(<span class="keyword">const</span> Cube &amp;c) : data&#123; c.data &#125;, repeat_cnt&#123; c.repeat_cnt &#125;, last_step&#123; c.last_step &#125;, step_cnt&#123; c.step_cnt &#125; &#123;&#125;</span><br><span class="line"></span><br><span class="line">	Cube(Cube &amp;&amp;c) : data&#123; move(c.data) &#125;, repeat_cnt&#123; c.repeat_cnt &#125;, last_step&#123; move(c.last_step) &#125;, step_cnt&#123; move(c.step_cnt) &#125; &#123;&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">bool</span> <span class="keyword">operator</span>==(<span class="keyword">const</span> Cube &amp;c) <span class="keyword">const</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">6</span>; ++i)</span><br><span class="line">			<span class="keyword">if</span> (data[i] != c.data[i])</span><br><span class="line">				<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">unsigned</span> <span class="keyword">int</span> <span class="title">hash</span><span class="params">(<span class="keyword">void</span>)</span> <span class="keyword">const</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">auto</span> k = (data[<span class="number">0</span>].get_data() &lt;&lt; <span class="number">8</span>) + data[<span class="number">1</span>].get_data() + (data[<span class="number">2</span>].get_data() &lt;&lt; <span class="number">4</span>);</span><br><span class="line">		<span class="keyword">auto</span> t = (data[<span class="number">5</span>].get_data() &lt;&lt; <span class="number">8</span>) + data[<span class="number">4</span>].get_data() + (data[<span class="number">3</span>].get_data() &lt;&lt; <span class="number">4</span>);</span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span>  k ^ t;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">flip</span><span class="params">(<span class="keyword">int</span> i)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">switch</span> (i)</span><br><span class="line">		&#123;</span><br><span class="line">		<span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">			L();</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">			Lp();</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">case</span> <span class="number">3</span>:</span><br><span class="line">			U();</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">case</span> <span class="number">4</span>:</span><br><span class="line">			Up();</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">case</span> <span class="number">5</span>:</span><br><span class="line">			B();</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">case</span> <span class="number">6</span>:</span><br><span class="line">			Bp();</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">default</span>:</span><br><span class="line">			<span class="built_in">cout</span> &lt;&lt; <span class="string">"flip error"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		add_path(i);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function">Cube <span class="title">flip_cp</span><span class="params">(<span class="keyword">int</span> i)</span> <span class="keyword">const</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		Cube c&#123; *<span class="keyword">this</span> &#125;;</span><br><span class="line"></span><br><span class="line">		c.flip(i);</span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span> c;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">add_path</span><span class="params">(<span class="keyword">int</span> i)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (last_step == i)</span><br><span class="line">			++repeat_cnt;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">			repeat_cnt = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">		last_step = i;</span><br><span class="line">		++step_cnt;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">get_last_path</span><span class="params">(<span class="keyword">void</span>)</span> <span class="keyword">const</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> last_step;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">get_repeat_cnt</span><span class="params">(<span class="keyword">void</span>)</span> <span class="keyword">const</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> repeat_cnt;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">get_step</span><span class="params">(<span class="keyword">void</span>)</span> <span class="keyword">const</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> step_cnt;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	</span><br><span class="line">	<span class="built_in">vector</span>&lt;Face&gt; data;</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">char</span> repeat_cnt;</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">char</span> last_step;</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">char</span> step_cnt;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">set_position</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">static</span> <span class="keyword">const</span> <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; fc&#123; &#123;TOP,LEFT,BACK&#125;,&#123;TOP,RIGHT,BACK&#125;,&#123;TOP,LEFT,FRONT&#125;,&#123;TOP,RIGHT,FRONT&#125;,</span><br><span class="line">			&#123;BOTTOM,LEFT,FRONT&#125;,&#123;BOTTOM,RIGHT,FRONT&#125;,&#123;BOTTOM,LEFT,BACK&#125;,&#123;BOTTOM,RIGHT,BACK&#125; &#125;;</span><br><span class="line">		<span class="keyword">static</span> <span class="keyword">const</span> <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; idx&#123; &#123;_1,_1,_2&#125;,&#123;_2,_2,_1&#125;,&#123;_3,_2,_1&#125;,&#123;_4,_1,_2&#125;,</span><br><span class="line">			&#123;_1,_4,_3&#125;,&#123;_2,_3,_4&#125;,&#123;_3,_3,_4&#125;,&#123;_4,_4,_3 &#125; &#125;;</span><br><span class="line"></span><br><span class="line">		Cube c&#123;&#125;;</span><br><span class="line">		<span class="built_in">vector</span>&lt;<span class="keyword">unsigned</span>&gt; base = &#123; c.data[FRONT][_4],c.data[RIGHT][_3] ,c.data[BOTTOM][_2] &#125;;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">int</span> i, k, t;</span><br><span class="line">		<span class="keyword">unsigned</span> color;</span><br><span class="line">		<span class="keyword">int</span> ans = <span class="number">-1</span>;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">8</span>; ++i)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">vector</span>&lt;<span class="keyword">bool</span>&gt; ok(<span class="number">3</span>, <span class="literal">false</span>);</span><br><span class="line"></span><br><span class="line">			<span class="keyword">for</span> (k = <span class="number">0</span>; k &lt; <span class="number">3</span>; ++k)</span><br><span class="line">			&#123;</span><br><span class="line">				color = data[fc[i][k]][idx[i][k]];</span><br><span class="line"></span><br><span class="line">				<span class="keyword">for</span> (t = <span class="number">0</span>; t &lt; <span class="number">3</span>; ++t)</span><br><span class="line">					<span class="keyword">if</span> (color == base[t])</span><br><span class="line">						ok[t] = <span class="literal">true</span>;</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			<span class="keyword">if</span> (ok[<span class="number">0</span>] &amp;&amp; ok[<span class="number">1</span>] &amp;&amp; ok[<span class="number">2</span>])</span><br><span class="line">			&#123;</span><br><span class="line">				ans = i;</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (ans == <span class="number">-1</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">cout</span> &lt;&lt; <span class="string">"position error"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">			<span class="keyword">return</span>;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		rotation(ans);</span><br><span class="line"></span><br><span class="line">		set_corner(fc[<span class="number">5</span>], idx[<span class="number">5</span>], c.data[BOTTOM][_2]);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">rotation</span><span class="params">(<span class="keyword">int</span> i)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v(<span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">		<span class="keyword">switch</span> (i)</span><br><span class="line">		&#123;</span><br><span class="line">		<span class="keyword">case</span> <span class="number">0</span>:</span><br><span class="line">			v[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">			v[<span class="number">1</span>] = <span class="number">-1</span>;</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">			v[<span class="number">0</span>] = <span class="number">-1</span>;</span><br><span class="line">			v[<span class="number">1</span>] = <span class="number">-1</span>;</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">			v[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">			v[<span class="number">1</span>] = <span class="number">-1</span>;</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">case</span> <span class="number">3</span>:</span><br><span class="line">			v[<span class="number">0</span>] = <span class="number">99</span>;</span><br><span class="line">			v[<span class="number">1</span>] = <span class="number">-1</span>;</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">case</span> <span class="number">4</span>:</span><br><span class="line">			v[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">			v[<span class="number">1</span>] = <span class="number">99</span>;</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">case</span> <span class="number">5</span>:</span><br><span class="line">			v[<span class="number">0</span>] = <span class="number">99</span>;</span><br><span class="line">			v[<span class="number">1</span>] = <span class="number">99</span>;</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">case</span> <span class="number">6</span>:</span><br><span class="line">			v[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">			v[<span class="number">1</span>] = <span class="number">99</span>;</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">case</span> <span class="number">7</span>:</span><br><span class="line">			v[<span class="number">0</span>] = <span class="number">-1</span>;</span><br><span class="line">			v[<span class="number">1</span>] = <span class="number">99</span>;</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span>(v[<span class="number">0</span>] != <span class="number">99</span>)</span><br><span class="line">			X(v[<span class="number">0</span>]);</span><br><span class="line">		<span class="keyword">if</span> (v[<span class="number">1</span>] != <span class="number">99</span>)</span><br><span class="line">			Y(v[<span class="number">1</span>]);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">set_corner</span><span class="params">(<span class="keyword">const</span> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;fc, <span class="keyword">const</span> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;idx, <span class="keyword">unsigned</span> bot_color)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="comment">// &#123;BOTTOM,RIGHT,FRONT&#125;</span></span><br><span class="line">		<span class="comment">// &#123;_2,_3,_4&#125;</span></span><br><span class="line">		<span class="keyword">int</span> y = <span class="number">-1</span>;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">3</span>;++i)</span><br><span class="line">			<span class="keyword">if</span> (data[fc[i]][idx[i]] == bot_color)</span><br><span class="line">			&#123;</span><br><span class="line">				y = i;</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (y == <span class="number">1</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			Z(<span class="number">1</span>);</span><br><span class="line">			X(<span class="number">1</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (y == <span class="number">2</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			Y(<span class="number">-1</span>);</span><br><span class="line">			X(<span class="number">-1</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">L</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="comment">// left</span></span><br><span class="line">		data[LEFT].rotation(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">		<span class="comment">// top</span></span><br><span class="line">		<span class="keyword">auto</span> tem = data[TOP][_1];</span><br><span class="line">		<span class="keyword">auto</span> tem2 = data[TOP][_3];</span><br><span class="line"></span><br><span class="line">		data[TOP].<span class="built_in">set</span>(_1, data[BACK][_4]);</span><br><span class="line">		data[TOP].<span class="built_in">set</span>(_3, data[BACK][_2]);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// back</span></span><br><span class="line">		data[BACK].<span class="built_in">set</span>(_4, data[BOTTOM][_1]);</span><br><span class="line">		data[BACK].<span class="built_in">set</span>(_2, data[BOTTOM][_3]);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// bottom</span></span><br><span class="line">		data[BOTTOM].<span class="built_in">set</span>(_1, data[FRONT][_1]);</span><br><span class="line">		data[BOTTOM].<span class="built_in">set</span>(_3, data[FRONT][_3]);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// front</span></span><br><span class="line">		data[FRONT].<span class="built_in">set</span>(_1, tem);</span><br><span class="line">		data[FRONT].<span class="built_in">set</span>(_3, tem2);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Lp</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="comment">// left</span></span><br><span class="line">		data[LEFT].rotation(<span class="number">-1</span>);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// top</span></span><br><span class="line">		<span class="keyword">auto</span> tem = data[TOP][_1];</span><br><span class="line">		<span class="keyword">auto</span> tem2 = data[TOP][_3];</span><br><span class="line"></span><br><span class="line">		data[TOP].<span class="built_in">set</span>(_1, data[FRONT][_1]);</span><br><span class="line">		data[TOP].<span class="built_in">set</span>(_3, data[FRONT][_3]);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// front</span></span><br><span class="line">		data[FRONT].<span class="built_in">set</span>(_1, data[BOTTOM][_1]);</span><br><span class="line">		data[FRONT].<span class="built_in">set</span>(_3, data[BOTTOM][_3]);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// bottom</span></span><br><span class="line">		data[BOTTOM].<span class="built_in">set</span>(_1, data[BACK][_4]);</span><br><span class="line">		data[BOTTOM].<span class="built_in">set</span>(_3, data[BACK][_2]);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// back</span></span><br><span class="line">		data[BACK].<span class="built_in">set</span>(_4, tem);</span><br><span class="line">		data[BACK].<span class="built_in">set</span>(_2, tem2);</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">U</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="comment">// top</span></span><br><span class="line">		data[TOP].rotation(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// front</span></span><br><span class="line">		<span class="keyword">auto</span> tem = data[FRONT][_1];</span><br><span class="line">		<span class="keyword">auto</span> tem2 = data[FRONT][_2];</span><br><span class="line"></span><br><span class="line">		data[FRONT].<span class="built_in">set</span>(_1, data[RIGHT][_1]);</span><br><span class="line">		data[FRONT].<span class="built_in">set</span>(_2, data[RIGHT][_2]);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// right</span></span><br><span class="line">		data[RIGHT].<span class="built_in">set</span>(_1, data[BACK][_1]);</span><br><span class="line">		data[RIGHT].<span class="built_in">set</span>(_2, data[BACK][_2]);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// back</span></span><br><span class="line">		data[BACK].<span class="built_in">set</span>(_1, data[LEFT][_1]);</span><br><span class="line">		data[BACK].<span class="built_in">set</span>(_2, data[LEFT][_2]);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// left</span></span><br><span class="line">		data[LEFT].<span class="built_in">set</span>(_1, tem);</span><br><span class="line">		data[LEFT].<span class="built_in">set</span>(_2, tem2);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Up</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="comment">// top</span></span><br><span class="line">		data[TOP].rotation(<span class="number">-1</span>);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// front</span></span><br><span class="line">		<span class="keyword">auto</span> tem = data[FRONT][_1];</span><br><span class="line">		<span class="keyword">auto</span> tem2 = data[FRONT][_2];</span><br><span class="line"></span><br><span class="line">		data[FRONT].<span class="built_in">set</span>(_1, data[LEFT][_1]);</span><br><span class="line">		data[FRONT].<span class="built_in">set</span>(_2, data[LEFT][_2]);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// left</span></span><br><span class="line">		data[LEFT].<span class="built_in">set</span>(_1, data[BACK][_1]);</span><br><span class="line">		data[LEFT].<span class="built_in">set</span>(_2, data[BACK][_2]);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// back</span></span><br><span class="line">		data[BACK].<span class="built_in">set</span>(_1, data[RIGHT][_1]);</span><br><span class="line">		data[BACK].<span class="built_in">set</span>(_2, data[RIGHT][_2]);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// right</span></span><br><span class="line">		data[RIGHT].<span class="built_in">set</span>(_1, tem);</span><br><span class="line">		data[RIGHT].<span class="built_in">set</span>(_2, tem2);</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">B</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="comment">// back</span></span><br><span class="line">		data[BACK].rotation(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// top</span></span><br><span class="line">		<span class="keyword">auto</span> tem = data[TOP][_1];</span><br><span class="line">		<span class="keyword">auto</span> tem2 = data[TOP][_2];</span><br><span class="line"></span><br><span class="line">		data[TOP].<span class="built_in">set</span>(_1, data[RIGHT][_2]);</span><br><span class="line">		data[TOP].<span class="built_in">set</span>(_2, data[RIGHT][_4]);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// right</span></span><br><span class="line">		data[RIGHT].<span class="built_in">set</span>(_2, data[BOTTOM][_4]);</span><br><span class="line">		data[RIGHT].<span class="built_in">set</span>(_4, data[BOTTOM][_3]);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// bottom</span></span><br><span class="line">		data[BOTTOM].<span class="built_in">set</span>(_3, data[LEFT][_1]);</span><br><span class="line">		data[BOTTOM].<span class="built_in">set</span>(_4, data[LEFT][_3]);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// LEFT</span></span><br><span class="line">		data[LEFT].<span class="built_in">set</span>(_1, tem2);</span><br><span class="line">		data[LEFT].<span class="built_in">set</span>(_3, tem);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Bp</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// back</span></span><br><span class="line">		data[BACK].rotation(<span class="number">-1</span>);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// top</span></span><br><span class="line">		<span class="keyword">auto</span> tem = data[TOP][_1];</span><br><span class="line">		<span class="keyword">auto</span> tem2 = data[TOP][_2];</span><br><span class="line"></span><br><span class="line">		data[TOP].<span class="built_in">set</span>(_1, data[LEFT][_3]);</span><br><span class="line">		data[TOP].<span class="built_in">set</span>(_2, data[LEFT][_1]);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// LEFT</span></span><br><span class="line">		data[LEFT].<span class="built_in">set</span>(_1, data[BOTTOM][_3]);</span><br><span class="line">		data[LEFT].<span class="built_in">set</span>(_3, data[BOTTOM][_4]);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// bottom</span></span><br><span class="line">		data[BOTTOM].<span class="built_in">set</span>(_3, data[RIGHT][_4]);</span><br><span class="line">		data[BOTTOM].<span class="built_in">set</span>(_4, data[RIGHT][_2]);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// right</span></span><br><span class="line">		data[RIGHT].<span class="built_in">set</span>(_2, tem);</span><br><span class="line">		data[RIGHT].<span class="built_in">set</span>(_4, tem2);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">X</span><span class="params">(<span class="keyword">int</span> n)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (n == <span class="number">0</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			swap(data[FRONT], data[BACK]);</span><br><span class="line">			swap(data[RIGHT], data[LEFT]);</span><br><span class="line"></span><br><span class="line">			data[TOP].rotation(<span class="number">0</span>);</span><br><span class="line">			data[BOTTOM].rotation(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">			<span class="keyword">return</span>;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; order;</span><br><span class="line">		<span class="keyword">int</span> orien;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">switch</span> (n)</span><br><span class="line">		&#123;</span><br><span class="line">		<span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">			order = &#123; FRONT,LEFT,BACK,RIGHT &#125;;</span><br><span class="line">			orien = <span class="number">1</span>;</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">case</span> <span class="number">-1</span>:</span><br><span class="line">			order = &#123; FRONT,RIGHT,BACK,LEFT &#125;;</span><br><span class="line">			orien = <span class="number">-1</span>;</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">default</span>:</span><br><span class="line">			<span class="built_in">cout</span> &lt;&lt; <span class="string">"X error"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">auto</span> tem = data[order[<span class="number">0</span>]];</span><br><span class="line">		data[order[<span class="number">0</span>]] = data[order[<span class="number">1</span>]];</span><br><span class="line">		data[order[<span class="number">1</span>]] = data[order[<span class="number">2</span>]];</span><br><span class="line">		data[order[<span class="number">2</span>]] = data[order[<span class="number">3</span>]];</span><br><span class="line">		data[order[<span class="number">3</span>]] = tem;</span><br><span class="line"></span><br><span class="line">		<span class="comment">// top</span></span><br><span class="line">		data[TOP].rotation(orien * <span class="number">-1</span>);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// bottom</span></span><br><span class="line">		data[BOTTOM].rotation(orien);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Y</span><span class="params">(<span class="keyword">int</span> n)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (n == <span class="number">0</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			swap(data[FRONT], data[BACK]);</span><br><span class="line">			swap(data[TOP], data[BOTTOM]);</span><br><span class="line"></span><br><span class="line">			data[FRONT].rotation(<span class="number">0</span>);</span><br><span class="line">			data[BACK].rotation(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">			data[RIGHT].rotation(<span class="number">0</span>);</span><br><span class="line">			data[LEFT].rotation(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">			<span class="keyword">return</span>;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; order;</span><br><span class="line">		<span class="keyword">int</span> orien;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">switch</span> (n)</span><br><span class="line">		&#123;</span><br><span class="line">		<span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">			order = &#123; TOP ,FRONT,BOTTOM,BACK &#125;;</span><br><span class="line">			orien = <span class="number">-1</span>;</span><br><span class="line"></span><br><span class="line">			data[TOP].rotation(<span class="number">0</span>);</span><br><span class="line">			data[BACK].rotation(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">case</span> <span class="number">-1</span>:</span><br><span class="line">			order = &#123; TOP,BACK,BOTTOM,FRONT &#125;;</span><br><span class="line"></span><br><span class="line">			data[BACK].rotation(<span class="number">0</span>);</span><br><span class="line">			data[BOTTOM].rotation(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">			orien = <span class="number">1</span>;</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">default</span>:</span><br><span class="line">			<span class="built_in">cout</span> &lt;&lt; <span class="string">"y error"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">auto</span> tem = data[order[<span class="number">0</span>]];</span><br><span class="line">		data[order[<span class="number">0</span>]] = data[order[<span class="number">1</span>]];</span><br><span class="line">		data[order[<span class="number">1</span>]] = data[order[<span class="number">2</span>]];</span><br><span class="line">		data[order[<span class="number">2</span>]] = data[order[<span class="number">3</span>]];</span><br><span class="line">		data[order[<span class="number">3</span>]] = tem;</span><br><span class="line"></span><br><span class="line">		<span class="comment">// right</span></span><br><span class="line">		data[RIGHT].rotation(orien * <span class="number">-1</span>);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// left</span></span><br><span class="line">		data[LEFT].rotation(orien);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Z</span><span class="params">(<span class="keyword">int</span> n)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (n == <span class="number">0</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			swap(data[TOP], data[BOTTOM]);</span><br><span class="line">			swap(data[RIGHT], data[LEFT]);</span><br><span class="line"></span><br><span class="line">			<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">6</span>; ++i)</span><br><span class="line">				data[i].rotation(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">			<span class="keyword">return</span>;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; order;</span><br><span class="line">		<span class="keyword">int</span> orien;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">switch</span> (n)</span><br><span class="line">		&#123;</span><br><span class="line">		<span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">			order = &#123; TOP,LEFT,BOTTOM,RIGHT &#125;;</span><br><span class="line"></span><br><span class="line">			<span class="keyword">for</span> (<span class="keyword">auto</span> &amp;x : order)</span><br><span class="line">				data[x].rotation(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">			orien = <span class="number">-1</span>;</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">case</span> <span class="number">-1</span>:</span><br><span class="line">			order = &#123; TOP,RIGHT,BOTTOM,LEFT &#125;;</span><br><span class="line">			orien = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">			<span class="keyword">for</span> (<span class="keyword">auto</span> &amp;x : order)</span><br><span class="line">				data[x].rotation(<span class="number">-1</span>);</span><br><span class="line"></span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">default</span>:</span><br><span class="line">			<span class="built_in">cout</span> &lt;&lt; <span class="string">"Z error"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">auto</span> tem = data[order[<span class="number">0</span>]];</span><br><span class="line">		data[order[<span class="number">0</span>]] = data[order[<span class="number">1</span>]];</span><br><span class="line">		data[order[<span class="number">1</span>]] = data[order[<span class="number">2</span>]];</span><br><span class="line">		data[order[<span class="number">2</span>]] = data[order[<span class="number">3</span>]];</span><br><span class="line">		data[order[<span class="number">3</span>]] = tem;</span><br><span class="line"></span><br><span class="line">		<span class="comment">// front</span></span><br><span class="line">		data[FRONT].rotation(orien * <span class="number">-1</span>);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// back</span></span><br><span class="line">		data[BACK].rotation(orien);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CubePermutation</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	CubePermutation() : data(<span class="number">8</span>), an(<span class="number">8</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; reserve_d&#123; <span class="number">1</span>,<span class="number">64</span>,<span class="number">729</span>,<span class="number">4096</span>,<span class="number">15625</span>,<span class="number">46656</span>,<span class="number">117649</span>,<span class="number">262144</span> &#125;;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; data.size(); ++i)</span><br><span class="line">			data[i].reserve(reserve_d[i]);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">		<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; reserve_a&#123; <span class="number">1</span>,<span class="number">20</span>,<span class="number">80</span>,<span class="number">300</span>,<span class="number">800</span>,<span class="number">3000</span>,<span class="number">10000</span>,<span class="number">45000</span>, <span class="number">120000</span> &#125;;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; data.size(); ++i)</span><br><span class="line">			an[i].reserve(reserve_a[i]);</span><br><span class="line"></span><br><span class="line">		mp.reserve(<span class="number">1000000</span>);</span><br><span class="line">		</span><br><span class="line">		cal_ans();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">set</span><span class="params">(<span class="keyword">const</span> <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; &amp;input)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">auto</span> &amp;x : data)</span><br><span class="line">			x.clear();</span><br><span class="line"></span><br><span class="line">		data[<span class="number">0</span>].push_back(Cube&#123; input &#125;);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">run</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> permutate_data();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="keyword">enum</span> &#123; L = <span class="number">1</span>, Lp, U, Up, B, Bp &#125;;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;Cube&gt;&gt; data;</span><br><span class="line">	<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;Cube&gt;&gt; an;</span><br><span class="line">	<span class="built_in">unordered_multimap</span>&lt;Cube::Type, Cube&amp;&gt; mp;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">permutate_data</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">int</span> now, pre;</span><br><span class="line">		<span class="keyword">int</span> i, k;</span><br><span class="line">		<span class="keyword">int</span> t = check_ans(<span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (t != <span class="number">-1</span>)</span><br><span class="line">			<span class="keyword">return</span> t;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span> (now = <span class="number">1</span>; now &lt;= <span class="number">7</span>; ++now)</span><br><span class="line">		&#123;</span><br><span class="line">			pre = now - <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">			<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; data[pre].size(); ++i)</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="keyword">for</span> (k = <span class="number">1</span>; k &lt;= <span class="number">6</span>; ++k)</span><br><span class="line">				&#123;</span><br><span class="line">					<span class="keyword">if</span> (is_redundant(data, pre, i, k))</span><br><span class="line">						<span class="keyword">continue</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">					data[now].emplace_back(data[pre][i].flip_cp(k));</span><br><span class="line"></span><br><span class="line">					t = check_ans(now, data[now].size() - <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">					<span class="keyword">if</span> (t != <span class="number">-1</span>)</span><br><span class="line">					&#123;</span><br><span class="line">						<span class="keyword">return</span> now + <span class="number">7</span>;</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span> <span class="number">99</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">permutate_ans</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">int</span> now, pre;</span><br><span class="line">		<span class="keyword">int</span> i, k;</span><br><span class="line">		</span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span> (now = <span class="number">1</span>; now &lt;= <span class="number">7</span>; ++now)</span><br><span class="line">		&#123;</span><br><span class="line">			pre = now - <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">			<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; an[pre].size(); ++i)</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="keyword">if</span> (i == <span class="number">121</span> &amp;&amp; now == <span class="number">7</span>)</span><br><span class="line">					i = <span class="number">121</span>;</span><br><span class="line"></span><br><span class="line">				<span class="keyword">for</span> (k = <span class="number">1</span>; k &lt;= <span class="number">6</span>; ++k)</span><br><span class="line">				&#123;</span><br><span class="line">					<span class="keyword">if</span> (is_redundant(an, pre, i, k))</span><br><span class="line">						<span class="keyword">continue</span>;</span><br><span class="line"></span><br><span class="line">					an[now].emplace_back(an[pre][i].flip_cp(k));</span><br><span class="line"></span><br><span class="line">					check_map(now, an[now].size() - <span class="number">1</span>);</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">is_redundant</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;Cube&gt;&gt; &amp;cdata, <span class="keyword">int</span> pre, <span class="keyword">int</span> idx, <span class="keyword">int</span> now_step)</span> <span class="keyword">const</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">int</span> last_step = cdata[pre][idx].get_last_path();</span><br><span class="line">		<span class="keyword">int</span> m, M;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (now_step == last_step &amp;&amp; ((last_step == Lp) || (last_step == Up) || (last_step == Bp)))</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (now_step == last_step &amp;&amp; cdata[pre][idx].get_repeat_cnt() == <span class="number">2</span>)</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (last_step &lt; now_step)</span><br><span class="line">		&#123;</span><br><span class="line">			m = last_step;</span><br><span class="line">			M = now_step;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">		&#123;</span><br><span class="line">			m = now_step;</span><br><span class="line">			M = last_step;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (M - m == <span class="number">1</span> &amp;&amp; (m &amp; <span class="number">0x01</span>))</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">check_ans</span><span class="params">(<span class="keyword">int</span> now, <span class="keyword">int</span> idx)</span> <span class="keyword">const</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">auto</span> key = data[now][idx].hash();</span><br><span class="line"></span><br><span class="line">		<span class="keyword">auto</span> range = mp.equal_range(key);</span><br><span class="line"></span><br><span class="line">		<span class="keyword">bool</span> found = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">auto</span> itr = range.first; itr != mp.end() &amp;&amp; itr != range.second; ++itr)</span><br><span class="line">			<span class="keyword">if</span> (itr-&gt;second == data[now][idx])</span><br><span class="line">				<span class="keyword">return</span> itr-&gt;second.get_step();</span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">cal_ans</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		an[<span class="number">0</span>].push_back(Cube&#123;&#125;);</span><br><span class="line">		mp.emplace(an[<span class="number">0</span>][<span class="number">0</span>].hash(), an[<span class="number">0</span>][<span class="number">0</span>]);</span><br><span class="line"></span><br><span class="line">		permutate_ans();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">check_map</span><span class="params">(<span class="keyword">int</span> now, <span class="keyword">int</span> idx)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">auto</span> key = an[now][idx].hash();</span><br><span class="line"></span><br><span class="line">		<span class="keyword">auto</span> range = mp.equal_range(key);</span><br><span class="line"></span><br><span class="line">		<span class="keyword">bool</span> found = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">auto</span> itr = range.first; itr != mp.end() &amp;&amp; itr != range.second; ++itr)</span><br><span class="line">			<span class="keyword">if</span> (itr-&gt;second == an[now][idx])</span><br><span class="line">			&#123;</span><br><span class="line">				found = <span class="literal">true</span>;</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (found)</span><br><span class="line">			an[now].pop_back();</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">			mp.emplace(key, an[now][idx]);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; input(<span class="number">6</span>);</span><br><span class="line"></span><br><span class="line">	CubePermutation p;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">int</span> n = <span class="number">9999</span>;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; n;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">cin</span>.get();</span><br><span class="line">	<span class="built_in">cin</span>.get();</span><br><span class="line"></span><br><span class="line">	<span class="keyword">while</span> (n--)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">6</span>; ++i)</span><br><span class="line">			getline(<span class="built_in">cin</span>, input[i]);</span><br><span class="line"></span><br><span class="line">		p.<span class="built_in">set</span>(input);</span><br><span class="line"></span><br><span class="line">		<span class="keyword">auto</span> step = p.run();</span><br><span class="line"></span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; step &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">		getline(<span class="built_in">cin</span>, input[<span class="number">0</span>]);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><br></p>
+<h2 id="稍微解說"><a href="#稍微解說" class="headerlink" title="稍微解說"></a>稍微解說</h2><h3 id="class-Face"><a href="#class-Face" class="headerlink" title="class Face"></a>class Face</h3><p>是紀錄<strong>面</strong>的資訊，由於一面有 4 格，每格可能會有 6 種可能的顏色<br>所以用 4 bits 就可以紀錄 6 種顏色，總共需要 4 x 4 = 16 bits，因此我用 <code>uint_16</code></p>
+<p><code>rotation()</code> method :<br>單面旋轉的函式，0 代表旋轉 180 度，1 代表順時針轉 90 度，-1 代表逆時針轉 90 度</p>
+<p><br></p>
+<h3 id="class-Cube"><a href="#class-Cube" class="headerlink" title="class Cube"></a>class Cube</h3><p>是紀錄<strong>方塊</strong>的資訊，有 6 面，所以我用 6 個 <code>class Face</code> 去紀錄</p>
+<p><code>set_position()</code>、<code>rotation()</code>、<code>set_corner()</code>:<br>這三個 methods 是在把方塊對其基準點歸位</p>
+<p><code>L()</code>、<code>Lp()</code>、…、<code>X()</code>、<code>Y()</code>、<code>Z()</code> :<br>就是最一開始講的那幾個操作</p>
+<p><code>flip()</code>、<code>flip_cp()</code> :<br>轉動方塊的<strong>面</strong></p>
+<p><code>repeat_cnt</code> : 用來檢查同樣的操作做了幾次<br><code>last_step</code> : 紀錄最後一次的操作是甚麼<br><code>step_cnt</code> : 代表從列舉起始狀態開始走了幾步，也就是 step k 的 k</p>
+<p><br></p>
+<h3 id="class-CubePermutation"><a href="#class-CubePermutation" class="headerlink" title="class CubePermutation"></a>class CubePermutation</h3><p><code>an</code> : 用來列舉<strong>還原狀態</strong>方塊的 step 0 ~ step 7<br><code>data</code> : 用來列舉題目給的<strong>待解狀態</strong>方塊 step 0 ~ step 7<br><code>mp</code> : Hash Table，存的是 <code>an</code> 的方塊 hash value 和方塊資訊</p>
+<p>注意在建構式的時候，我就已經 reserve <code>an</code> 的 capacity 了，為的就是讓 vector 不要在重新 allocte memory<br>這樣會改變 Cubes 的記憶體位置，造成 <code>mp</code> 中存的 reference 存取錯誤，<strong>注意這是不好的作法</strong>，我只是求方便</p>
+<p><code>cal_ans()</code>、<code>permutate_ans()</code>、<code>check_map()</code> : 用來列舉 <code>an</code> 的</p>
+<p><code>permutate_data()</code>、<code>check_ans()</code> : 用來列舉題目給的待解狀態 <code>data</code></p>
+<p><code>is_redundant()</code> : 用來檢查 3 規則</p>
+<p><code>set()</code> : 新的輸入就要做一些清空的動作</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/C/" rel="tag"> <i class="fa fa-tag"></i> <span class="mypost_tag"> C++ </span> </a>
+          
+            <a href="/tags/BFS/" rel="tag"> <i class="fa fa-tag"></i> <span class="mypost_tag"> BFS </span> </a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/22/UVa-10617-Again-Palindrome/" rel="next" title="UVa 10617 : Again Palindrome">
+                <i class="fa fa-chevron-left"></i> UVa 10617 : Again Palindrome
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/upload/image/avatar.gif" alt="Chen Yu Sheng">
+            
+              <p class="site-author-name" itemprop="name">Chen Yu Sheng</p>
+              <div class="site-description motion-element" itemprop="description">紀錄我的程式學習</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">18</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">14</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/nicknick0630" title="GitHub &rarr; https://github.com/nicknick0630" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:nicknick0630@gmail.com" title="E-Mail &rarr; mailto:nicknick0630@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#題目-UVa-Link"><span class="nav-number">1.</span> <span class="nav-text">題目 :  UVa Link </span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#想法"><span class="nav-number">2.</span> <span class="nav-text">想法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解法一"><span class="nav-number">3.</span> <span class="nav-text">解法一</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#缺點"><span class="nav-number">3.1.</span> <span class="nav-text">缺點</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解法二"><span class="nav-number">4.</span> <span class="nav-text">解法二</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#程式碼"><span class="nav-number">5.</span> <span class="nav-text">程式碼</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#稍微解說"><span class="nav-number">6.</span> <span class="nav-text">稍微解說</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#class-Face"><span class="nav-number">6.1.</span> <span class="nav-text">class Face</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#class-Cube"><span class="nav-number">6.2.</span> <span class="nav-text">class Cube</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#class-CubePermutation"><span class="nav-number">6.3.</span> <span class="nav-text">class CubePermutation</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chen Yu Sheng</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a></div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="Total Visitors">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="Total Views">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+    
+    
+      
+    
+  
+  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-nest@1/canvas-nest-nomobile.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/velocity/1.2.1/velocity.min.js"></script>
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/velocity/1.2.1/velocity.ui.min.js"></script>
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.6/jquery.fancybox.min.js"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.1"></script>
+
+  <script src="/js/src/motion.js?v=7.0.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=7.0.1"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=7.0.1"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
+
+  
+
+
+  <script src="/js/src/next-boot.js?v=7.0.1"></script>
+
+
+  
+
+  
+
+  
+
+  
+  
+
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://nicknick0630.github.io/2019/05/23/UVa-11007-Mini-Cube/";
+    this.page.identifier = "2019/05/23/UVa-11007-Mini-Cube/";
+    this.page.title = 'UVa 11007 : Mini Cube';
+    };
+  function loadComments() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://conding-road.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', '' + +new Date());
+    (d.head || d.body).appendChild(s);
+  }
+  
+    loadComments();
+  
+</script>
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') { next = next.nextSibling }
+        if (next && next.nodeName.toLowerCase() === 'br') { next.parentNode.removeChild(next) }
+      }
+    });
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<style>
+.MathJax_Display {
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
+</style>
+
+    
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<style>
+  .copy-btn {
+    display: inline-block;
+    padding: 6px 12px;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 20px;
+    color: #333;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+    
+    user-select: none;
+    outline: 0;
+  }
+
+  .highlight-wrap .copy-btn {
+    transition: opacity .3s ease-in-out;
+    opacity: 0;
+    padding: 2px 6px;
+    position: absolute;
+    
+      right: 4px;
+      top: 8px;
+    
+  }
+
+  .highlight-wrap:hover .copy-btn,
+  .highlight-wrap .copy-btn:focus {
+    opacity: 1;
+  }
+
+  .highlight-wrap {
+    position: relative;
+  }
+</style>
+<script>
+  $('.highlight').each(function(i, e) {
+    var $wrap = $('<div>').addClass('highlight-wrap');
+    $(e).after($wrap);
+    $wrap.append($('<button>').addClass('copy-btn').append('Copy').on('click', function(e) {
+      var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+        return $(e).text();
+      }).toArray().join('\n');
+      var ta = document.createElement('textarea');
+      var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+      ta.style.top = yPosition + 'px'; // Prevent page scroll
+      ta.style.position = 'absolute';
+      ta.style.opacity = '0';
+      ta.readOnly = true;
+      ta.value = code;
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, code.length);
+      ta.readOnly = false;
+      var result = document.execCommand('copy');
+      
+        if (result) $(this).text('Copied');
+        else $(this).text('Copy failed');
+      
+      ta.blur(); // For iOS
+      $(this).blur();
+    })).on('mouseleave', function(e) {
+      var $b = $(this).find('.copy-btn');
+      setTimeout(function() {
+        $b.text('Copy');
+      }, 300);
+    }).append(e);
+  })
+</script>
+
+
+</body>
+</html>
